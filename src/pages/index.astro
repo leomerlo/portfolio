@@ -4,6 +4,7 @@ import ProjectCard from '../components/ProjectCard.astro';
 
 const projects = [
   {
+    i18nKey: 'project1',
     title: 'Vision Design System',
     description: 'End-to-end design system for Perceptyx\'s employee experience platform, from token architecture to component library.',
     metric: 'Design System',
@@ -12,6 +13,7 @@ const projects = [
     tags: ['React', 'Vue', 'Web Components', 'Design Tokens', 'Storybook', 'SCSS'],
   },
   {
+    i18nKey: 'project2',
     title: 'TurniSports — Online Schedule & Customer CMS',
     description: 'Booking and customer management platform built for individual sports coaches.',
     metric: 'Open Source',
@@ -21,6 +23,7 @@ const projects = [
     url: 'https://github.com/Digital-Craft-AR/turni-sports',
   },
   {
+    i18nKey: 'project3',
     title: 'Kimberly-Clark — Enterprise Frontend (via Accenture)',
     description: 'Frontend development for Kimberly-Clark\'s internal platforms as part of an Accenture engagement.',
     metric: 'Enterprise',
@@ -44,25 +47,31 @@ const projects = [
           <a href="/" aria-label="Leo Merlo — home">
             <h1 class="site-name">Leo<br/>Merlo</h1>
           </a>
-          <p class="site-title">Fullstack Developer, Frontend Focused</p>
-          <p class="site-tagline">
+          <p class="site-title" data-i18n="site.title">Fullstack Developer, Frontend Focused</p>
+          <p class="site-tagline" data-i18n="site.tagline">
             I build frontend systems that teams actually use.
           </p>
 
           <nav class="sidebar-nav" aria-label="Page sections">
             <ul>
-              {[
-                ['#about',   'About'],
-                ['#work',    'Work'],
-                ['#contact', 'Contact'],
-              ].map(([href, label]) => (
-                <li>
-                  <a href={href} class="nav-link">
-                    <span class="nav-indicator" aria-hidden="true"></span>
-                    <span>{label}</span>
-                  </a>
-                </li>
-              ))}
+              <li>
+                <a href="#about" class="nav-link">
+                  <span class="nav-indicator" aria-hidden="true"></span>
+                  <span data-i18n="nav.about">About</span>
+                </a>
+              </li>
+              <li>
+                <a href="#work" class="nav-link">
+                  <span class="nav-indicator" aria-hidden="true"></span>
+                  <span data-i18n="nav.work">Work</span>
+                </a>
+              </li>
+              <li>
+                <a href="#contact" class="nav-link">
+                  <span class="nav-indicator" aria-hidden="true"></span>
+                  <span data-i18n="nav.contact">Contact</span>
+                </a>
+              </li>
             </ul>
           </nav>
         </div>
@@ -112,44 +121,46 @@ const projects = [
       <!-- ── About ── -->
       <section id="about" class="section" aria-labelledby="about-heading">
         <div class="section-header-mobile">
-          <h2 id="about-heading">About</h2>
+          <h2 id="about-heading" data-i18n="about.heading">About</h2>
         </div>
 
         <div class="about-content">
           <img src="/leo-main.jpg" alt="Portrait of Leo Merlo" class="about-photo" width="140" height="140" loading="lazy">
 
-          <p>
+          <p data-i18n="about.p1">
             I'm a fullstack developer with a strong frontend focus — 10+ years building the kind of systems that hold up under real product pressure. My work lives at the intersection of engineering quality, design consistency, and team scale.
           </p>
-          <p>
+          <p data-i18n="about.p2">
             I've built design systems from scratch that reached 80%+ adoption across distributed teams — not by mandate, but by making them genuinely better to use than the alternative. Token-first architecture, framework-agnostic components, and Storybook as the shared contract between design and engineering.
           </p>
-          <p>
+          <p data-i18n="about.p3">
             I treat accessibility as architecture, not audit. When a11y constraints live in the system — semantic tokens, tested patterns, focus management done right — quality becomes the default and review cycles shrink. I've cut them by 30%.
           </p>
-          <p>
+          <p data-i18n="about.p4">
             I've also led cross-functional Frontend Guilds: aligning 6 distributed teams on shared standards through RFCs and pair programming, without relying on org chart authority.
           </p>
         </div>
 
         <dl class="about-meta">
-          {[
-            ['Focus',    'Frontend Architecture, Design Systems, A11y'],
-            ['Stack',    'React · TypeScript · Node.js · CSS'],
-            ['Based in', 'Buenos Aires, Argentina, Earth, Solar System, Milky Way'],
-          ].map(([label, value]) => (
-            <div class="meta-item">
-              <dt class="meta-label">{label}</dt>
-              <dd class="meta-value">{value}</dd>
-            </div>
-          ))}
+          <div class="meta-item">
+            <dt class="meta-label" data-i18n="meta.focus.label">Focus</dt>
+            <dd class="meta-value" data-i18n="meta.focus.value">Frontend Architecture, Design Systems, A11y</dd>
+          </div>
+          <div class="meta-item">
+            <dt class="meta-label" data-i18n="meta.stack.label">Stack</dt>
+            <dd class="meta-value" data-i18n="meta.stack.value">React · TypeScript · Node.js · CSS</dd>
+          </div>
+          <div class="meta-item">
+            <dt class="meta-label" data-i18n="meta.location.label">Based in</dt>
+            <dd class="meta-value" data-i18n="meta.location.value">Buenos Aires, Argentina, Earth, Solar System, Milky Way</dd>
+          </div>
         </dl>
       </section>
 
       <!-- ── Work ── -->
       <section id="work" class="section" aria-labelledby="work-heading">
         <div class="section-header-mobile">
-          <h2 id="work-heading">Work</h2>
+          <h2 id="work-heading" data-i18n="work.heading">Work</h2>
         </div>
 
         <ul class="project-list" aria-label="Selected projects">
@@ -160,10 +171,10 @@ const projects = [
       <!-- ── Contact ── -->
       <section id="contact" class="section" aria-labelledby="contact-heading">
         <div class="section-header-mobile">
-          <h2 id="contact-heading">Contact</h2>
+          <h2 id="contact-heading" data-i18n="contact.heading">Contact</h2>
         </div>
 
-        <p class="contact-intro">
+        <p class="contact-intro" data-i18n="contact.intro">
           If you're building something where frontend architecture matters, I'd like to hear about it.
         </p>
 

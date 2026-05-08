@@ -33,11 +33,15 @@ const {
         if (stored === 'light' || (!stored && prefersLight)) {
           document.documentElement.classList.add('light');
         }
+        var lang = localStorage.getItem('lang');
+        if (lang === 'es') {
+          document.documentElement.setAttribute('lang', 'es');
+        }
       })();
     </script>
   </head>
   <body>
-    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <a href="#main-content" class="skip-link" data-i18n="skip-link">Skip to main content</a>
 
     <!-- Theme toggle -->
     <button
@@ -58,18 +62,83 @@ const {
       </svg>
     </button>
 
+    <!-- Language toggle -->
+    <button
+      id="lang-toggle"
+      class="lang-toggle"
+      type="button"
+      aria-label="Cambiar a español"
+    >
+      <span class="lang-label lang-en">EN</span>
+      <span class="lang-sep" aria-hidden="true">/</span>
+      <span class="lang-label lang-es">ES</span>
+    </button>
+
     <slot />
 
     <script>
-      // Theme toggle
+      import { ui } from '../i18n/ui';
+      import type { Lang, TranslationKey } from '../i18n/ui';
+
+      // ── Lang helpers ──────────────────────────────────────────
+      function getLang(): Lang {
+        return (localStorage.getItem('lang') as Lang) || 'en';
+      }
+
+      function applyLang(lang: Lang) {
+        const t = ui[lang];
+
+        document.querySelectorAll<HTMLElement>('[data-i18n]').forEach((el) => {
+          const key = el.dataset.i18n as TranslationKey;
+          if (key in t) el.textContent = t[key];
+        });
+
+        document.querySelectorAll<HTMLElement>('[data-i18n-aria]').forEach((el) => {
+          const key = el.dataset.i18nAria as TranslationKey;
+          if (key in t) el.setAttribute('aria-label', t[key]);
+        });
+
+        document.documentElement.setAttribute('lang', lang);
+
+        const toggle = document.getElementById('lang-toggle');
+        if (toggle) {
+          const isEs = lang === 'es';
+          toggle.querySelector('.lang-en')?.classList.toggle('lang-active', !isEs);
+          toggle.querySelector('.lang-es')?.classList.toggle('lang-active', isEs);
+          toggle.setAttribute('aria-label', t['lang-toggle.label']);
+        }
+
+        // Update theme toggle aria-label to match current lang
+        const themeBtn = document.getElementById('theme-toggle');
+        if (themeBtn) {
+          const isLight = document.documentElement.classList.contains('light');
+          const key: TranslationKey = isLight ? 'theme-toggle.to-dark' : 'theme-toggle.to-light';
+          themeBtn.setAttribute('aria-label', t[key]);
+        }
+      }
+
+      // ── Boot ─────────────────────────────────────────────────
+      const currentLang = getLang();
+      applyLang(currentLang);
+
+      // ── Lang toggle ──────────────────────────────────────────
+      document.getElementById('lang-toggle')?.addEventListener('click', () => {
+        const next: Lang = getLang() === 'en' ? 'es' : 'en';
+        localStorage.setItem('lang', next);
+        applyLang(next);
+      });
+
+      // ── Theme toggle ─────────────────────────────────────────
       const themeBtn = document.getElementById('theme-toggle');
       themeBtn?.addEventListener('click', () => {
         const isLight = document.documentElement.classList.toggle('light');
         localStorage.setItem('theme', isLight ? 'light' : 'dark');
-        themeBtn.setAttribute('aria-label', isLight ? 'Switch to dark mode' : 'Switch to light mode');
+        const lang = getLang();
+        const key: TranslationKey = isLight ? 'theme-toggle.to-dark' : 'theme-toggle.to-light';
+        themeBtn.setAttribute('aria-label', ui[lang][key]);
       });
 
-      // Active nav link via IntersectionObserver
+      // ── Active nav link via IntersectionObserver ─────────────
       const sections = document.querySelectorAll('.section[id]');
       const navLinks = document.querySelectorAll('.nav-link');
 
@@ -87,3 +156,57 @@ const {
     </script>
   </body>
 </html>
+
+<style>
+  .lang-toggle {
+    position: fixed;
+    top: 1.5rem;
+    right: 4.75rem;
+    height: 38px;
+    padding: 0 0.75rem;
+    border-radius: 9999px;
+    border: 1px solid var(--card-border);
+    background: var(--bg-alt);
+    color: var(--text);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    z-index: 100;
+    transition: color var(--transition), border-color var(--transition), transform var(--transition);
+    box-shadow: var(--shadow);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+  }
+
+  .lang-toggle:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+    transform: scale(1.05);
+  }
+
+  .lang-label {
+    opacity: 0.4;
+    transition: opacity var(--transition), color var(--transition);
+  }
+
+  .lang-label.lang-active {
+    opacity: 1;
+    color: var(--accent);
+  }
+
+  .lang-sep {
+    opacity: 0.25;
+    font-size: 0.65rem;
+  }
+
+  @media (max-width: 480px) {
+    .lang-toggle {
+      top: 1rem;
+      right: 4.25rem;
+      height: 34px;
+      padding: 0 0.6rem;
+    }
+  }
+</style>
