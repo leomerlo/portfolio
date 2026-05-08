@@ -4,28 +4,29 @@ import ProjectCard from '../components/ProjectCard.astro';
 
 const projects = [
   {
-    title: 'Design System at Scale',
-    description: 'Framework-agnostic, token-based design system built to be adopted — not just installed.',
-    metric: '80%+ team adoption',
-    summary: 'I built this with one constraint: it had to win on merit. No mandate, no exec decree. That meant treating the system as a product — clear onboarding, honest documentation, a migration path from wherever teams already were.',
-    details: 'Architecture was token-first: semantic color, spacing, and typography tokens that worked whether a team was on React, Angular, or a legacy stack. Storybook served as the contract between design and engineering. The measure of success wasn\'t "did we ship components" — it was "did teams choose to use them twice."',
-    tags: ['Design Tokens', 'Storybook', 'Web Components', 'TypeScript', 'SCSS'],
+    title: 'Vision Design System',
+    description: 'End-to-end design system for Perceptyx\'s employee experience platform, from token architecture to component library.',
+    metric: 'Design System',
+    summary: 'Perceptyx needed a single source of truth that could span multiple product surfaces without fracturing. Vision was the answer: a token-first, framework-agnostic system where every decision — color, spacing, motion — was named for its intent, not its value.',
+    details: 'The core constraint was framework agnosticism: components had to work equally well in React, Vue, and plain HTML. Tokens lived at the semantic layer — shipped as CSS custom properties — so any consumer could adopt them regardless of stack. Storybook served as the shared contract between design and engineering, and versioned npm packages kept teams on a predictable upgrade path.',
+    tags: ['React', 'Vue', 'Web Components', 'Design Tokens', 'Storybook', 'SCSS'],
   },
   {
-    title: 'Accessibility as Architecture',
-    description: 'Moved a11y from a QA checkbox to an architectural constraint. Cut review cycles by 30%.',
-    metric: '−30% review cycles',
-    summary: 'The problem wasn\'t awareness — engineers knew a11y mattered. The problem was friction: fixes were expensive because they happened at the end. The fix was to shift the cost left.',
-    details: 'Accessible patterns went directly into the design system: focus management, ARIA semantics, keyboard navigation baked into every component. Automated axe-core checks ran in CI. WCAG compliance stopped being a separate pass and became part of the definition of done.',
-    tags: ['WCAG 2.1', 'axe-core', 'ARIA', 'CI/CD'],
+    title: 'TurniSports — Online Schedule & Customer CMS',
+    description: 'Booking and customer management platform built for individual sports coaches.',
+    metric: 'Open Source',
+    summary: 'TurniSports started from a real pain point: individual coaches managing their schedules through WhatsApp groups and spreadsheets. The goal was a product that felt simple to the coach but handled the full complexity of recurring bookings, availability, and customer management.',
+    details: 'Built as a full-stack application with a React frontend and a CMS that let coaches manage their availability, sessions, and client records without any technical knowledge. Real-time availability, booking confirmation flows, and a clean public-facing scheduling UI for their clients.',
+    tags: ['React', 'TypeScript', 'Node.js', 'CMS', 'Full-stack'],
+    url: 'https://github.com/Digital-Craft-AR/turni-sports',
   },
   {
-    title: 'Frontend Guild',
-    description: 'Built shared standards across 6 distributed teams — without org chart authority.',
-    metric: '6 teams aligned',
-    summary: 'When you lead without formal authority, you ship standards by making them worth adopting. I started a Frontend Guild: a lightweight structure for cross-team alignment that ran on trust and usefulness, not process.',
-    details: 'The format was RFC-driven: any engineer could propose a standard, the guild would discuss, teams could opt in. Over 18 months, 6 teams converged on shared tooling, testing patterns, and performance budgets — not because they had to, but because the defaults were genuinely good.',
-    tags: ['RFC process', 'Developer experience', 'Cross-team alignment'],
+    title: 'Kimberly-Clark — Enterprise Frontend (via Accenture)',
+    description: 'Frontend development for Kimberly-Clark\'s internal platforms as part of an Accenture engagement.',
+    metric: 'Enterprise',
+    summary: 'Embedded within an Accenture team delivering frontend solutions for Kimberly-Clark\'s internal tools and consumer-facing platforms. The challenge was navigating enterprise constraints — legacy integrations, multi-team coordination, strict delivery timelines — while keeping the frontend quality high.',
+    details: 'Led component standardization efforts across the engagement, established coding guidelines adopted by the broader team, and worked closely with UX and backend engineers to ship features that held up at scale. The experience sharpened my ability to operate in large, distributed delivery contexts.',
+    tags: ['React', 'TypeScript', 'Enterprise', 'Accenture', 'Component Architecture'],
   },
 ];
 ---
@@ -40,8 +41,8 @@ const projects = [
       <div class="sidebar-inner">
 
         <div class="sidebar-top">
-          <a href="/" aria-label="Leandro Merlo — home">
-            <h1 class="site-name">Leandro<br/>Merlo</h1>
+          <a href="/" aria-label="Leo Merlo — home">
+            <h1 class="site-name">Leo<br/>Merlo</h1>
           </a>
           <p class="site-title">Fullstack Developer, Frontend Focused</p>
           <p class="site-tagline">
@@ -115,16 +116,7 @@ const projects = [
         </div>
 
         <div class="about-content">
-          <!--
-            PHOTO: Replace with:
-            <img src="/photo.jpg" alt="Portrait of Leandro Merlo" class="about-photo" width="140" height="140" loading="lazy">
-          -->
-          <div class="photo-placeholder" role="img" aria-label="Profile photo placeholder">
-            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.58-7 8-7s8 3 8 7"/>
-            </svg>
-            <span>Your photo</span>
-          </div>
+          <img src="/leo-main.jpg" alt="Portrait of Leo Merlo" class="about-photo" width="140" height="140" loading="lazy">
 
           <p>
             I'm a fullstack developer with a strong frontend focus — 10+ years building the kind of systems that hold up under real product pressure. My work lives at the intersection of engineering quality, design consistency, and team scale.
@@ -144,7 +136,7 @@ const projects = [
           {[
             ['Focus',    'Frontend Architecture, Design Systems, A11y'],
             ['Stack',    'React · TypeScript · Node.js · CSS'],
-            ['Based in', 'Buenos Aires, Argentina, Milky Way, Solar System'],
+            ['Based in', 'Buenos Aires, Argentina, Earth, Solar System, Milky Way'],
           ].map(([label, value]) => (
             <div class="meta-item">
               <dt class="meta-label">{label}</dt>
