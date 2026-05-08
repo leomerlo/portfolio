@@ -1,0 +1,606 @@
+@import '@fontsource-variable/inter';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ═══════════════════════════════════════════════
+   LEANDRO MERLO — PORTFOLIO
+   Two-column sticky sidebar layout
+   Inspired by brittanychiang.com / lampard.netlify.app
+   ═══════════════════════════════════════════════ */
+
+/* ─── Tokens ─── */
+:root {
+  --bg:            #0f172a;
+  --bg-alt:        #1e293b;
+  --text:          #94a3b8;
+  --text-bright:   #e2e8f0;
+  --text-heading:  #ccd6f6;
+  --accent:        #60a5fa;   /* blue-400 — French blue adapted for dark */
+  --accent-muted:  rgba(96, 165, 250, 0.10);
+  --card-hover:    rgba(96, 165, 250, 0.05);
+  --card-border:   rgba(96, 165, 250, 0.12);
+  --shadow:        0 10px 30px -15px rgba(2, 12, 27, 0.7);
+  --transition:    0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+html.light {
+  --bg:            #f8fafc;
+  --bg-alt:        #ffffff;
+  --text:          #64748b;
+  --text-bright:   #1e293b;
+  --text-heading:  #0f172a;
+  --accent:        #0047AB;   /* Azul Francia */
+  --accent-muted:  rgba(0, 71, 171, 0.08);
+  --card-hover:    rgba(0, 71, 171, 0.04);
+  --card-border:   rgba(0, 71, 171, 0.14);
+  --shadow:        0 10px 30px -15px rgba(0, 0, 0, 0.10);
+}
+
+/* ─── Base ─── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+body {
+  font-family: 'InterVariable', 'Inter', system-ui, -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+
+a { color: inherit; text-decoration: none; }
+ul { list-style: none; }
+
+::selection {
+  background: var(--accent-muted);
+  color: var(--accent);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* ─── Skip link ─── */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 1rem;
+  z-index: 999;
+  padding: 0.5rem 1rem;
+  background: var(--accent);
+  color: var(--bg);
+  font-size: 0.875rem;
+  font-weight: 600;
+  border-radius: 0 0 6px 6px;
+  text-decoration: none;
+  transition: top 0.1s;
+}
+.skip-link:focus { top: 0; }
+
+/* ─── Two-column layout ─── */
+.layout {
+  display: flex;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 3rem;
+  min-height: 100vh;
+  position: relative;
+  z-index: 1;
+}
+
+/* ─── Left column — sticky header ─── */
+.sidebar {
+  width: 40%;
+  max-width: 440px;
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 6rem 3rem 6rem 0;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--card-border) transparent;
+}
+
+.sidebar::-webkit-scrollbar { width: 4px; }
+.sidebar::-webkit-scrollbar-track { background: transparent; }
+.sidebar::-webkit-scrollbar-thumb { background: var(--card-border); border-radius: 2px; }
+
+.sidebar-inner {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+/* ─── Sidebar top ─── */
+.sidebar-top {}
+
+.site-name {
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: var(--text-heading);
+  letter-spacing: -1.5px;
+  line-height: 1.1;
+}
+
+.site-title {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--text-bright);
+  margin-top: 0.75rem;
+  letter-spacing: -0.2px;
+}
+
+.site-tagline {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  max-width: 300px;
+  line-height: 1.6;
+}
+
+/* ─── Nav ─── */
+.sidebar-nav {
+  margin-top: 3.5rem;
+}
+
+.sidebar-nav ul {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.6rem 0;
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--text);
+  transition: color var(--transition);
+}
+
+.nav-indicator {
+  display: inline-block;
+  width: 28px;
+  height: 1px;
+  background: currentColor;
+  transition: width var(--transition), background var(--transition);
+  flex-shrink: 0;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: var(--text-bright);
+}
+
+.nav-link:hover .nav-indicator,
+.nav-link.active .nav-indicator {
+  width: 56px;
+}
+
+/* ─── Sidebar bottom ─── */
+.sidebar-bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.social-links {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.social-link {
+  color: var(--text);
+  transition: color var(--transition), transform var(--transition);
+}
+
+.social-link:hover {
+  color: var(--text-bright);
+  transform: translateY(-2px);
+}
+
+/* ─── Right column — scrollable main ─── */
+.content {
+  flex: 1;
+  padding: 6rem 0 6rem 4rem;
+}
+
+/* ─── Sections ─── */
+.section {
+  margin-bottom: 7rem;
+  scroll-margin-top: 5rem;
+}
+
+.section-header-mobile {
+  display: none;
+}
+
+.section-header-mobile h2 {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--text-bright);
+  position: sticky;
+  top: 0;
+  padding: 1.25rem 0;
+  background: var(--bg);
+  z-index: 10;
+  margin-bottom: 1.5rem;
+}
+
+/* ─── About ─── */
+.about-content {
+  overflow: hidden; /* contain float */
+}
+
+.photo-placeholder {
+  float: left;
+  width: 140px;
+  height: 140px;
+  border-radius: 12px;
+  border: 2px dashed var(--card-border);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  color: var(--text);
+  opacity: 0.45;
+  margin: 0.25rem 1.75rem 1rem 0;
+  flex-shrink: 0;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  text-align: center;
+}
+
+/* To swap in a real photo, replace .photo-placeholder with an <img> */
+.about-photo {
+  float: left;
+  width: 140px;
+  height: 140px;
+  border-radius: 12px;
+  object-fit: cover;
+  border: 2px solid var(--card-border);
+  margin: 0.25rem 1.75rem 1rem 0;
+  transition: border-color var(--transition), transform var(--transition);
+  display: block;
+}
+
+.about-photo:hover {
+  border-color: var(--accent);
+  transform: scale(1.02);
+}
+
+.about-content p {
+  font-size: 0.925rem;
+  margin-bottom: 1rem;
+}
+
+.about-content p:last-child { margin-bottom: 0; }
+
+.about-content a {
+  color: var(--text-bright);
+  font-weight: 500;
+  border-bottom: 1px solid transparent;
+  transition: color var(--transition), border-color var(--transition);
+}
+
+.about-content a:hover {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+.about-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--card-border);
+}
+
+.meta-item {}
+.meta-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text);
+  font-family: 'InterVariable', monospace;
+  margin-bottom: 0.25rem;
+}
+.meta-value {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-bright);
+}
+
+/* ─── Projects ─── */
+.project-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.card {
+  display: block;
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  transition: background var(--transition), border-color var(--transition), box-shadow var(--transition);
+  cursor: pointer;
+}
+
+.card:hover {
+  background: var(--card-hover);
+  border-color: var(--card-border);
+  box-shadow: var(--shadow);
+}
+
+.card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.card-title {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--text-bright);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  line-height: 1.4;
+  transition: color var(--transition);
+}
+
+.card:hover .card-title { color: var(--accent); }
+
+.card-metric {
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: var(--accent);
+  background: var(--accent-muted);
+  padding: 3px 10px;
+  border-radius: 9999px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.card-description {
+  font-size: 0.875rem;
+  line-height: 1.65;
+  margin-bottom: 0.75rem;
+}
+
+.card-expand {
+  margin-top: 0.5rem;
+}
+
+.card-expand summary {
+  list-style: none;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--accent);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: opacity var(--transition);
+}
+
+.card-expand summary:hover { opacity: 0.8; }
+
+.card-expand[open] .expand-icon { transform: rotate(180deg); }
+
+.expand-icon {
+  display: inline-block;
+  transition: transform var(--transition);
+}
+
+.card-expand-body {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--card-border);
+}
+
+.card-expand-body p {
+  font-size: 0.875rem;
+  line-height: 1.65;
+  margin-bottom: 0.75rem;
+}
+
+.card-expand-body p:last-child { margin-bottom: 0; }
+
+.card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 1rem;
+}
+
+.tag {
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: var(--accent);
+  background: var(--accent-muted);
+  padding: 3px 10px;
+  border-radius: 9999px;
+}
+
+/* ─── Thinking ─── */
+.thinking-placeholder {
+  padding: 2rem;
+  border: 1px dashed var(--card-border);
+  border-radius: 8px;
+  max-width: 400px;
+  text-align: center;
+}
+
+.thinking-placeholder p {
+  font-size: 0.875rem;
+}
+
+/* ─── Contact ─── */
+.contact-intro {
+  font-size: 0.925rem;
+  max-width: 440px;
+  margin-bottom: 2.5rem;
+}
+
+.contact-links {
+  display: flex;
+  flex-direction: column;
+  max-width: 400px;
+}
+
+.contact-link {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  padding: 0.875rem 0;
+  border-bottom: 1px solid var(--card-border);
+  font-size: 0.875rem;
+  color: var(--text);
+  transition: color var(--transition), padding-left var(--transition);
+}
+
+.contact-link:first-child { border-top: 1px solid var(--card-border); }
+
+.contact-link:hover {
+  color: var(--text-bright);
+  padding-left: 0.5rem;
+}
+
+.contact-link:hover .contact-arrow { color: var(--accent); }
+
+.contact-arrow {
+  color: var(--text);
+  transition: color var(--transition);
+  flex-shrink: 0;
+}
+
+.contact-ext-icon {
+  margin-left: auto;
+  opacity: 0.3;
+  flex-shrink: 0;
+  transition: opacity var(--transition);
+}
+
+.contact-link:hover .contact-ext-icon { opacity: 0.8; }
+
+/* ─── Footer (inside sidebar) ─── */
+.sidebar-footer {
+  font-size: 0.75rem;
+  line-height: 1.6;
+  color: var(--text);
+  opacity: 0.5;
+}
+
+/* ─── Theme toggle ─── */
+.theme-toggle {
+  position: fixed;
+  top: 1.5rem;
+  right: 1.5rem;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1px solid var(--card-border);
+  background: var(--bg-alt);
+  color: var(--text);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  transition: color var(--transition), border-color var(--transition), transform var(--transition);
+  box-shadow: var(--shadow);
+}
+
+.theme-toggle:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+  transform: scale(1.1);
+}
+
+.icon-moon { display: block; }
+.icon-sun  { display: none; }
+html.light .icon-moon { display: none; }
+html.light .icon-sun  { display: block; }
+
+/* ─── Responsive ─── */
+@media (max-width: 1024px) {
+  .layout {
+    flex-direction: column;
+    padding: 0 1.5rem;
+  }
+
+  .sidebar {
+    width: 100%;
+    max-width: 100%;
+    position: relative;
+    height: auto;
+    padding: 3rem 0 1.5rem;
+  }
+
+  .sidebar-inner {
+    height: auto;
+    gap: 2rem;
+  }
+
+  .sidebar-nav { display: none; }
+
+  .sidebar-footer { display: none; }
+
+  .content {
+    padding: 1.5rem 0 4rem;
+  }
+
+  .section-header-mobile {
+    display: block;
+  }
+
+  .section { margin-bottom: 4rem; }
+}
+
+@media (max-width: 480px) {
+  .site-name { font-size: 2.2rem; }
+
+  .card { padding: 1.25rem; }
+
+  .theme-toggle {
+    top: 1rem;
+    right: 1rem;
+    width: 34px;
+    height: 34px;
+  }
+}

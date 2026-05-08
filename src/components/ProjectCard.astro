@@ -1,0 +1,37 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  summary: string;
+  details: string;
+  metric: string;
+  tags: string[];
+}
+
+const { title, description, summary, details, metric, tags } = Astro.props;
+---
+
+<li>
+  <details class="card card-expand" aria-label={title}>
+    <summary>
+      <div class="card-header">
+        <span class="card-title">
+          {title}
+          <svg class="expand-icon" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="6 9 12 15 18 9"/>
+          </svg>
+        </span>
+        <span class="card-metric">{metric}</span>
+      </div>
+      <p class="card-description">{description}</p>
+      <ul class="card-tags" role="list" aria-label="Technologies">
+        {tags.map((t) => <li><span class="tag">{t}</span></li>)}
+      </ul>
+    </summary>
+
+    <div class="card-expand-body">
+      <p>{summary}</p>
+      <p>{details}</p>
+    </div>
+  </details>
+</li>

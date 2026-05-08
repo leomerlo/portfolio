@@ -1,0 +1,19 @@
+{
+  "name": "leandro-merlo-portfolio",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "@astrojs/tailwind": "^5.1.2",
+    "@fontsource-variable/inter": "^5.1.1",
+    "astro": "^4.16.18",
+    "tailwindcss": "^3.4.16"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.2"
+  }
+}
