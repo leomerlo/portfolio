@@ -570,6 +570,11 @@ html.light .icon-sun  { display: block; }
 /* ─── Responsive ─── */
 
 @media (max-width: 1024px) {
+  .contact-intro,
+  .contact-links {
+    max-width: 100%;
+  }
+
   .layout {
     flex-direction: column;
     padding: 0 1.5rem;
