@@ -6,9 +6,10 @@ interface Props {
   details: string;
   metric: string;
   tags: string[];
+  url?: string;
 }
 
-const { title, description, summary, details, metric, tags } = Astro.props;
+const { title, description, summary, details, metric, tags, url } = Astro.props;
 ---
 
 <li>
@@ -32,6 +33,11 @@ const { title, description, summary, details, metric, tags } = Astro.props;
     <div class="card-expand-body">
       <p>{summary}</p>
       <p>{details}</p>
+      {url && (
+        <a href={url} target="_blank" rel="noopener noreferrer" class="card-link">
+          View on GitHub →
+        </a>
+      )}
     </div>
   </details>
 </li>
