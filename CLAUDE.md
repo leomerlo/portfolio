@@ -52,6 +52,22 @@ All UI strings used in the site. Source of truth for the i18n toggle (EN / ES).
 | Key | EN | ES |
 |---|---|---|
 | work.heading | Work | Trabajo |
+| work.experience.heading | Experience | Experiencia |
+| work.projects.heading | Selected Projects | Proyectos Destacados |
+
+### Experience
+
+Note: the Work section renders Selected Projects first, then Experience below it. Company, role, and period are not translated (kept identical in both languages). Only the summary is localized. `experience1`–`experience2` render as full two-line entries (role/company + summary paragraph); `experience3`–`experience7` render as condensed one-line entries (earlier/pre-Perceptyx jobs, from an older CV).
+
+| Key | EN | ES |
+|---|---|---|
+| experience1.summary | Led the Design System to 80%+ adoption across product teams, drove WCAG accessibility initiatives that cut review cycles by 30%, and founded the cross-team Frontend Guild. | Lideré el Design System hasta el 80%+ de adopción entre equipos de producto, impulsé iniciativas de accesibilidad (WCAG) que redujeron los ciclos de revisión en un 30%, y fundé el Frontend Guild entre equipos. |
+| experience2.summary | Built client-facing interfaces for Kimberly-Clark and Dyson on SharePoint, end-to-end from wireframes to production, in cross-functional US/Argentina teams. | Desarrollé interfaces client-facing para Kimberly-Clark y Dyson sobre SharePoint, end-to-end desde wireframes hasta producción, en equipos cross-funcionales US/Argentina. |
+| experience3.summary (CrossMedia, 2014) | Responsive HTML builds for Virgin Mobile, Bimbo, and Banamex. | Maquetado HTML responsive para Virgin Mobile, Bimbo y Banamex. |
+| experience4.summary (Estudio Himalaya, Freelance) | Independent frontend and WordPress projects. | Proyectos independientes de frontend y WordPress. |
+| experience5.summary (Paginar.net, 2010–2013) | Drupal, Joomla, and WordPress sites for ICBC, SC Johnson, and Banghó. | Sitios en Drupal, Joomla y WordPress para ICBC, SC Johnson y Banghó. |
+| experience6.summary (Insilence, 2009–2010) | Web security tooling and pentesting utilities. | Herramientas de seguridad web y utilidades de pentesting. |
+| experience7.summary (Baires Group, 2008–2009) | Loyalty-program sites and newsletter/Flash design. | Sitios de programas de fidelización y diseño de newsletters/Flash. |
 
 ### Project 1 — Design System at Scale
 
