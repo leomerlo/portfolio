@@ -27,6 +27,16 @@ export const ui = {
 
     'work.heading': 'Work',
 
+    'work.experience.heading': 'Experience',
+    'experience1.summary': 'Led the Design System to 80%+ adoption across product teams, drove WCAG accessibility initiatives that cut review cycles by 30%, and founded the cross-team Frontend Guild.',
+    'experience2.summary': 'Built client-facing interfaces for Kimberly-Clark and Dyson on SharePoint, end-to-end from wireframes to production, in cross-functional US/Argentina teams.',
+    'experience3.summary': 'Responsive HTML builds for Virgin Mobile, Bimbo, and Banamex.',
+    'experience4.summary': 'Independent frontend and WordPress projects.',
+    'experience5.summary': 'Drupal, Joomla, and WordPress sites for ICBC, SC Johnson, and Banghó.',
+    'experience6.summary': 'Web security tooling and pentesting utilities.',
+    'experience7.summary': 'Loyalty-program sites and newsletter/Flash design.',
+    'work.projects.heading': 'Selected Projects',
+
     'project1.title': 'Vision Design System',
     'project1.description': "End-to-end design system for Perceptyx's employee experience platform, from token architecture to component library.",
     'project1.metric': 'Design System',
@@ -76,6 +86,16 @@ export const ui = {
     'meta.location.value': 'Buenos Aires, Argentina, Tierra, Sistema Solar, Vía Láctea',
 
     'work.heading': 'Trabajo',
+
+    'work.experience.heading': 'Experiencia',
+    'experience1.summary': 'Lideré el Design System hasta el 80%+ de adopción entre equipos de producto, impulsé iniciativas de accesibilidad (WCAG) que redujeron los ciclos de revisión en un 30%, y fundé el Frontend Guild entre equipos.',
+    'experience2.summary': 'Desarrollé interfaces client-facing para Kimberly-Clark y Dyson sobre SharePoint, end-to-end desde wireframes hasta producción, en equipos cross-funcionales US/Argentina.',
+    'experience3.summary': 'Maquetado HTML responsive para Virgin Mobile, Bimbo y Banamex.',
+    'experience4.summary': 'Proyectos independientes de frontend y WordPress.',
+    'experience5.summary': 'Sitios en Drupal, Joomla y WordPress para ICBC, SC Johnson y Banghó.',
+    'experience6.summary': 'Herramientas de seguridad web y utilidades de pentesting.',
+    'experience7.summary': 'Sitios de programas de fidelización y diseño de newsletters/Flash.',
+    'work.projects.heading': 'Proyectos Destacados',
 
     'project1.title': 'Vision Design System',
     'project1.description': 'Sistema de diseño end-to-end para la plataforma de experiencia del empleado de Perceptyx, desde la arquitectura de tokens hasta la librería de componentes.',

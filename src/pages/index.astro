@@ -2,6 +2,61 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 
+const experience = [
+  {
+    i18nKey: 'experience1',
+    company: 'Perceptyx',
+    role: 'Sr. Frontend Developer',
+    period: '2017 — 2025',
+    summary: 'Led the Design System to 80%+ adoption across product teams, drove WCAG accessibility initiatives that cut review cycles by 30%, and founded the cross-team Frontend Guild.',
+  },
+  {
+    i18nKey: 'experience2',
+    company: 'Accenture',
+    role: 'Sr. Frontend Developer',
+    period: '2014 — 2017',
+    summary: 'Built client-facing interfaces for Kimberly-Clark and Dyson on SharePoint, end-to-end from wireframes to production, in cross-functional US/Argentina teams.',
+  },
+];
+
+const earlierExperience = [
+  {
+    i18nKey: 'experience3',
+    company: 'CrossMedia',
+    role: 'Frontend Developer',
+    period: '2014',
+    summary: 'Responsive HTML builds for Virgin Mobile, Bimbo, and Banamex.',
+  },
+  {
+    i18nKey: 'experience4',
+    company: 'Estudio Himalaya',
+    role: 'Freelance Frontend Developer',
+    period: 'Freelance',
+    summary: 'Independent frontend and WordPress projects.',
+  },
+  {
+    i18nKey: 'experience5',
+    company: 'Paginar.net',
+    role: 'Frontend Developer',
+    period: '2010 — 2013',
+    summary: 'Drupal, Joomla, and WordPress sites for ICBC, SC Johnson, and Banghó.',
+  },
+  {
+    i18nKey: 'experience6',
+    company: 'Insilence',
+    role: 'PHP Developer',
+    period: '2009 — 2010',
+    summary: 'Web security tooling and pentesting utilities.',
+  },
+  {
+    i18nKey: 'experience7',
+    company: 'Baires Group',
+    role: 'Web Designer',
+    period: '2008 — 2009',
+    summary: 'Loyalty-program sites and newsletter/Flash design.',
+  },
+];
+
 const projects = [
   {
     i18nKey: 'project1',
@@ -163,9 +218,37 @@ const projects = [
           <h2 id="work-heading" data-i18n="work.heading">Work</h2>
         </div>
 
+        <h3 class="subsection-heading" data-i18n="work.projects.heading">Selected Projects</h3>
         <ul class="project-list" aria-label="Selected projects">
           {projects.map((p) => <ProjectCard {...p} />)}
         </ul>
+
+        <div class="experience-block">
+          <h3 class="subsection-heading" data-i18n="work.experience.heading">Experience</h3>
+          <ul class="experience-list" aria-label="Work experience">
+            {experience.map((e) => (
+              <li class="experience-item">
+                <div class="experience-period">{e.period}</div>
+                <div class="experience-main">
+                  <p class="experience-role">
+                    {e.role} <span class="experience-company">· {e.company}</span>
+                  </p>
+                  <p class="experience-summary" data-i18n={`${e.i18nKey}.summary`}>{e.summary}</p>
+                </div>
+              </li>
+            ))}
+            {earlierExperience.map((e) => (
+              <li class="experience-item experience-item-simple">
+                <div class="experience-period">{e.period}</div>
+                <p class="experience-line">
+                  <span class="experience-role-inline">{e.role} <span class="experience-company">· {e.company}</span></span>
+                  {' — '}
+                  <span data-i18n={`${e.i18nKey}.summary`}>{e.summary}</span>
+                </p>
+              </li>
+            ))}
+          </ul>
+        </div>
       </section>
 
       <!-- ── Contact ── -->
