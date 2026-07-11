@@ -1,0 +1,37 @@
+---
+import Vision from './projects/Vision.astro'
+import Turni from './projects/Turni.astro'
+import KimberlyClark from './projects/KimberlyClark.astro'
+import SurveyBuilder from './projects/SurveyBuilder.astro'
+
+interface Props {
+  i18nKey: string;
+  title: string;
+  description: string;
+  summary: string;
+  details: string;
+  metric: string;
+  tags: string[];
+  url?: string;
+}
+
+const { i18nKey } = Astro.props;
+---
+
+<div>
+  {i18nKey === 'project1' && (
+    <Vision {...Astro.props} />
+  )}
+
+  {i18nKey === 'project2' && (
+    <Turni {...Astro.props} />
+  )}
+
+  {i18nKey === 'project3' && (
+    <KimberlyClark {...Astro.props} />
+  )}
+
+  {i18nKey === 'project4' && (
+    <SurveyBuilder {...Astro.props} />
+  )}
+</div>
