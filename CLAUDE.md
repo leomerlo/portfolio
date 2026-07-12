@@ -26,6 +26,24 @@ All UI strings used in the site. Source of truth for the i18n toggle (EN / ES).
 | nav.about | About | Sobre mí |
 | nav.work | Work | Trabajo |
 | nav.contact | Contact | Contacto |
+| nav.features | Features | Secciones |
+| nav.reviews | Reviews | Reseñas |
+| nav.linkedin | LinkedIn | LinkedIn |
+| nav.other-works | Other works | Otros trabajos |
+| nav.contact-me | Contact Me | Contactame |
+
+---
+
+## Hero (index)
+
+| Key | EN | ES |
+|---|---|---|
+| hero.title | Fullstack dev Frontend focus | Dev Fullstack con foco en Frontend |
+| hero.care | Caring for Performance & User Experiences | Cuido la performance y la experiencia de usuario |
+| hero.thinker | Proactive thinker | Pensamiento proactivo |
+| hero.thinker.detail | Passionate for the craft, always thinking on the next step | Apasionado por el oficio, siempre pensando en el próximo paso |
+| hero.years.detail | Years of experience that makes a difference | Años de experiencia que hacen la diferencia |
+| hero.learn-more | Learn More | Ver más |
 
 ---
 
@@ -54,6 +72,60 @@ All UI strings used in the site. Source of truth for the i18n toggle (EN / ES).
 | work.heading | Work | Trabajo |
 | work.experience.heading | Experience | Experiencia |
 | work.projects.heading | Selected Projects | Proyectos Destacados |
+| work.projects.pill | Projects | Proyectos |
+| work.flavors.heading | NOW with MORE flavors | AHORA con MÁS sabores |
+| work.flavors.frontend.kicker | Frontend experience | Experiencia Frontend |
+| work.flavors.frontend.title | Design systems & frontend architecture | Design systems y arquitectura frontend |
+| work.flavors.a11y.title | Accessibility & Performance | Accesibilidad y Performance |
+| work.flavors.backend.kicker | Backend experience | Experiencia Backend |
+| work.flavors.backend.title | Node, SQL & API | Node, SQL y APIs |
+| work.my-work | My Work | Mi trabajo |
+| project.view-more | View More | Ver más |
+
+### Carousel (a11y labels)
+
+| Key | EN | ES |
+|---|---|---|
+| carousel.label | Selected projects | Proyectos destacados |
+| carousel.prev | Previous project | Proyecto anterior |
+| carousel.next | Next project | Proyecto siguiente |
+
+### Project card blocks
+
+| Key | EN | ES |
+|---|---|---|
+| project1.block.adoption | Dev team adoption | Adopción del equipo dev |
+| project1.block.speed.title | Speed & Quality | Velocidad y Calidad |
+| project1.block.speed.detail | ~30% less QA & Accessibility review cycles | ~30% menos ciclos de revisión de QA y Accesibilidad |
+| project1.block.components | +40 components | +40 componentes |
+| project1.block.release | Treat the internal library as a product. By-weekly release, Semantic versioning | Tratar la librería interna como un producto. Releases quincenales, versionado semántico |
+| project1.block.crossteam | Work closely on a cross-team effort | Trabajo cercano entre equipos |
+| project2.block.ai.title | AI Assistance speed | Velocidad con asistencia de IA |
+| project2.block.claude | Claude Code | Claude Code |
+| project2.block.spec | Spec driven development | Desarrollo spec-driven |
+| project2.block.fullstack | Fullstack workflow | Workflow fullstack |
+| project3.block.award | Accenture Award Winner | Ganador de premio Accenture |
+
+### Project detail pages (`/projects/[slug]`)
+
+Slugs: `vision-design-system`, `turnisports`, `kimberly-clark`. Content adapted from the STAR story bank in `../career-ops/interview-prep/story-bank.md` (Vision → "Perceptyx Design System — 80%+ Adoption"; TurniSports → "Cursor + Claude Code in Daily Workflow"; Kimberly-Clark → "Accenture LATAM/US Bridge").
+
+| Key | EN | ES |
+|---|---|---|
+| detail.back | Back to home | Volver al inicio |
+| detail.situation | Situation | Situación |
+| detail.task | Task | Tarea |
+| detail.action | Action | Acción |
+| detail.result | Result | Resultado |
+| detail.reflection | Reflection | Reflexión |
+| detail.github | View on GitHub | Ver en GitHub |
+| project{1,2,3}.star.situation | STAR: situation paragraph… | ES translation… |
+| project{1,2,3}.star.task | STAR: task paragraph… | ES translation… |
+| project{1,2,3}.star.action | STAR: action paragraph… | ES translation… |
+| project{1,2,3}.star.result | STAR: result paragraph… | ES translation… |
+| project{1,2,3}.star.reflection | STAR: reflection paragraph… | ES translation… |
+
+Full STAR copy lives in `src/i18n/ui.ts` (keys `project1.star.*`, `project2.star.*`, `project3.star.*`).
 
 ### Experience
 
@@ -107,3 +179,13 @@ Note: the Work section renders Selected Projects first, then Experience below it
 |---|---|---|
 | contact.heading | Contact | Contacto |
 | contact.intro | If you're building something where frontend architecture matters, I'd like to hear about it. | Si estás construyendo algo donde la arquitectura frontend importa, me gustaría escucharlo. |
+| contact.title | Let's keep in touch. | Sigamos en contacto. |
+| contact.now | Contact Now | Contactame |
+
+---
+
+## Footer
+
+| Key | EN | ES |
+|---|---|---|
+| footer.tagline | Fullstack developer with a focus on experience and accessibility. | Desarrollador fullstack con foco en experiencia y accesibilidad. |

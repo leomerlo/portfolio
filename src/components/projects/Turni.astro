@@ -2,6 +2,7 @@
 import { ArrowUpRight, BrainCog } from 'lucide-astro';
 interface Props {
   i18nKey: string;
+  slug: string;
   title: string;
   description: string;
   summary: string;
@@ -11,29 +12,33 @@ interface Props {
   url?: string;
 }
 
-const { i18nKey, title, description, summary, details, metric, tags, url } = Astro.props;
+const { i18nKey, slug, title, description, summary, details, metric, tags, url } = Astro.props;
+const detailUrl = `/projects/${slug}`;
 ---
 
 <div class="grid grid-cols-3 py-6">
   <div class="flex flex-col justify-between">
     <div class="flex flex-col gap-2">
-      <h3 class="text-4xl">{title}</h3>
-      <p class="text-sm my-6">{description}</p>
+      <h3 class="text-4xl"><a href={detailUrl} class="hover:underline" data-i18n={`${i18nKey}.title`}>{title}</a></h3>
+      <p class="text-sm my-6" data-i18n={`${i18nKey}.description`}>{description}</p>
     </div>
-    <div class="flex gap-2 flex-wrap">
-      {tags.map((tag, index) => <span class={`rounded-full px-4 py-1 text-xs ${index % 2 === 0 ? 'border border-black' : 'bg-black text-white'}`}>{tag}</span>)}
+    <div class="flex flex-col gap-6">
+      <div class="flex gap-2 flex-wrap">
+        {tags.map((tag, index) => <span class={`rounded-full px-4 py-1 text-xs ${index % 2 === 0 ? 'border border-black' : 'bg-black text-white'}`}>{tag}</span>)}
+      </div>
+      <a href={detailUrl} class="border-b border-black uppercase text-xs self-start flex items-center gap-1">
+        <span data-i18n="project.view-more">View More</span> <ArrowUpRight class="w-2 h-2" />
+      </a>
     </div>
   </div>
   <div class="grid grid-cols-3 gap-6 col-span-2">
     <div class="relative h-full z-10">
-      <div class="bg-brand-purple w-[350px] absolute h-full">
-        asd
-      </div>
+      <div class="color-block bg-brand-purple w-[350px] absolute h-full"></div>
     </div>
     <div class="flex flex-col gap-2 z-20 justify-between">
-      <div class="bg-brand-yellow flex flex-col p-6 h-[180px]">
+      <div class="color-block bg-brand-yellow flex flex-col p-6 h-[180px]">
         <div class="flex justify-between items-center">
-          <span class="text-lg font-bold">AI Assistance speed</span>
+          <span class="text-lg font-bold" data-i18n={`${i18nKey}.block.ai.title`}>AI Assistance speed</span>
           <ArrowUpRight class="w-4 h-4" />
         </div>
         <div class="flex justify-between items-end flex-1">
@@ -44,13 +49,14 @@ const { i18nKey, title, description, summary, details, metric, tags, url } = Ast
       </div>
       <div class="flex flex-col items-end gap-4">
         <div class="w-2/3">
-          <span class="rounded-full px-4 py-1 text-xs border border-black">Claude code</span>
-        </div> 
-        <div class="w-2/3"><span class="text-xs">Spec driven development</span></div>
+          <span class="rounded-full px-4 py-1 text-xs border border-black" data-i18n={`${i18nKey}.block.claude`}>Claude Code</span>
+        </div>
+        <div class="w-2/3"><span class="text-xs" data-i18n={`${i18nKey}.block.spec`}>Spec driven development</span></div>
       </div>
     </div>
     <div class="flex flex-col items-center justify-space">
-      <span class="text-3xl text-center my-6 mx-8">Fullstack workflow</span>
-      <div class="rounded-full bg-brand-lavender w-12 h-12 flex items-center justify-center"><BrainCog class="w-6 h-6" /></div>
+      <span class="text-3xl text-center my-6 mx-8" data-i18n={`${i18nKey}.block.fullstack`}>Fullstack workflow</span>
+      <div class="color-block rounded-full bg-brand-lavender w-12 h-12 flex items-center justify-center"><BrainCog class="w-6 h-6" /></div>
     </div>
+  </div>
 </div>

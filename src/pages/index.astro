@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import ProjectBlock from '../components/ProjectBlock.astro';
+import ProjectCarousel from '../components/ProjectCarousel.astro';
 import { Brain, Heart, Star, ArrowRight, ArrowUpRight, Puzzle, Rabbit, Sticker } from 'lucide-astro';
 
 const experience = [
@@ -58,36 +58,6 @@ const earlierExperience = [
   },
 ];
 
-const projects = [
-  {
-    i18nKey: 'project1',
-    title: 'Vision Design System',
-    description: 'End-to-end design system for Perceptyx\'s employee experience platform, from token architecture to component library.',
-    metric: 'Design System',
-    summary: 'Perceptyx needed a single source of truth that could span multiple product surfaces without fracturing. Vision was the answer: a token-first, framework-agnostic system where every decision — color, spacing, motion — was named for its intent, not its value.',
-    details: 'The core constraint was framework agnosticism: components had to work equally well in React, Vue, and plain HTML. Tokens lived at the semantic layer — shipped as CSS custom properties — so any consumer could adopt them regardless of stack. Storybook served as the shared contract between design and engineering, and versioned npm packages kept teams on a predictable upgrade path.',
-    tags: ['React', 'Vue', 'Web Components', 'Design Tokens', 'Storybook', 'SCSS'],
-  },
-  {
-    i18nKey: 'project2',
-    title: 'TurniSports — Online Schedule & Customer CMS',
-    description: 'Booking and customer management platform built for individual sports coaches.',
-    metric: 'Open Source',
-    summary: 'TurniSports started from a real pain point: individual coaches managing their schedules through WhatsApp groups and spreadsheets. The goal was a product that felt simple to the coach but handled the full complexity of recurring bookings, availability, and customer management.',
-    details: 'Built as a full-stack application with a React frontend and a CMS that let coaches manage their availability, sessions, and client records without any technical knowledge. Real-time availability, booking confirmation flows, and a clean public-facing scheduling UI for their clients.',
-    tags: ['React', 'TypeScript', 'Node.js', 'CMS', 'Full-stack'],
-    url: 'https://github.com/Digital-Craft-AR/turni-sports',
-  },
-  {
-    i18nKey: 'project3',
-    title: 'Kimberly-Clark — Enterprise Frontend (via Accenture)',
-    description: 'Frontend development for Kimberly-Clark\'s internal platforms as part of an Accenture engagement.',
-    metric: 'Enterprise',
-    summary: 'Embedded within an Accenture team delivering frontend solutions for Kimberly-Clark\'s internal tools and consumer-facing platforms. The challenge was navigating enterprise constraints — legacy integrations, multi-team coordination, strict delivery timelines — while keeping the frontend quality high.',
-    details: 'Led component standardization efforts across the engagement, established coding guidelines adopted by the broader team, and worked closely with UX and backend engineers to ship features that held up at scale. The experience sharpened my ability to operate in large, distributed delivery contexts.',
-    tags: ['React', 'TypeScript', 'Enterprise', 'Accenture', 'Component Architecture'],
-  },
-];
 ---
 
 <BaseLayout>
@@ -122,30 +92,30 @@ const projects = [
       <!-- ── About ── -->
       <section id="about" class="section" aria-labelledby="about-heading">
         <div>
-          <h1 class="text-6xl bold max-w-2xl mx-auto text-center my-12">Fullstack dev Frontend focus</h1>
+          <h1 class="text-6xl bold max-w-2xl mx-auto text-center my-12" data-i18n="hero.title">Fullstack dev Frontend focus</h1>
           <div class="grid grid-cols-3">
             <div class="max-w-48 flex flex-col gap-16">
               <div class="flex flex-col gap-4 justify-center items-center">
                 <Heart class="w-12 h-12" />
-                <span class="text-lg block text-center">Caring for Performance & User Experiences</span>
+                <span class="text-lg block text-center" data-i18n="hero.care">Caring for Performance & User Experiences</span>
               </div>
               <div class="flex flex-col gap-4 justify-center items-center">
                 <Brain class="w-12 h-12" />
-                <span class="text-lg block text-center">Proactive thinker</span>
-                <span class="text-sm block text-center">Passionate for the craft, always thinking on the next step</span>
+                <span class="text-lg block text-center" data-i18n="hero.thinker">Proactive thinker</span>
+                <span class="text-sm block text-center" data-i18n="hero.thinker.detail">Passionate for the craft, always thinking on the next step</span>
               </div>
             </div>
             <div class="max-w-xl margin-auto relative">
-              <div class="w-[260px] h-[420px] overflow-hidden bg-[url(/hero_yellow.png)] bg-cover bg-center absolute -right-10 z-10"></div>
-              <div class="w-[260px] h-[420px] overflow-hidden bg-[url(/hero_pink.png)] bg-cover bg-center relative z-20 top-10"></div>
+              <div data-parallax="0.1" class="w-[260px] h-[420px] overflow-hidden bg-[url(/hero_yellow.png)] bg-cover bg-center absolute -right-10 z-10 will-change-transform"></div>
+              <div data-parallax="-0.08" class="w-[260px] h-[420px] overflow-hidden bg-[url(/hero_pink.png)] bg-cover bg-center relative z-20 top-10 will-change-transform"></div>
             </div>
             <div class="max-w-48 flex flex-col gap-16 ml-auto">
               <div class="flex flex-col gap-4 justify-center items-center">
                 <Star class="w-12 h-12" />
                 <span class="text-3xl block text-center">15+</span>
-                <span class="text-sm block text-center">Years of experience that makes a difference</span>
+                <span class="text-sm block text-center" data-i18n="hero.years.detail">Years of experience that makes a difference</span>
                 <a href="#features" class="flex gap-1 border-b border-black items-center text-sm">
-                  Learn More <ArrowUpRight class="w-4 h-4" />
+                  <span data-i18n="hero.learn-more">Learn More</span> <ArrowUpRight class="w-4 h-4" />
                 </a>
               </div>
             </div>
@@ -156,68 +126,61 @@ const projects = [
       <!-- ── Work ── -->
       <section id="features" class="section" aria-labelledby="features-heading">
         <div class="flex flex-col gap-12">
-        <h2 id="work-heading" class="text-4xl font-bold">NOW with <span class="font-bold">MORE</span> flavors</h2>
+        <h2 id="work-heading" class="text-4xl font-bold" data-i18n="work.flavors.heading">NOW with MORE flavors</h2>
 
         <div class="grid grid-cols-3 gap-8">
           <div class="bg-brand-yellow flex justify-between items-center p-4 bg-[url(/flavor_frontend.png)] bg-right-top bg-cover">
             <div class="flex flex-col h-full justify-between">
               <div class="flex flex-col gap-1">
-                <span class="text-md">Frontend experience</span>
-                <span class="text-xl font-bold">Design systems & </br> frontend architecture</span>
+                <span class="text-md" data-i18n="work.flavors.frontend.kicker">Frontend experience</span>
+                <span class="text-xl font-bold" data-i18n="work.flavors.frontend.title">Design systems & frontend architecture</span>
               </div>
-              <a href="#" class="border-black flex items-center uppercase text-sm font-bold tracking-wider">My Work <ArrowRight class="w-2 h-2" /></a>
+              <a href="#" class="border-black flex items-center uppercase text-sm font-bold tracking-wider"><span data-i18n="work.my-work">My Work</span> <ArrowRight class="w-2 h-2" /></a>
             </div>
           </div>
           <div class="bg-brand-pink text-white flex justify-between items-center p-4 bg-[url(/flavor_performance.png)] bg-right-bottom bg-contain bg-no-repeat">
             <div class="flex flex-col h-full justify-between">
               <div class="flex flex-col gap-1 h-40">
-                <span class="text-xl font-bold">Accessibility & </br> Performance</span>
+                <span class="text-xl font-bold" data-i18n="work.flavors.a11y.title">Accessibility & Performance</span>
               </div>
-              <a href="" class=" border-black flex items-center uppercase text-sm font-bold tracking-wider">My Work <ArrowRight class="w-2 h-2" /></a>
+              <a href="" class=" border-black flex items-center uppercase text-sm font-bold tracking-wider"><span data-i18n="work.my-work">My Work</span> <ArrowRight class="w-2 h-2" /></a>
             </div>
           </div>
           <div class="bg-brand-purple text-white flex justify-between items-center p-4 flex-row-reverse bg-[url(/flavor_backend.png)] bg-left-top bg-cover">
             <div class="flex flex-col h-full justify-between text-right">
               <div class="flex flex-col gap-1">
-                <span class="text-md">Backend experience</span>
-                <span class="text-xl font-bold">Node, SQL & API</span>
+                <span class="text-md" data-i18n="work.flavors.backend.kicker">Backend experience</span>
+                <span class="text-xl font-bold" data-i18n="work.flavors.backend.title">Node, SQL & API</span>
               </div>
-              <a href="" class=" border-black flex items-center justify-end uppercase text-sm font-bold tracking-wider">My Work <ArrowRight class="w-2 h-2" /></a>
+              <a href="" class=" border-black flex items-center justify-end uppercase text-sm font-bold tracking-wider"><span data-i18n="work.my-work">My Work</span> <ArrowRight class="w-2 h-2" /></a>
             </div>
           </div>
         </div>
 
-        <section id="projects" class="section" aria-labelledby="projects-heading">
-          <h2 class="border border-black rounded-full text-sm inline py-1 px-4">Projects</h2>
-          <div>
-            {projects.map((p) => <ProjectBlock {...p} />)}
-          </div>
+        <section id="projects" class="section flex flex-col gap-6" aria-labelledby="projects-heading">
+          <h2 id="projects-heading" class="border border-black rounded-full text-sm inline self-start py-1 px-4" data-i18n="work.projects.pill">Projects</h2>
+          <ProjectCarousel />
         </section>
 
-        <h3 class="subsection-heading" data-i18n="work.projects.heading">Selected Projects</h3>
-        <ul class="project-list" aria-label="Selected projects">
-          
-        </ul>
-
-        <div class="experience-block">
-          <h3 class="subsection-heading" data-i18n="work.experience.heading">Experience</h3>
-          <ul class="experience-list" aria-label="Work experience">
+        <div class="flex flex-col gap-8">
+          <h3 class="border border-black rounded-full text-sm inline self-start py-1 px-4" data-i18n="work.experience.heading">Experience</h3>
+          <ul class="flex flex-col" aria-label="Work experience">
             {experience.map((e) => (
-              <li class="experience-item">
-                <div class="experience-period">{e.period}</div>
-                <div class="experience-main">
-                  <p class="experience-role">
-                    {e.role} <span class="experience-company">· {e.company}</span>
+              <li class="grid grid-cols-[8rem_1fr] gap-6 py-6 border-b border-gray-200">
+                <div class="text-sm text-gray-500 pt-1">{e.period}</div>
+                <div class="flex flex-col gap-2">
+                  <p class="text-xl font-bold">
+                    {e.role} <span class="font-normal text-gray-500">· {e.company}</span>
                   </p>
-                  <p class="experience-summary" data-i18n={`${e.i18nKey}.summary`}>{e.summary}</p>
+                  <p class="text-sm max-w-2xl" data-i18n={`${e.i18nKey}.summary`}>{e.summary}</p>
                 </div>
               </li>
             ))}
             {earlierExperience.map((e) => (
-              <li class="experience-item experience-item-simple">
-                <div class="experience-period">{e.period}</div>
-                <p class="experience-line">
-                  <span class="experience-role-inline">{e.role} <span class="experience-company">· {e.company}</span></span>
+              <li class="grid grid-cols-[8rem_1fr] gap-6 py-3 border-b border-gray-200 text-sm items-baseline">
+                <div class="text-gray-500">{e.period}</div>
+                <p>
+                  <span class="font-bold">{e.role}</span> <span class="text-gray-500">· {e.company}</span>
                   {' — '}
                   <span data-i18n={`${e.i18nKey}.summary`}>{e.summary}</span>
                 </p>
@@ -231,14 +194,14 @@ const projects = [
       <section id="contact" class="section" aria-labelledby="contact-heading">
         <div class="grid grid-cols-2 items-center">
           <div class="flex flex-col gap-8">
-            <h2 id="work-heading" class="text-5xl font-bold">Let's keep</br> in touch.</h2>
+            <h2 id="contact-heading" class="text-5xl font-bold" data-i18n="contact.title">Let's keep in touch.</h2>
             <div class="flex gap-8 items-center w-2/3">
               <img src="./contact-photo.png" class="w-20" />
-              <span class="text-sm">If you're building something where frontend architecture matters, I'd like to hear about it.</span>
+              <span class="text-sm" data-i18n="contact.intro">If you're building something where frontend architecture matters, I'd like to hear about it.</span>
             </div>
             <div class="flex justify-between items-center">
               <button class="rounded-lg py-3 px-4 bg-black text-white flex items-center gap-4 text-sm">
-                Contact Now
+                <span data-i18n="contact.now">Contact Now</span>
                 <ArrowUpRight class="w-4 h-4" />
               </button>
             </div>
@@ -279,7 +242,7 @@ const projects = [
       <div class="grid grid-cols-2">
         <div>
           <h1 class="text-4xl">Leo Merlo</h1>
-          <span class="text-xs">Fullstack developer with a focus on experience and accessibility.</span>
+          <span class="text-xs" data-i18n="footer.tagline">Fullstack developer with a focus on experience and accessibility.</span>
         </div>
         <div class="grid grid-cols-4">
           <div>
@@ -299,3 +262,28 @@ const projects = [
     </div>
   </footer>
 </BaseLayout>
+
+<script>
+  const parallaxEls = document.querySelectorAll<HTMLElement>('[data-parallax]');
+
+  if (parallaxEls.length && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    let ticking = false;
+
+    const update = () => {
+      const y = window.scrollY;
+      parallaxEls.forEach((el) => {
+        el.style.transform = `translateY(${y * parseFloat(el.dataset.parallax || '0')}px)`;
+      });
+      ticking = false;
+    };
+
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(update);
+      }
+    }, { passive: true });
+
+    update();
+  }
+</script>

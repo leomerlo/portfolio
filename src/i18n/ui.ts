@@ -57,6 +57,78 @@ export const ui = {
 
     'contact.heading': 'Contact',
     'contact.intro': "If you're building something where frontend architecture matters, I'd like to hear about it.",
+    'contact.title': "Let's keep in touch.",
+    'contact.now': 'Contact Now',
+
+    'nav.features': 'Features',
+    'nav.reviews': 'Reviews',
+    'nav.linkedin': 'LinkedIn',
+    'nav.other-works': 'Other works',
+    'nav.contact-me': 'Contact Me',
+
+    'hero.title': 'Fullstack dev Frontend focus',
+    'hero.care': 'Caring for Performance & User Experiences',
+    'hero.thinker': 'Proactive thinker',
+    'hero.thinker.detail': 'Passionate for the craft, always thinking on the next step',
+    'hero.years.detail': 'Years of experience that makes a difference',
+    'hero.learn-more': 'Learn More',
+
+    'work.flavors.heading': 'NOW with MORE flavors',
+    'work.flavors.frontend.kicker': 'Frontend experience',
+    'work.flavors.frontend.title': 'Design systems & frontend architecture',
+    'work.flavors.a11y.title': 'Accessibility & Performance',
+    'work.flavors.backend.kicker': 'Backend experience',
+    'work.flavors.backend.title': 'Node, SQL & API',
+    'work.my-work': 'My Work',
+    'work.projects.pill': 'Projects',
+
+    'project.view-more': 'View More',
+
+    'project1.block.adoption': 'Dev team adoption',
+    'project1.block.speed.title': 'Speed & Quality',
+    'project1.block.speed.detail': '~30% less QA & Accessibility review cycles',
+    'project1.block.components': '+40 components',
+    'project1.block.release': 'Treat the internal library as a product. By-weekly release, Semantic versioning',
+    'project1.block.crossteam': 'Work closely on a cross-team effort',
+
+    'project2.block.ai.title': 'AI Assistance speed',
+    'project2.block.claude': 'Claude Code',
+    'project2.block.spec': 'Spec driven development',
+    'project2.block.fullstack': 'Fullstack workflow',
+
+    'project3.block.award': 'Accenture Award Winner',
+
+    'carousel.label': 'Selected projects',
+    'carousel.prev': 'Previous project',
+    'carousel.next': 'Next project',
+
+    'detail.back': 'Back to home',
+    'detail.situation': 'Situation',
+    'detail.task': 'Task',
+    'detail.action': 'Action',
+    'detail.result': 'Result',
+    'detail.reflection': 'Reflection',
+    'detail.github': 'View on GitHub',
+
+    'project1.star.situation': 'UI was inconsistent across 6 product teams at Perceptyx. No shared components, no design tokens — every team reinventing the same patterns.',
+    'project1.star.task': 'Lead the creation of a company-wide Design System that teams would actually use.',
+    'project1.star.action': 'Built 40+ components using Vue.js + TypeScript, with design tokens as the source of truth. Embedded the system into team workflows by working directly with each team lead during rollout, and set up Figma-to-code alignment to reduce handoff drift.',
+    'project1.star.result': '80%+ component adoption across all product teams — the de facto standard for new features. Accessibility baked into the components also cut review cycles by 30%.',
+    'project1.star.reflection': 'Adoption is harder than building. The system succeeded because I treated it as a product — with onboarding, docs, and champions in each team — not just as a library.',
+
+    'project2.star.situation': 'Individual coaches were managing their schedules through WhatsApp groups and spreadsheets. Building the product solo, repetitive refactors and multi-file changes were eating into the time I wanted to spend on product and architecture decisions.',
+    'project2.star.task': 'Ship a full-stack booking platform as a solo developer, integrating AI tooling into the workflow without sacrificing code quality or shipping technical debt.',
+    'project2.star.action': 'Adopted a spec-driven workflow: Cursor for in-context refactors and Claude Code for multi-step tasks — test generation, migrations, scaffolding. Set guardrails: every AI-generated change goes through the same review and test pipeline as hand-written code. I drive the architectural intent; the AI accelerates the execution.',
+    'project2.star.result': 'A working full-stack product — React frontend plus a CMS coaches can use without technical knowledge — shipped solo, with real-time availability and booking confirmation flows. The AI-assisted workflow recovered meaningful time for design work and review depth.',
+    'project2.star.reflection': 'AI tools are multipliers when you have product and codebase context. Without that context, they generate technical debt faster than humans do. The skill that matters is knowing what to ask, not knowing how to prompt.',
+
+    'project3.star.situation': 'At Accenture, the US team owned specs and stakeholder relationships; the Argentina team owned implementation. Communication gaps caused rework and misaligned deliveries.',
+    'project3.star.task': 'Serve as the Argentina-side technical liaison — bridge requirements to implementation without losing context.',
+    'project3.star.action': 'Ran structured weekly syncs between both teams, translated business requirements into actionable dev tickets, and became the go-to escalation point for ambiguous specs.',
+    'project3.star.result': 'On-time delivery for Kimberly-Clark and Dyson. Promoted to Argentina referent for JavaScript/CSS standards.',
+    'project3.star.reflection': 'Ambiguity at kickoff is expensive. A longer kickoff meeting costs less than a mid-sprint course correction. I now front-load clarity deliberately.',
+
+    'footer.tagline': 'Fullstack developer with a focus on experience and accessibility.',
   },
 
   es: {
@@ -117,6 +189,78 @@ export const ui = {
 
     'contact.heading': 'Contacto',
     'contact.intro': 'Si estás construyendo algo donde la arquitectura frontend importa, me gustaría escucharlo.',
+    'contact.title': 'Sigamos en contacto.',
+    'contact.now': 'Contactame',
+
+    'nav.features': 'Secciones',
+    'nav.reviews': 'Reseñas',
+    'nav.linkedin': 'LinkedIn',
+    'nav.other-works': 'Otros trabajos',
+    'nav.contact-me': 'Contactame',
+
+    'hero.title': 'Dev Fullstack con foco en Frontend',
+    'hero.care': 'Cuido la performance y la experiencia de usuario',
+    'hero.thinker': 'Pensamiento proactivo',
+    'hero.thinker.detail': 'Apasionado por el oficio, siempre pensando en el próximo paso',
+    'hero.years.detail': 'Años de experiencia que hacen la diferencia',
+    'hero.learn-more': 'Ver más',
+
+    'work.flavors.heading': 'AHORA con MÁS sabores',
+    'work.flavors.frontend.kicker': 'Experiencia Frontend',
+    'work.flavors.frontend.title': 'Design systems y arquitectura frontend',
+    'work.flavors.a11y.title': 'Accesibilidad y Performance',
+    'work.flavors.backend.kicker': 'Experiencia Backend',
+    'work.flavors.backend.title': 'Node, SQL y APIs',
+    'work.my-work': 'Mi trabajo',
+    'work.projects.pill': 'Proyectos',
+
+    'project.view-more': 'Ver más',
+
+    'project1.block.adoption': 'Adopción del equipo dev',
+    'project1.block.speed.title': 'Velocidad y Calidad',
+    'project1.block.speed.detail': '~30% menos ciclos de revisión de QA y Accesibilidad',
+    'project1.block.components': '+40 componentes',
+    'project1.block.release': 'Tratar la librería interna como un producto. Releases quincenales, versionado semántico',
+    'project1.block.crossteam': 'Trabajo cercano entre equipos',
+
+    'project2.block.ai.title': 'Velocidad con asistencia de IA',
+    'project2.block.claude': 'Claude Code',
+    'project2.block.spec': 'Desarrollo spec-driven',
+    'project2.block.fullstack': 'Workflow fullstack',
+
+    'project3.block.award': 'Ganador de premio Accenture',
+
+    'carousel.label': 'Proyectos destacados',
+    'carousel.prev': 'Proyecto anterior',
+    'carousel.next': 'Proyecto siguiente',
+
+    'detail.back': 'Volver al inicio',
+    'detail.situation': 'Situación',
+    'detail.task': 'Tarea',
+    'detail.action': 'Acción',
+    'detail.result': 'Resultado',
+    'detail.reflection': 'Reflexión',
+    'detail.github': 'Ver en GitHub',
+
+    'project1.star.situation': 'La UI era inconsistente entre 6 equipos de producto en Perceptyx. Sin componentes compartidos ni design tokens — cada equipo reinventaba los mismos patrones.',
+    'project1.star.task': 'Liderar la creación de un Design System para toda la compañía que los equipos realmente usaran.',
+    'project1.star.action': 'Construí más de 40 componentes con Vue.js + TypeScript, con design tokens como fuente de verdad. Integré el sistema en los flujos de trabajo trabajando directamente con cada líder de equipo durante el rollout, y alineé Figma con el código para reducir el drift en el handoff.',
+    'project1.star.result': 'Más del 80% de adopción de componentes en todos los equipos de producto — el estándar de facto para nuevas funcionalidades. La accesibilidad integrada en los componentes también redujo los ciclos de revisión en un 30%.',
+    'project1.star.reflection': 'La adopción es más difícil que la construcción. El sistema funcionó porque lo traté como un producto — con onboarding, documentación y champions en cada equipo — no solo como una librería.',
+
+    'project2.star.situation': 'Los entrenadores independientes gestionaban sus agendas por grupos de WhatsApp y planillas. Construyendo el producto solo, los refactors repetitivos y los cambios multi-archivo se comían el tiempo que quería dedicar a decisiones de producto y arquitectura.',
+    'project2.star.task': 'Lanzar una plataforma de reservas full-stack como único desarrollador, integrando herramientas de IA en el workflow sin sacrificar calidad de código ni acumular deuda técnica.',
+    'project2.star.action': 'Adopté un workflow spec-driven: Cursor para refactors en contexto y Claude Code para tareas multi-paso — generación de tests, migraciones, scaffolding. Definí guardrails: todo cambio generado por IA pasa por el mismo pipeline de revisión y tests que el código escrito a mano. Yo dirijo la intención arquitectural; la IA acelera la ejecución.',
+    'project2.star.result': 'Un producto full-stack funcionando — frontend en React más un CMS que los entrenadores usan sin conocimientos técnicos — lanzado en solitario, con disponibilidad en tiempo real y flujos de confirmación de reservas. El workflow asistido por IA recuperó tiempo real para el diseño y la profundidad de las revisiones.',
+    'project2.star.reflection': 'Las herramientas de IA son multiplicadores cuando tenés contexto de producto y del código. Sin ese contexto, generan deuda técnica más rápido que un humano. La habilidad que importa es saber qué pedir, no saber cómo promptear.',
+
+    'project3.star.situation': 'En Accenture, el equipo de US era dueño de las specs y de la relación con los stakeholders; el equipo de Argentina, de la implementación. Los baches de comunicación causaban retrabajo y entregas desalineadas.',
+    'project3.star.task': 'Actuar como nexo técnico del lado argentino — conectar los requerimientos con la implementación sin perder contexto.',
+    'project3.star.action': 'Organicé syncs semanales estructuradas entre ambos equipos, traduje requerimientos de negocio en tickets accionables, y me convertí en el punto de escalación para specs ambiguas.',
+    'project3.star.result': 'Entregas a tiempo para Kimberly-Clark y Dyson. Promovido a referente de estándares de JavaScript/CSS en Argentina.',
+    'project3.star.reflection': 'La ambigüedad en el kickoff es cara. Una reunión de kickoff más larga cuesta menos que una corrección de rumbo a mitad de sprint. Ahora adelanto la claridad deliberadamente.',
+
+    'footer.tagline': 'Desarrollador fullstack con foco en experiencia y accesibilidad.',
   },
 } as const;
 

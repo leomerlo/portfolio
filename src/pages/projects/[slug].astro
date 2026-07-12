@@ -1,0 +1,83 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { ArrowLeft, ArrowUpRight } from 'lucide-astro';
+import { projects } from '../../data/projects';
+import { ui } from '../../i18n/ui';
+
+export function getStaticPaths() {
+  return projects.map((project) => ({
+    params: { slug: project.slug },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+const { i18nKey, title, description, metric, tags, url } = project;
+
+const t = (key: string) => (ui.en as Record<string, string>)[key];
+
+const starSections = [
+  { key: 'situation', heading: 'Situation' },
+  { key: 'task', heading: 'Task' },
+  { key: 'action', heading: 'Action' },
+  { key: 'result', heading: 'Result' },
+  { key: 'reflection', heading: 'Reflection' },
+];
+---
+
+<BaseLayout title={`${title} — Leo Merlo`} description={description}>
+  <div class="h-[60px] bg-gradient-to-b from-brand-pink/5 to-white w-full absolute top-0 left-0"></div>
+  <div class="max-w-screen-xl mx-auto px-6 relative pb-24">
+    <header class="flex justify-between items-center py-6 border-b border-gray-200 text-sm" aria-label="Site header">
+      <a href="/" class="flex items-center gap-2">
+        <ArrowLeft class="w-4 h-4" />
+        <span data-i18n="detail.back">Back to home</span>
+      </a>
+      <div class="text-2xl">Leo Merlo</div>
+      <a href="/#contact" class="btn rounded-lg shadow-md px-4 py-2 flex items-center gap-2 bg-white mr-24">
+        <span data-i18n="nav.contact-me">Contact Me</span>
+      </a>
+    </header>
+
+    <main id="main-content" class="flex flex-col gap-12 pt-12" tabindex="-1">
+      <div class="flex flex-col gap-6 max-w-3xl">
+        <span class="border border-black rounded-full text-sm inline self-start py-1 px-4" data-i18n={`${i18nKey}.metric`}>{metric}</span>
+        <h1 class="text-5xl font-bold" data-i18n={`${i18nKey}.title`}>{title}</h1>
+        <p class="text-lg" data-i18n={`${i18nKey}.description`}>{description}</p>
+        <div class="flex gap-2 flex-wrap">
+          {tags.map((tag, index) => (
+            <span class={`rounded-full px-4 py-1 text-xs ${index % 2 === 0 ? 'border border-black' : 'bg-black text-white'}`}>{tag}</span>
+          ))}
+        </div>
+      </div>
+
+      <div class="grid grid-cols-4 gap-3 h-4" aria-hidden="true">
+        <div class="bg-brand-yellow"></div>
+        <div class="bg-brand-pink"></div>
+        <div class="bg-brand-purple"></div>
+        <div class="bg-brand-lavender"></div>
+      </div>
+
+      <div class="flex flex-col gap-10 max-w-3xl">
+        {starSections.map(({ key, heading }) => (
+          <section aria-labelledby={`star-${key}`}>
+            <h2 id={`star-${key}`} class="border border-black rounded-full text-sm inline py-1 px-4" data-i18n={`detail.${key}`}>{heading}</h2>
+            <p class="text-sm leading-relaxed mt-4" data-i18n={`${i18nKey}.star.${key}`}>{t(`${i18nKey}.star.${key}`)}</p>
+          </section>
+        ))}
+      </div>
+
+      {url && (
+        <a
+          href={url}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="rounded-lg py-3 px-4 bg-black text-white flex items-center gap-4 text-sm self-start"
+        >
+          <span data-i18n="detail.github">View on GitHub</span>
+          <ArrowUpRight class="w-4 h-4" />
+        </a>
+      )}
+    </main>
+  </div>
+</BaseLayout>

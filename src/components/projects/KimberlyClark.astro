@@ -2,6 +2,7 @@
 import { ArrowUpRight } from 'lucide-astro';
 interface Props {
   i18nKey: string;
+  slug: string;
   title: string;
   description: string;
   summary: string;
@@ -11,28 +12,30 @@ interface Props {
   url?: string;
 }
 
-const { i18nKey, title, description, summary, details, metric, tags, url } = Astro.props;
+const { i18nKey, slug, title, description, summary, details, metric, tags, url } = Astro.props;
+const detailUrl = `/projects/${slug}`;
 ---
 
 <div class="grid grid-cols-2 py-6">
   <div class="flex flex-col justify-between w-2/3">
     <div class="flex flex-col gap-2">
-      <h3 class="text-4xl">{title}</h3>
-      <p class="text-sm my-6">{description}</p>
+      <h3 class="text-4xl"><a href={detailUrl} class="hover:underline" data-i18n={`${i18nKey}.title`}>{title}</a></h3>
+      <p class="text-sm my-6" data-i18n={`${i18nKey}.description`}>{description}</p>
     </div>
     <div class="flex gap-2 flex-wrap">
       {tags.map((tag, index) => <span class={`rounded-full px-4 py-1 text-xs ${index % 2 === 0 ? 'border border-black' : 'bg-black text-white'}`}>{tag}</span>)}
     </div>
   </div>
   <div class="grid grid-cols-3 gap-6">
-    <div class="bg-brand-yellow">
-
-    </div>
+    <div class="color-block bg-brand-yellow"></div>
     <div class="col-span-2 flex flex-col gap-2">
-      <div class="bg-brand-lavender flex-1"></div>
+      <div class="color-block bg-brand-lavender flex-1"></div>
       <div class="flex justify-between items-center p-2">
-        <span class="text-xl font-bold">Accenture Award Winner</span>
-        <a class="border-b-1 uppercase text-xs">View More <ArrowUpRight class="w-2 h-2 inline" /></a>
+        <span class="text-xl font-bold" data-i18n={`${i18nKey}.block.award`}>Accenture Award Winner</span>
+        <a href={detailUrl} class="border-b border-black uppercase text-xs flex items-center gap-1">
+          <span data-i18n="project.view-more">View More</span> <ArrowUpRight class="w-2 h-2 inline" />
+        </a>
       </div>
     </div>
+  </div>
 </div>
