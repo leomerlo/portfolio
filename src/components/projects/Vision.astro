@@ -16,10 +16,10 @@ const { i18nKey, slug, title, description, summary, details, metric, tags, url }
 const detailUrl = `/projects/${slug}`;
 ---
 
-<div class="grid grid-cols-2 py-6">
-  <div class="flex flex-col justify-between w-2/3">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-0 py-6">
+  <div class="flex flex-col justify-between gap-6 md:gap-0 w-full md:w-2/3">
     <div class="flex flex-col gap-2">
-      <h3 class="text-4xl"><a href={detailUrl} class="hover:underline" data-i18n={`${i18nKey}.title`}>{title}</a></h3>
+      <h3 class="text-3xl md:text-4xl"><a href={detailUrl} class="hover:underline" data-i18n={`${i18nKey}.title`}>{title}</a></h3>
       <p class="text-sm my-6" data-i18n={`${i18nKey}.description`}>{description}</p>
     </div>
     <div class="flex flex-col gap-6">
@@ -41,7 +41,7 @@ const detailUrl = `/projects/${slug}`;
       <span class="text-xs" data-i18n={`${i18nKey}.block.speed.detail`}>~30% less QA & Accessibility review cycles</span>
     </div>
     <div class="color-block col-span-3 bg-brand-yellow bg-[url(/vision_main.png)] bg-right-top bg-cover bg-no-repeat p-3 h-56">
-      <div class="flex flex-col h-full w-1/3 justify-self-start">
+      <div class="flex flex-col h-full w-2/3 md:w-1/3 justify-self-start">
         <div>
           <span class="rounded-full py-1 px-4 text-xs bg-white text-black" data-i18n={`${i18nKey}.block.components`}>+40 components</span>
         </div>

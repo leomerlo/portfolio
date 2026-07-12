@@ -65,6 +65,8 @@ export const ui = {
     'nav.linkedin': 'LinkedIn',
     'nav.other-works': 'Other works',
     'nav.contact-me': 'Contact Me',
+    'nav.menu': 'Open menu',
+    'nav.menu.close': 'Close menu',
 
     'hero.title': 'Fullstack dev Frontend focus',
     'hero.care': 'Caring for Performance & User Experiences',
@@ -197,6 +199,8 @@ export const ui = {
     'nav.linkedin': 'LinkedIn',
     'nav.other-works': 'Otros trabajos',
     'nav.contact-me': 'Contactame',
+    'nav.menu': 'Abrir menú',
+    'nav.menu.close': 'Cerrar menú',
 
     'hero.title': 'Dev Fullstack con foco en Frontend',
     'hero.care': 'Cuido la performance y la experiencia de usuario',

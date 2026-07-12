@@ -31,6 +31,8 @@ All UI strings used in the site. Source of truth for the i18n toggle (EN / ES).
 | nav.linkedin | LinkedIn | LinkedIn |
 | nav.other-works | Other works | Otros trabajos |
 | nav.contact-me | Contact Me | Contactame |
+| nav.menu | Open menu | Abrir menú |
+| nav.menu.close | Close menu | Cerrar menú |
 
 ---
 

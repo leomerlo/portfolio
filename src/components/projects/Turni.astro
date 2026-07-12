@@ -16,10 +16,10 @@ const { i18nKey, slug, title, description, summary, details, metric, tags, url }
 const detailUrl = `/projects/${slug}`;
 ---
 
-<div class="grid grid-cols-3 py-6">
-  <div class="flex flex-col justify-between">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-0 py-6">
+  <div class="flex flex-col justify-between gap-6 md:gap-0">
     <div class="flex flex-col gap-2">
-      <h3 class="text-4xl"><a href={detailUrl} class="hover:underline" data-i18n={`${i18nKey}.title`}>{title}</a></h3>
+      <h3 class="text-3xl md:text-4xl"><a href={detailUrl} class="hover:underline" data-i18n={`${i18nKey}.title`}>{title}</a></h3>
       <p class="text-sm my-6" data-i18n={`${i18nKey}.description`}>{description}</p>
     </div>
     <div class="flex flex-col gap-6">
@@ -31,9 +31,9 @@ const detailUrl = `/projects/${slug}`;
       </a>
     </div>
   </div>
-  <div class="grid grid-cols-3 gap-6 col-span-2">
-    <div class="relative h-full z-10">
-      <div class="color-block bg-brand-purple w-[350px] absolute h-full"></div>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:col-span-2">
+    <div class="relative h-24 md:h-full z-10">
+      <div class="color-block bg-brand-purple w-full h-full md:w-[350px] absolute"></div>
     </div>
     <div class="flex flex-col gap-2 z-20 justify-between">
       <div class="color-block bg-brand-yellow flex flex-col p-6 h-[180px]">

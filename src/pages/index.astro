@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ProjectCarousel from '../components/ProjectCarousel.astro';
-import { Brain, Heart, Star, ArrowRight, ArrowUpRight, Puzzle, Rabbit, Sticker } from 'lucide-astro';
+import { Brain, Heart, Star, ArrowRight, ArrowUpRight, Menu, Puzzle, Rabbit, Sticker, X } from 'lucide-astro';
 
 const experience = [
   {
@@ -64,17 +64,17 @@ const earlierExperience = [
   <div class="h-[60px] bg-gradient-to-b from-brand-pink/5 to-white w-full absolute top-0 left-0"></div>
   <div class="max-w-screen-xl mx-auto px-6 relative pb-8">
     <header class="flex justify-between items-center py-6 border-b border-gray-200 text-sm" aria-label="Site header">
-      <nav class="flex gap-8">
+      <nav class="hidden md:flex gap-8">
         <a href="#about" data-i18n="nav.about">About</a>
         <a href="#features" data-i18n="nav.features">Features</a>
         <a href="#work" data-i18n="nav.reviews">Reviews</a>
       </nav>
       <div class="flex-1">
-        <div class="flex items-center justify-center gap-1 text-2xl">
+        <div class="flex items-center justify-start md:justify-center gap-1 text-2xl">
           Leo Merlo
         </div>
       </div>
-      <div class="flex gap-8 items-center">
+      <div class="hidden md:flex gap-8 items-center">
         <a href="https://linkedin.com/in/merloleandro" target="_blank" rel="noopener noreferrer" data-i18n="nav.linkedin">LinkedIn</a>
         <a href="https://github.com/leomerlo" target="_blank" rel="noopener noreferrer" data-i18n="nav.other-works">Other works</a>
         <a href="#contact" class="btn rounded-lg shadow-md px-4 py-2 flex items-center gap-2 bg-white">
@@ -82,7 +82,36 @@ const earlierExperience = [
           <span data-i18n="nav.contact-me">Contact Me</span>
         </a>
       </div>
+      <button
+        id="menu-toggle"
+        type="button"
+        class="md:hidden p-2 -mr-2"
+        aria-label="Open menu"
+        data-i18n-aria="nav.menu"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+      >
+        <Menu class="w-6 h-6" />
+      </button>
     </header>
+
+    <div id="menu-overlay" class="fixed inset-0 bg-black/40 z-40 hidden md:hidden"></div>
+    <nav
+      id="mobile-menu"
+      class="fixed top-0 right-0 h-full w-72 max-w-[85vw] bg-white z-50 shadow-xl translate-x-full transition-transform duration-300 md:hidden flex flex-col gap-6 p-8 text-lg"
+      aria-label="Mobile menu"
+    >
+      <button id="menu-close" type="button" class="self-start p-2 -ml-2" aria-label="Close menu" data-i18n-aria="nav.menu.close">
+        <X class="w-6 h-6" />
+      </button>
+      <a href="#about" data-i18n="nav.about">About</a>
+      <a href="#features" data-i18n="nav.features">Features</a>
+      <a href="#work" data-i18n="nav.reviews">Reviews</a>
+      <hr class="border-gray-200" />
+      <a href="https://linkedin.com/in/merloleandro" target="_blank" rel="noopener noreferrer" data-i18n="nav.linkedin">LinkedIn</a>
+      <a href="https://github.com/leomerlo" target="_blank" rel="noopener noreferrer" data-i18n="nav.other-works">Other works</a>
+      <a href="#contact" data-i18n="nav.contact-me">Contact Me</a>
+    </nav>
 
     <!-- ════════════════════════════════════
          RIGHT — scrollable content
@@ -92,9 +121,9 @@ const earlierExperience = [
       <!-- ── About ── -->
       <section id="about" class="section" aria-labelledby="about-heading">
         <div>
-          <h1 class="text-6xl bold max-w-2xl mx-auto text-center my-12" data-i18n="hero.title">Fullstack dev Frontend focus</h1>
-          <div class="grid grid-cols-3">
-            <div class="max-w-48 flex flex-col gap-16">
+          <h1 class="text-4xl md:text-6xl bold max-w-2xl mx-auto text-center my-8 md:my-12" data-i18n="hero.title">Fullstack dev Frontend focus</h1>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-0">
+            <div class="max-w-48 mx-auto md:mx-0 flex flex-col gap-12 md:gap-16 order-2 md:order-none">
               <div class="flex flex-col gap-4 justify-center items-center">
                 <Heart class="w-12 h-12" />
                 <span class="text-lg block text-center" data-i18n="hero.care">Caring for Performance & User Experiences</span>
@@ -105,11 +134,11 @@ const earlierExperience = [
                 <span class="text-sm block text-center" data-i18n="hero.thinker.detail">Passionate for the craft, always thinking on the next step</span>
               </div>
             </div>
-            <div class="max-w-xl margin-auto relative">
-              <div data-parallax="0.1" class="w-[260px] h-[420px] overflow-hidden bg-[url(/hero_yellow.png)] bg-cover bg-center absolute -right-10 z-10 will-change-transform"></div>
-              <div data-parallax="-0.08" class="w-[260px] h-[420px] overflow-hidden bg-[url(/hero_pink.png)] bg-cover bg-center relative z-20 top-10 will-change-transform"></div>
+            <div class="max-w-xl margin-auto relative order-1 md:order-none">
+              <div data-parallax="0.1" class="w-[200px] h-[320px] md:w-[260px] md:h-[420px] overflow-hidden bg-[url(/hero_yellow.png)] bg-cover bg-center absolute -right-2 md:-right-10 z-10 will-change-transform"></div>
+              <div data-parallax="-0.08" class="w-[200px] h-[320px] md:w-[260px] md:h-[420px] overflow-hidden bg-[url(/hero_pink.png)] bg-cover bg-center relative z-20 top-10 will-change-transform"></div>
             </div>
-            <div class="max-w-48 flex flex-col gap-16 ml-auto">
+            <div class="max-w-48 mx-auto md:mx-0 md:ml-auto flex flex-col gap-12 md:gap-16 order-3 md:order-none">
               <div class="flex flex-col gap-4 justify-center items-center">
                 <Star class="w-12 h-12" />
                 <span class="text-3xl block text-center">15+</span>
@@ -126,11 +155,11 @@ const earlierExperience = [
       <!-- ── Work ── -->
       <section id="features" class="section" aria-labelledby="features-heading">
         <div class="flex flex-col gap-12">
-        <h2 id="work-heading" class="text-4xl font-bold" data-i18n="work.flavors.heading">NOW with MORE flavors</h2>
+        <h2 id="work-heading" class="text-3xl md:text-4xl font-bold" data-i18n="work.flavors.heading">NOW with MORE flavors</h2>
 
-        <div class="grid grid-cols-3 gap-8">
-          <div class="bg-brand-yellow flex justify-between items-center p-4 bg-[url(/flavor_frontend.png)] bg-right-top bg-cover">
-            <div class="flex flex-col h-full justify-between">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div class="bg-brand-yellow flex justify-between items-center p-4 min-h-40 bg-[url(/flavor_frontend.png)] bg-right-top bg-cover">
+            <div class="flex flex-col h-full min-h-32 justify-between">
               <div class="flex flex-col gap-1">
                 <span class="text-md" data-i18n="work.flavors.frontend.kicker">Frontend experience</span>
                 <span class="text-xl font-bold" data-i18n="work.flavors.frontend.title">Design systems & frontend architecture</span>
@@ -138,16 +167,16 @@ const earlierExperience = [
               <a href="#" class="border-black flex items-center uppercase text-sm font-bold tracking-wider"><span data-i18n="work.my-work">My Work</span> <ArrowRight class="w-2 h-2" /></a>
             </div>
           </div>
-          <div class="bg-brand-pink text-white flex justify-between items-center p-4 bg-[url(/flavor_performance.png)] bg-right-bottom bg-contain bg-no-repeat">
-            <div class="flex flex-col h-full justify-between">
-              <div class="flex flex-col gap-1 h-40">
+          <div class="bg-brand-pink text-white flex justify-between items-center p-4 min-h-40 bg-[url(/flavor_performance.png)] bg-right-bottom bg-contain bg-no-repeat">
+            <div class="flex flex-col h-full min-h-32 justify-between">
+              <div class="flex flex-col gap-1 md:h-40">
                 <span class="text-xl font-bold" data-i18n="work.flavors.a11y.title">Accessibility & Performance</span>
               </div>
               <a href="" class=" border-black flex items-center uppercase text-sm font-bold tracking-wider"><span data-i18n="work.my-work">My Work</span> <ArrowRight class="w-2 h-2" /></a>
             </div>
           </div>
-          <div class="bg-brand-purple text-white flex justify-between items-center p-4 flex-row-reverse bg-[url(/flavor_backend.png)] bg-left-top bg-cover">
-            <div class="flex flex-col h-full justify-between text-right">
+          <div class="bg-brand-purple text-white flex justify-between items-center p-4 min-h-40 flex-row-reverse bg-[url(/flavor_backend.png)] bg-left-top bg-cover">
+            <div class="flex flex-col h-full min-h-32 justify-between text-right">
               <div class="flex flex-col gap-1">
                 <span class="text-md" data-i18n="work.flavors.backend.kicker">Backend experience</span>
                 <span class="text-xl font-bold" data-i18n="work.flavors.backend.title">Node, SQL & API</span>
@@ -166,9 +195,9 @@ const earlierExperience = [
           <h3 class="border border-black rounded-full text-sm inline self-start py-1 px-4" data-i18n="work.experience.heading">Experience</h3>
           <ul class="flex flex-col" aria-label="Work experience">
             {experience.map((e) => (
-              <li class="grid grid-cols-[8rem_1fr] gap-6 py-6 border-b border-gray-200">
-                <div class="text-sm text-gray-500 pt-1">{e.period}</div>
-                <div class="flex flex-col gap-2">
+              <li class="grid grid-cols-1 md:grid-cols-[8rem_1fr] gap-1 md:gap-6 py-6 border-b border-gray-200 w-full">
+                <div class="text-sm text-gray-500 md:pt-1">{e.period}</div>
+                <div class="flex flex-col gap-2 w-full">
                   <p class="text-xl font-bold">
                     {e.role} <span class="font-normal text-gray-500">· {e.company}</span>
                   </p>
@@ -177,7 +206,7 @@ const earlierExperience = [
               </li>
             ))}
             {earlierExperience.map((e) => (
-              <li class="grid grid-cols-[8rem_1fr] gap-6 py-3 border-b border-gray-200 text-sm items-baseline">
+              <li class="grid grid-cols-1 md:grid-cols-[8rem_1fr] gap-1 md:gap-6 py-4 md:py-3 border-b border-gray-200 text-sm items-baseline w-full">
                 <div class="text-gray-500">{e.period}</div>
                 <p>
                   <span class="font-bold">{e.role}</span> <span class="text-gray-500">· {e.company}</span>
@@ -192,10 +221,10 @@ const earlierExperience = [
 
       <!-- ── Contact ── -->
       <section id="contact" class="section" aria-labelledby="contact-heading">
-        <div class="grid grid-cols-2 items-center">
+        <div class="grid grid-cols-1 md:grid-cols-2 items-center gap-12">
           <div class="flex flex-col gap-8">
-            <h2 id="contact-heading" class="text-5xl font-bold" data-i18n="contact.title">Let's keep in touch.</h2>
-            <div class="flex gap-8 items-center w-2/3">
+            <h2 id="contact-heading" class="text-4xl md:text-5xl font-bold" data-i18n="contact.title">Let's keep in touch.</h2>
+            <div class="flex gap-8 items-center w-full md:w-2/3">
               <img src="./contact-photo.png" class="w-20" />
               <span class="text-sm" data-i18n="contact.intro">If you're building something where frontend architecture matters, I'd like to hear about it.</span>
             </div>
@@ -239,12 +268,12 @@ const earlierExperience = [
   </div>
   <footer class="bg-brand-navy text-white pt-8 pb-12 px-4">
     <div class="max-w-screen-xl mx-auto">
-      <div class="grid grid-cols-2">
+      <div class="grid grid-cols-1 gap-8 md:grid-cols-2">
         <div>
           <h1 class="text-4xl">Leo Merlo</h1>
           <span class="text-xs" data-i18n="footer.tagline">Fullstack developer with a focus on experience and accessibility.</span>
         </div>
-        <div class="grid grid-cols-4">
+        <div class="grid grid-cols-2 gap-4 md:grid-cols-4">
           <div>
             <span>Shop</span>
           </div>
@@ -264,6 +293,37 @@ const earlierExperience = [
 </BaseLayout>
 
 <script>
+  // ── Mobile menu ──────────────────────────────────────────
+  const menuToggle = document.getElementById('menu-toggle');
+  const menuClose = document.getElementById('menu-close');
+  const menuOverlay = document.getElementById('menu-overlay');
+  const mobileMenu = document.getElementById('mobile-menu');
+
+  if (menuToggle && menuClose && menuOverlay && mobileMenu) {
+    const openMenu = () => {
+      mobileMenu.classList.remove('translate-x-full');
+      menuOverlay.classList.remove('hidden');
+      menuToggle.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
+    };
+
+    const closeMenu = () => {
+      mobileMenu.classList.add('translate-x-full');
+      menuOverlay.classList.add('hidden');
+      menuToggle.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    };
+
+    menuToggle.addEventListener('click', openMenu);
+    menuClose.addEventListener('click', closeMenu);
+    menuOverlay.addEventListener('click', closeMenu);
+    mobileMenu.querySelectorAll('a').forEach((link) => link.addEventListener('click', closeMenu));
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeMenu();
+    });
+  }
+
+  // ── Hero parallax ────────────────────────────────────────
   const parallaxEls = document.querySelectorAll<HTMLElement>('[data-parallax]');
 
   if (parallaxEls.length && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
