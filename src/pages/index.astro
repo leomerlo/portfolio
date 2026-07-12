@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import LangToggle from '../components/LangToggle.astro';
 import ProjectCarousel from '../components/ProjectCarousel.astro';
 import { Brain, Heart, Star, ArrowRight, ArrowUpRight, Menu, Puzzle, Rabbit, Sticker, X } from 'lucide-astro';
 
@@ -81,6 +82,7 @@ const earlierExperience = [
           <Star class="w-2 h-2" />
           <span data-i18n="nav.contact-me">Contact Me</span>
         </a>
+        <LangToggle />
       </div>
       <button
         id="menu-toggle"
@@ -111,6 +113,10 @@ const earlierExperience = [
       <a href="https://linkedin.com/in/merloleandro" target="_blank" rel="noopener noreferrer" data-i18n="nav.linkedin">LinkedIn</a>
       <a href="https://github.com/leomerlo" target="_blank" rel="noopener noreferrer" data-i18n="nav.other-works">Other works</a>
       <a href="#contact" data-i18n="nav.contact-me">Contact Me</a>
+      <hr class="border-gray-200" />
+      <div class="self-start">
+        <LangToggle />
+      </div>
     </nav>
 
     <!-- ════════════════════════════════════
