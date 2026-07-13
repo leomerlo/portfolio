@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import LangToggle from '../components/LangToggle.astro';
 
 interface Props {
   title?: string;
@@ -27,6 +28,10 @@ const {
   </head>
   <body>
     <a href="#main-content" class="skip-link" data-i18n="skip-link">Skip to main content</a>
+
+    <div class="fixed bottom-6 right-6 z-50">
+      <LangToggle />
+    </div>
 
     <div class="relative">
       <slot />

@@ -1,6 +1,5 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import LangToggle from '../../components/LangToggle.astro';
 import { ArrowLeft, ArrowUpRight } from 'lucide-astro';
 import { projects } from '../../data/projects';
 import { ui } from '../../i18n/ui';
@@ -29,18 +28,12 @@ const starSections = [
 <BaseLayout title={`${title} — Leo Merlo`} description={description}>
   <div class="h-[60px] bg-gradient-to-b from-brand-pink/5 to-white w-full absolute top-0 left-0"></div>
   <div class="max-w-screen-xl mx-auto px-6 relative pb-24">
-    <header class="flex justify-between items-center py-6 border-b border-gray-200 text-sm" aria-label="Site header">
+    <header class="relative flex justify-between items-center py-6 border-b border-gray-200 text-sm" aria-label="Site header">
       <a href="/" class="flex items-center gap-2">
         <ArrowLeft class="w-4 h-4" />
         <span data-i18n="detail.back">Back to home</span>
       </a>
-      <div class="text-2xl">Leo Merlo</div>
-      <div class="flex items-center gap-4">
-        <a href="/#contact" class="btn rounded-lg shadow-md px-4 py-2 hidden md:flex items-center gap-2 bg-white">
-          <span data-i18n="nav.contact-me">Contact Me</span>
-        </a>
-        <LangToggle />
-      </div>
+      <div class="absolute left-1/2 -translate-x-1/2 text-2xl pointer-events-none select-none">Leo Merlo</div>
     </header>
 
     <main id="main-content" class="flex flex-col gap-12 pt-12" tabindex="-1">

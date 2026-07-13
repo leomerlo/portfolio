@@ -11,8 +11,8 @@ import { projects } from '../data/projects';
   aria-label="Selected projects"
   data-i18n-aria="carousel.label"
 >
-  <div class="overflow-hidden">
-    <div class="carousel-track flex items-stretch transition-transform duration-500 ease-out motion-reduce:transition-none" aria-live="off">
+  <div class="carousel-viewport">
+    <div class="carousel-track flex items-start transition-transform duration-500 ease-out motion-reduce:transition-none" aria-live="off">
       {projects.map((p, i) => (
         <div
           class:list={['carousel-slide w-full shrink-0 overflow-hidden', { 'is-active': i === 0 }]}
@@ -63,6 +63,34 @@ import { projects } from '../data/projects';
 </div>
 
 <style is:global>
+  .carousel-viewport {
+    overflow: hidden;
+    cursor: grab;
+  }
+
+  .carousel-viewport.is-dragging {
+    cursor: grabbing;
+  }
+
+  .carousel-viewport.is-dragging .carousel-track {
+    transition: none;
+  }
+
+  .project-carousel.is-dragging,
+  .project-carousel.is-dragging * {
+    user-select: none;
+  }
+
+  .carousel-track {
+    touch-action: pan-y;
+  }
+
+  @media (max-width: 767px) {
+    .carousel-viewport {
+      transition: height 300ms ease;
+    }
+  }
+
   @media (prefers-reduced-motion: no-preference) {
     .carousel-slide.is-active .color-block {
       animation: carousel-block-in 0.5s ease-out backwards;
@@ -83,9 +111,11 @@ import { projects } from '../data/projects';
 
 <script>
   const AUTOPLAY_MS = 6000;
+  const MOBILE_QUERY = '(max-width: 767px)';
   const carousel = document.querySelector<HTMLElement>('.project-carousel');
 
   if (carousel) {
+    const viewport = carousel.querySelector<HTMLElement>('.carousel-viewport')!;
     const track = carousel.querySelector<HTMLElement>('.carousel-track')!;
     const slides = [...carousel.querySelectorAll<HTMLElement>('.carousel-slide')];
     const dots = [...carousel.querySelectorAll<HTMLElement>('.carousel-dot')];
@@ -100,10 +130,28 @@ import { projects } from '../data/projects';
 
     let index = 0;
     let timer: ReturnType<typeof setInterval> | null = null;
+    let slideWidth = viewport.clientWidth;
+    let dragOffset = 0;
+    let dragging = false;
+    let dragStartX = 0;
+    let dragMoved = false;
+
+    function syncHeight() {
+      if (window.matchMedia(MOBILE_QUERY).matches) {
+        viewport.style.height = `${slides[index].offsetHeight}px`;
+      } else {
+        viewport.style.height = '';
+      }
+    }
+
+    function applyTransform() {
+      track.style.transform = `translateX(${-(index * slideWidth) + dragOffset}px)`;
+    }
 
     function goTo(next: number) {
       index = (next + slides.length) % slides.length;
-      track.style.transform = `translateX(-${index * 100}%)`;
+      dragOffset = 0;
+      applyTransform();
       slides.forEach((slide, i) => {
         const active = i === index;
         slide.classList.toggle('is-active', active);
@@ -114,6 +162,7 @@ import { projects } from '../data/projects';
         dot.classList.toggle('bg-black', i === index);
         dot.setAttribute('aria-current', String(i === index));
       });
+      syncHeight();
     }
 
     function stop() {
@@ -157,19 +206,67 @@ import { projects } from '../data/projects';
       if (!carousel.contains(e.relatedTarget as Node)) start();
     });
 
-    // Basic swipe support
-    let touchStartX = 0;
-    carousel.addEventListener('touchstart', (e) => {
-      touchStartX = e.touches[0].clientX;
-    }, { passive: true });
-    carousel.addEventListener('touchend', (e) => {
-      const delta = e.changedTouches[0].clientX - touchStartX;
-      if (Math.abs(delta) > 50) {
-        goTo(delta < 0 ? index + 1 : index - 1);
-        restart();
-      }
-    }, { passive: true });
+    // ── Drag to scroll (mouse + touch + pen via Pointer Events) ──
+    viewport.addEventListener('pointerdown', (e) => {
+      dragging = true;
+      dragMoved = false;
+      dragStartX = e.clientX;
+      dragOffset = 0;
+      viewport.setPointerCapture(e.pointerId);
+      carousel.classList.add('is-dragging');
+      viewport.classList.add('is-dragging');
+      stop();
+    });
 
+    viewport.addEventListener('pointermove', (e) => {
+      if (!dragging) return;
+      dragOffset = e.clientX - dragStartX;
+      if (Math.abs(dragOffset) > 4) dragMoved = true;
+      applyTransform();
+    });
+
+    function endDrag(e: PointerEvent) {
+      if (!dragging) return;
+      dragging = false;
+      carousel.classList.remove('is-dragging');
+      viewport.classList.remove('is-dragging');
+      try {
+        viewport.releasePointerCapture(e.pointerId);
+      } catch {}
+
+      const threshold = Math.min(80, slideWidth * 0.15);
+      if (dragOffset <= -threshold) {
+        goTo(index + 1);
+      } else if (dragOffset >= threshold) {
+        goTo(index - 1);
+      } else {
+        dragOffset = 0;
+        applyTransform();
+      }
+      restart();
+    }
+
+    viewport.addEventListener('pointerup', endDrag);
+    viewport.addEventListener('pointercancel', endDrag);
+
+    // Prevent a dragged link/button from firing its click on release
+    carousel.addEventListener('click', (e) => {
+      if (dragMoved) {
+        e.preventDefault();
+        e.stopPropagation();
+        dragMoved = false;
+      }
+    }, { capture: true });
+
+    // ── Keep width/height in sync with layout changes ──
+    const resizeObserver = new ResizeObserver(() => {
+      slideWidth = viewport.clientWidth;
+      applyTransform();
+      syncHeight();
+    });
+    resizeObserver.observe(viewport);
+
+    goTo(0);
     start();
   }
 </script>

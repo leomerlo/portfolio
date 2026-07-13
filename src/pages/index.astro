@@ -64,25 +64,26 @@ const earlierExperience = [
 <BaseLayout>
   <div class="h-[60px] bg-gradient-to-b from-brand-pink/5 to-white w-full absolute top-0 left-0"></div>
   <div class="max-w-screen-xl mx-auto px-6 relative pb-8">
-    <header class="flex justify-between items-center py-6 border-b border-gray-200 text-sm" aria-label="Site header">
+    <header class="relative flex justify-between items-center py-6 border-b border-gray-200 text-sm" aria-label="Site header">
       <nav class="hidden md:flex gap-8">
         <a href="#about" data-i18n="nav.about">About</a>
         <a href="#features" data-i18n="nav.features">Features</a>
         <a href="#work" data-i18n="nav.reviews">Reviews</a>
       </nav>
-      <div class="flex-1">
-        <div class="flex items-center justify-start md:justify-center gap-1 text-2xl">
-          Leo Merlo
-        </div>
+      <div class="absolute left-1/2 -translate-x-1/2 text-2xl pointer-events-none select-none">
+        Leo Merlo
       </div>
       <div class="hidden md:flex gap-8 items-center">
         <a href="https://linkedin.com/in/merloleandro" target="_blank" rel="noopener noreferrer" data-i18n="nav.linkedin">LinkedIn</a>
         <a href="https://github.com/leomerlo" target="_blank" rel="noopener noreferrer" data-i18n="nav.other-works">Other works</a>
-        <a href="#contact" class="btn rounded-lg shadow-md px-4 py-2 flex items-center gap-2 bg-white">
+        <a
+          id="contact-btn"
+          href="#contact"
+          class="btn rounded-lg shadow-md px-4 py-2 flex items-center gap-2 bg-white transition-all duration-300"
+        >
           <Star class="w-2 h-2" />
           <span data-i18n="nav.contact-me">Contact Me</span>
         </a>
-        <LangToggle />
       </div>
       <button
         id="menu-toggle"
@@ -164,30 +165,32 @@ const earlierExperience = [
         <h2 id="work-heading" class="text-3xl md:text-4xl font-bold" data-i18n="work.flavors.heading">NOW with MORE flavors</h2>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div class="bg-brand-yellow flex justify-between items-center p-4 min-h-40 bg-[url(/flavor_frontend.png)] bg-right-top bg-cover">
+          <div class="bg-brand-yellow flex justify-between items-center p-4 min-h-40">
             <div class="flex flex-col h-full min-h-32 justify-between">
               <div class="flex flex-col gap-1">
                 <span class="text-md" data-i18n="work.flavors.frontend.kicker">Frontend experience</span>
-                <span class="text-xl font-bold" data-i18n="work.flavors.frontend.title">Design systems & frontend architecture</span>
+                <span class="text-xl font-bold whitespace-pre-line" data-i18n="work.flavors.frontend.title">Design systems & frontend architecture</span>
               </div>
               <a href="#" class="border-black flex items-center uppercase text-sm font-bold tracking-wider"><span data-i18n="work.my-work">My Work</span> <ArrowRight class="w-2 h-2" /></a>
             </div>
           </div>
-          <div class="bg-brand-pink text-white flex justify-between items-center p-4 min-h-40 bg-[url(/flavor_performance.png)] bg-right-bottom bg-contain bg-no-repeat">
-            <div class="flex flex-col h-full min-h-32 justify-between">
+          <div class="bg-brand-pink text-white relative flex items-center p-4 min-h-40 overflow-hidden">
+            <div class="flex flex-col h-full min-h-32 justify-between z-10">
               <div class="flex flex-col gap-1 md:h-40">
-                <span class="text-xl font-bold" data-i18n="work.flavors.a11y.title">Accessibility & Performance</span>
+                <span class="text-xl font-bold whitespace-pre-line" data-i18n="work.flavors.a11y.title">Accessibility & Performance</span>
               </div>
-              <a href="" class=" border-black flex items-center uppercase text-sm font-bold tracking-wider"><span data-i18n="work.my-work">My Work</span> <ArrowRight class="w-2 h-2" /></a>
+              <a href="" class="border-black flex items-center uppercase text-sm font-bold tracking-wider"><span data-i18n="work.my-work">My Work</span> <ArrowRight class="w-2 h-2" /></a>
             </div>
+            <img id="badge-performance" src="/badge_performance.png" alt="" aria-hidden="true" class="absolute right-4 h-[68%] w-auto object-contain" />
           </div>
-          <div class="bg-brand-purple text-white flex justify-between items-center p-4 min-h-40 flex-row-reverse bg-[url(/flavor_backend.png)] bg-left-top bg-cover">
-            <div class="flex flex-col h-full min-h-32 justify-between text-right">
+          <div class="bg-brand-purple text-white relative flex items-center p-4 min-h-40 overflow-hidden">
+            <img id="badge-backend" src="/badge_backend.png" alt="" aria-hidden="true" class="absolute left-4 h-[68%] w-auto object-contain" />
+            <div class="flex flex-col h-full min-h-32 justify-between text-right ml-auto z-10">
               <div class="flex flex-col gap-1">
-                <span class="text-md" data-i18n="work.flavors.backend.kicker">Backend experience</span>
-                <span class="text-xl font-bold" data-i18n="work.flavors.backend.title">Node, SQL & API</span>
+                <span class="text-md" data-i18n="work.flavors.backend.kicker">Extended flavor</span>
+                <span class="text-xl font-bold" data-i18n="work.flavors.backend.title">Node, SQL & APIs</span>
               </div>
-              <a href="" class=" border-black flex items-center justify-end uppercase text-sm font-bold tracking-wider"><span data-i18n="work.my-work">My Work</span> <ArrowRight class="w-2 h-2" /></a>
+              <a href="" class="border-black flex items-center justify-end uppercase text-sm font-bold tracking-wider"><span data-i18n="work.my-work">My Work</span> <ArrowRight class="w-2 h-2" /></a>
             </div>
           </div>
         </div>
@@ -329,6 +332,47 @@ const earlierExperience = [
     });
   }
 
+  // ── Badge scroll animations ───────────────────────────────
+  const badgePerformance = document.getElementById('badge-performance');
+  const badgeBackend = document.getElementById('badge-backend');
+
+  const easeIn = (t: number) => t * t;
+
+  const animateBadges = () => {
+    const center = window.innerHeight / 2;
+    const THRESHOLD = 150;
+
+    if (badgePerformance) {
+      const rect = badgePerformance.getBoundingClientRect();
+      const elCenter = rect.top + rect.height / 2;
+      const distance = Math.abs(elCenter - center);
+      const progress = easeIn(Math.max(0, 1 - distance / THRESHOLD));
+      badgePerformance.style.transform = `rotate(${-10 * progress}deg)`;
+    }
+
+    if (badgeBackend) {
+      const rect = badgeBackend.getBoundingClientRect();
+      const elCenter = rect.top + rect.height / 2;
+      const distance = Math.abs(elCenter - center);
+      const progress = easeIn(Math.max(0, 1 - distance / THRESHOLD));
+      badgeBackend.style.transform = `scale(${1 + 0.15 * progress})`;
+    }
+  };
+
+  window.addEventListener('scroll', animateBadges, { passive: true });
+  animateBadges();
+
+  // ── Contact btn: fixed on scroll ─────────────────────────
+  const contactBtn = document.getElementById('contact-btn');
+  if (contactBtn) {
+    const header = contactBtn.closest('header') as HTMLElement;
+    const onScroll = () => {
+      const scrolled = window.scrollY > header.offsetHeight;
+      contactBtn.classList.toggle('contact-btn--fixed', scrolled);
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+  }
+
   // ── Hero parallax ────────────────────────────────────────
   const parallaxEls = document.querySelectorAll<HTMLElement>('[data-parallax]');
 
@@ -353,3 +397,24 @@ const earlierExperience = [
     update();
   }
 </script>
+
+<style>
+  #badge-performance,
+  #badge-backend {
+    will-change: transform;
+  }
+
+  #badge-backend {
+    transform-origin: left center;
+  }
+
+  #contact-btn.contact-btn--fixed {
+    position: fixed;
+    top: 1.5rem;
+    right: 1.5rem;
+    z-index: 50;
+    background: #000;
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+</style>
