@@ -241,6 +241,13 @@ import { projects } from '../data/projects';
 
     function restart() { stop(); start(); }
 
+    carousel.addEventListener('goto', (e: Event) => {
+      const { index: target } = (e as CustomEvent).detail;
+      const dir = target > index ? 'next' : 'prev';
+      goTo(target, dir);
+      restart();
+    });
+
     carousel.querySelector('.carousel-prev')?.addEventListener('click', () => {
       goTo(index - 1, 'prev'); restart();
     });

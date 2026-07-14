@@ -108,11 +108,11 @@ export const ui = {
     'carousel.next': 'Next project',
 
     'detail.back': 'Back to home',
-    'detail.situation': 'Situation',
-    'detail.task': 'Task',
-    'detail.action': 'Action',
-    'detail.result': 'Result',
-    'detail.reflection': 'Reflection',
+    'detail.situation': 'Context',
+    'detail.task': 'Challenge',
+    'detail.action': 'Approach',
+    'detail.result': 'Impact',
+    'detail.reflection': 'Takeaway',
     'detail.github': 'View on GitHub',
 
     'project1.star.situation': 'UI was inconsistent across 6 product teams at Perceptyx. No shared components, no design tokens — every team reinventing the same patterns.',
@@ -245,11 +245,11 @@ export const ui = {
     'carousel.next': 'Proyecto siguiente',
 
     'detail.back': 'Volver al inicio',
-    'detail.situation': 'Situación',
-    'detail.task': 'Tarea',
-    'detail.action': 'Acción',
-    'detail.result': 'Resultado',
-    'detail.reflection': 'Reflexión',
+    'detail.situation': 'Contexto',
+    'detail.task': 'Desafío',
+    'detail.action': 'Enfoque',
+    'detail.result': 'Impacto',
+    'detail.reflection': 'Aprendizaje',
     'detail.github': 'Ver en GitHub',
 
     'project1.star.situation': 'La UI era inconsistente entre 6 equipos de producto en Perceptyx. Sin componentes compartidos ni design tokens — cada equipo reinventaba los mismos patrones.',

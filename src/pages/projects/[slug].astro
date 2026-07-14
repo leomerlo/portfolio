@@ -2,9 +2,10 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ContactSection from '../../components/ContactSection.astro';
 import SiteFooter from '../../components/SiteFooter.astro';
-import { ArrowLeft, ArrowUpRight, ArrowDown } from 'lucide-astro';
+import { ArrowLeft, ArrowUpRight, ArrowDown, ArrowRight } from 'lucide-astro';
 import { projects } from '../../data/projects';
 import { ui } from '../../i18n/ui';
+import type { Lang } from '../../i18n/ui';
 
 export function getStaticPaths() {
   return projects.map((project) => ({
@@ -16,6 +17,11 @@ export function getStaticPaths() {
 const { project } = Astro.props;
 const { i18nKey, title, description, metric, tags, url } = project;
 
+const currentIndex = projects.findIndex((p) => p.slug === project.slug);
+const prevProject = projects[(currentIndex - 1 + projects.length) % projects.length];
+const nextProject = projects[(currentIndex + 1) % projects.length];
+
+// Default to EN at build time; BaseLayout's applyLang() will swap text client-side
 const t = (key: string) => (ui.en as Record<string, string>)[key];
 
 const accents: Record<string, { main: string; soft: string; alt: string; text: string }> = {
@@ -66,11 +72,11 @@ const accent = accents[i18nKey] ?? accents.project1;
         <span>Case study</span>
       </div>
 
-      <!-- ── 01 Situation ─────────────────────────────────── -->
-      <section class="chapter" aria-labelledby="star-situation">
+      <!-- ── 01 Context ─────────────────────────────────── -->
+      <section class="chapter" aria-labelledby="cs-context">
         <div class="chapter-head">
           <span class={`chapter-num ${accent.text}`}>01</span>
-          <h2 id="star-situation" class="chapter-title" data-i18n="detail.situation">Situation</h2>
+          <h2 id="cs-context" class="chapter-title" data-i18n="detail.situation">Context</h2>
         </div>
         <p class="chapter-body" data-i18n={`${i18nKey}.star.situation`}>{t(`${i18nKey}.star.situation`)}</p>
       </section>
@@ -80,20 +86,20 @@ const accent = accents[i18nKey] ?? accents.project1;
         <div class={`${accent.main} md:col-span-2 relative`}><span class="placeholder-label">Before state</span></div>
       </div>
 
-      <!-- ── 02 Task ──────────────────────────────────────── -->
-      <section class="chapter" aria-labelledby="star-task">
+      <!-- ── 02 Challenge ──────────────────────────────────────── -->
+      <section class="chapter" aria-labelledby="cs-challenge">
         <div class="chapter-head">
           <span class={`chapter-num ${accent.text}`}>02</span>
-          <h2 id="star-task" class="chapter-title" data-i18n="detail.task">Task</h2>
+          <h2 id="cs-challenge" class="chapter-title" data-i18n="detail.task">Challenge</h2>
         </div>
         <p class="chapter-body" data-i18n={`${i18nKey}.star.task`}>{t(`${i18nKey}.star.task`)}</p>
       </section>
 
-      <!-- ── 03 Action ────────────────────────────────────── -->
-      <section class="chapter" aria-labelledby="star-action">
+      <!-- ── 03 Approach ────────────────────────────────────── -->
+      <section class="chapter" aria-labelledby="cs-approach">
         <div class="chapter-head">
           <span class={`chapter-num ${accent.text}`}>03</span>
-          <h2 id="star-action" class="chapter-title" data-i18n="detail.action">Action</h2>
+          <h2 id="cs-approach" class="chapter-title" data-i18n="detail.action">Approach</h2>
         </div>
         <p class="chapter-body" data-i18n={`${i18nKey}.star.action`}>{t(`${i18nKey}.star.action`)}</p>
       </section>
@@ -107,11 +113,11 @@ const accent = accents[i18nKey] ?? accents.project1;
         </div>
       </div>
 
-      <!-- ── 04 Result ────────────────────────────────────── -->
-      <section class="chapter" aria-labelledby="star-result">
+      <!-- ── 04 Impact ────────────────────────────────────── -->
+      <section class="chapter" aria-labelledby="cs-impact">
         <div class="chapter-head">
           <span class={`chapter-num ${accent.text}`}>04</span>
-          <h2 id="star-result" class="chapter-title" data-i18n="detail.result">Result</h2>
+          <h2 id="cs-impact" class="chapter-title" data-i18n="detail.result">Impact</h2>
         </div>
         <p class="chapter-body" data-i18n={`${i18nKey}.star.result`}>{t(`${i18nKey}.star.result`)}</p>
       </section>
@@ -121,11 +127,11 @@ const accent = accents[i18nKey] ?? accents.project1;
         <span class="text-white/90 text-lg md:text-xl max-w-md" data-i18n={`${i18nKey}.description`}>{description}</span>
       </div>
 
-      <!-- ── 05 Reflection ────────────────────────────────── -->
-      <section class="chapter" aria-labelledby="star-reflection">
+      <!-- ── 05 Takeaway ────────────────────────────────── -->
+      <section class="chapter" aria-labelledby="cs-takeaway">
         <div class="chapter-head">
           <span class={`chapter-num ${accent.text}`}>05</span>
-          <h2 id="star-reflection" class="chapter-title" data-i18n="detail.reflection">Reflection</h2>
+          <h2 id="cs-takeaway" class="chapter-title" data-i18n="detail.reflection">Takeaway</h2>
         </div>
         <blockquote class={`border-l-4 pl-6 md:pl-10 mt-2 ${accent.text} border-current`}>
           <p class="text-xl md:text-3xl font-bold leading-snug text-black" data-i18n={`${i18nKey}.star.reflection`}>{t(`${i18nKey}.star.reflection`)}</p>
@@ -133,22 +139,36 @@ const accent = accents[i18nKey] ?? accents.project1;
       </section>
 
       <!-- ── Footer CTA ───────────────────────────────────── -->
-      <div class="mt-20 pt-10 border-t border-gray-200 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-        <a href="/" class="flex items-center gap-2 text-sm">
-          <ArrowLeft class="w-4 h-4" />
-          <span data-i18n="detail.back">Back to home</span>
-        </a>
-        {url && (
+      {url && (
+        <div class="mt-20 pt-10 border-t border-gray-200">
           <a
             href={url}
             target="_blank"
             rel="noopener noreferrer"
-            class="rounded-lg py-3 px-4 bg-black text-white flex items-center gap-4 text-sm"
+            class="rounded-lg py-3 px-4 bg-black text-white flex items-center gap-4 text-sm self-start w-fit"
           >
             <span data-i18n="detail.github">View on GitHub</span>
             <ArrowUpRight class="w-4 h-4" />
           </a>
-        )}
+        </div>
+      )}
+
+      <!-- ── Project nav ── -->
+      <div class="flex justify-between items-center border-t border-b border-gray-200 py-8 mt-20 mb-4">
+        <a href={`/projects/${prevProject.slug}`} class="flex items-center gap-3 group">
+          <ArrowLeft class="w-4 h-4" />
+          <div class="flex flex-col">
+            <span class="text-xs uppercase tracking-widest text-gray-400">Previous</span>
+            <span class="text-sm font-bold group-hover:underline">{prevProject.title}</span>
+          </div>
+        </a>
+        <a href={`/projects/${nextProject.slug}`} class="flex items-center gap-3 text-right group">
+          <div class="flex flex-col">
+            <span class="text-xs uppercase tracking-widest text-gray-400">Next</span>
+            <span class="text-sm font-bold group-hover:underline">{nextProject.title}</span>
+          </div>
+          <ArrowRight class="w-4 h-4" />
+        </a>
       </div>
 
       <ContactSection />

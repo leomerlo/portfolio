@@ -91,20 +91,22 @@ const {
       });
 
       // ── Active nav link via IntersectionObserver ─────────────
-      const sections = document.querySelectorAll('.section[id]');
-      const navLinks = document.querySelectorAll('.nav-link');
+      const sections = document.querySelectorAll<HTMLElement>('.section[id]');
+      const navLinks = document.querySelectorAll<HTMLAnchorElement>('nav a[href^="#"]');
 
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            navLinks.forEach((l) => l.classList.remove('active'));
-            const active = document.querySelector(`.nav-link[href="#${entry.target.id}"]`);
-            active?.classList.add('active');
-          }
-        });
-      }, { rootMargin: '-30% 0px -60% 0px' });
+      if (navLinks.length) {
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              navLinks.forEach((l) => l.removeAttribute('aria-current'));
+              const active = document.querySelector<HTMLAnchorElement>(`nav a[href="#${entry.target.id}"]`);
+              active?.setAttribute('aria-current', 'page');
+            }
+          });
+        }, { rootMargin: '-30% 0px -60% 0px' });
 
-      sections.forEach((s) => observer.observe(s));
+        sections.forEach((s) => observer.observe(s));
+      }
     </script>
   </body>
 </html>
