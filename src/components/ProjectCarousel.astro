@@ -28,19 +28,7 @@ import { projects } from '../data/projects';
     </div>
   </div>
 
-  <div class="carousel-controls flex items-center justify-between mt-2">
-    <div class="flex gap-2">
-      {projects.map((p, i) => (
-        <button
-          type="button"
-          class:list={['carousel-dot w-2.5 h-2.5 rounded-full border border-black transition-colors', { 'bg-black': i === 0 }]}
-          data-index={i}
-          aria-label={p.title}
-          data-i18n-aria={`${p.i18nKey}.title`}
-          aria-current={i === 0 ? 'true' : 'false'}
-        />
-      ))}
-    </div>
+  <div class="carousel-controls flex items-center justify-end mt-2">
     <div class="flex gap-2">
       <button
         type="button"
@@ -111,7 +99,7 @@ import { projects } from '../data/projects';
     const viewport = carousel.querySelector<HTMLElement>('.carousel-viewport')!;
     const track = carousel.querySelector<HTMLElement>('.carousel-track')!;
     const slides = [...carousel.querySelectorAll<HTMLElement>('.carousel-slide')];
-    const dots = [...carousel.querySelectorAll<HTMLElement>('.carousel-dot')];
+    const dots: HTMLElement[] = [];
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     let index = 0;
@@ -278,17 +266,19 @@ import { projects } from '../data/projects';
       dragMoved = false;
       dragStartX = e.clientX;
       dragOffset = 0;
-      viewport.setPointerCapture(e.pointerId);
-      carousel.classList.add('is-dragging');
-      viewport.classList.add('is-dragging');
       stop();
     });
 
     viewport.addEventListener('pointermove', (e) => {
       if (!dragging) return;
       dragOffset = e.clientX - dragStartX;
-      if (Math.abs(dragOffset) > 4) dragMoved = true;
-      slides[index].style.transform = `translateX(${dragOffset}px)`;
+      if (!dragMoved && Math.abs(dragOffset) > 4) {
+        dragMoved = true;
+        viewport.setPointerCapture(e.pointerId);
+        carousel.classList.add('is-dragging');
+        viewport.classList.add('is-dragging');
+      }
+      if (dragMoved) slides[index].style.transform = `translateX(${dragOffset}px)`;
     });
 
     function endDrag(e: PointerEvent) {
