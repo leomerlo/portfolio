@@ -1,0 +1,55 @@
+---
+import { ArrowUpRight } from 'lucide-astro';
+interface Props {
+  i18nKey: string;
+  slug: string;
+  title: string;
+  description: string;
+  summary: string;
+  details: string;
+  metric: string;
+  tags: string[];
+  url?: string;
+}
+
+const { i18nKey, slug, title, description, summary, details, metric, tags, url } = Astro.props;
+const detailUrl = `/projects/${slug}`;
+---
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-0 py-6">
+  <div class="project-text flex flex-col justify-between gap-6 md:gap-0 w-full md:w-2/3">
+    <div class="flex flex-col gap-2">
+      <h3 class="text-3xl md:text-4xl"><a href={detailUrl} class="hover:underline" data-i18n={`${i18nKey}.title`}>{title}</a></h3>
+      <p class="text-sm my-6" data-i18n={`${i18nKey}.description`}>{description}</p>
+    </div>
+    <div class="flex flex-col gap-6">
+      <div class="flex gap-2 flex-wrap">
+        {tags.map((tag, index) => <span class={`rounded-full px-4 py-1 text-xs ${index % 2 === 0 ? 'border border-black' : 'bg-black text-white'}`}>{tag}</span>)}
+      </div>
+      <a href={detailUrl} class="border-b border-black uppercase text-xs self-start flex items-center gap-1">
+        <span data-i18n="project.view-more">View More</span> <ArrowUpRight class="w-2 h-2" />
+      </a>
+    </div>
+  </div>
+  <div class="grid grid-cols-3 gap-3 md:gap-6">
+    <div class="color-block bg-brand-yellow h-40 md:h-auto flex flex-col justify-between p-3">
+      <span class="text-2xl font-bold leading-none">2</span>
+      <div class="flex flex-col gap-1">
+        <span class="text-xs font-bold">Kimberly-Clark</span>
+        <span class="text-xs text-gray-600">+ Dyson</span>
+      </div>
+      <span class="text-xs uppercase tracking-wider text-gray-500">Enterprise clients</span>
+    </div>
+    <div class="col-span-2 flex flex-col gap-2">
+      <div class="color-block bg-brand-lavender flex-1 relative overflow-hidden flex items-center justify-center">
+        <span class="text-xs uppercase tracking-widest text-black/30 text-center px-4">[SharePoint enterprise UI — placeholder]</span>
+      </div>
+      <div class="flex justify-between items-center p-2">
+        <span class="text-xl font-bold" data-i18n={`${i18nKey}.block.award`}>Accenture Award Winner</span>
+        <a href={detailUrl} class="border-b border-black uppercase text-xs flex items-center gap-1">
+          <span data-i18n="project.view-more">View More</span> <ArrowUpRight class="w-2 h-2 inline" />
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

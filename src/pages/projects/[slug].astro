@@ -1,0 +1,308 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ContactSection from '../../components/ContactSection.astro';
+import SiteFooter from '../../components/SiteFooter.astro';
+import { ArrowLeft, ArrowUpRight, ArrowDown, ArrowRight } from 'lucide-astro';
+import { projects } from '../../data/projects';
+import { ui } from '../../i18n/ui';
+import type { Lang } from '../../i18n/ui';
+
+export function getStaticPaths() {
+  return projects.map((project) => ({
+    params: { slug: project.slug },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+const { i18nKey, title, description, metric, tags, url } = project;
+
+const currentIndex = projects.findIndex((p) => p.slug === project.slug);
+const prevProject = projects[(currentIndex - 1 + projects.length) % projects.length];
+const nextProject = projects[(currentIndex + 1) % projects.length];
+
+// Default to EN at build time; BaseLayout's applyLang() will swap text client-side
+const t = (key: string) => (ui.en as Record<string, string>)[key];
+
+const accents: Record<string, { main: string; soft: string; alt: string; text: string }> = {
+  project1: { main: 'bg-brand-purple', soft: 'bg-brand-purple/10', alt: 'bg-brand-yellow', text: 'text-brand-purple' },
+  project2: { main: 'bg-brand-yellow', soft: 'bg-brand-yellow/10', alt: 'bg-brand-purple', text: 'text-brand-purple' },
+  project3: { main: 'bg-brand-pink', soft: 'bg-brand-pink/10', alt: 'bg-brand-lavender', text: 'text-brand-pink' },
+};
+const accent = accents[i18nKey] ?? accents.project1;
+
+type ProjectImage = { src: string; caption: string; position?: string; fit?: string };
+type ProjectImageSet = {
+  context: [ProjectImage, ProjectImage];
+  approach: [ProjectImage, ProjectImage, ProjectImage];
+};
+
+const projectImages: Record<string, ProjectImageSet> = {
+  'vision-design-system': {
+    context: [
+      { src: '/projects/vision-design-system/before-state.png', caption: 'Legacy Perceptyx dashboard — the analytics surface before Vision.', position: 'bg-left-top' },
+      { src: '/projects/vision-design-system/context.png', caption: 'Favorability Report — primary analytics view used across all product teams.', position: 'bg-left-top' },
+    ],
+    approach: [
+      { src: '/projects/vision-design-system/process.png', caption: 'Design token system — color scale documentation for the Vision palette.', position: 'bg-left-top' },
+      { src: '/projects/vision-design-system/detail.png', caption: 'Brand components in Storybook — the shared contract between design and engineering.', position: 'bg-left-top' },
+      { src: '/projects/vision-design-system/outcome.png', caption: 'New Perceptyx platform — post Vision Design System adoption across product teams.', position: 'bg-top' },
+    ],
+  },
+  'turnisports': {
+    context: [
+      { src: '/projects/turnisports/context.jpg', caption: 'Coach profile & class packs — the first screen every coach configures on signup.', position: 'bg-center', fit: 'contain' },
+      { src: '/projects/turnisports/context2.jpg', caption: 'Class schedule — calendar and list views built for coaches managing multiple groups.', position: 'bg-center' },
+    ],
+    approach: [
+      { src: '/projects/turnisports/process.jpg', caption: 'Turni Kit visual system — gradient overlays and brand language documented for consistency.', position: 'bg-center' },
+      { src: '/projects/turnisports/detail.jpg', caption: 'Mascotas & Ilustraciones — 3D characters representing each sport, built as reusable assets.', position: 'bg-center' },
+      { src: '/projects/turnisports/outcome.jpg', caption: 'Turni Kit 1.0 — color palette, typography, components, and illustration system shipped as a living doc.', position: 'bg-center' },
+    ],
+  },
+};
+
+const imgs = projectImages[project.slug];
+---
+
+<BaseLayout title={`${title} — Leo Merlo`} description={description}>
+  <div class="h-[60px] bg-gradient-to-b from-brand-pink/5 to-white w-full absolute top-0 left-0"></div>
+
+  <div class="max-w-screen-xl mx-auto px-6 relative pb-24">
+    <header class="relative flex justify-between items-center py-6 border-b border-gray-200 text-sm" aria-label="Site header">
+      <a href="/" class="flex items-center gap-2">
+        <ArrowLeft class="w-4 h-4" />
+        <span data-i18n="detail.back">Back to home</span>
+      </a>
+      <div class="absolute left-1/2 -translate-x-1/2 text-2xl pointer-events-none select-none">Leo Merlo</div>
+    </header>
+
+    <main id="main-content" class="flex flex-col pt-16" tabindex="-1">
+
+      <!-- ── Hero ─────────────────────────────────────────── -->
+      <section class="flex flex-col gap-8">
+        <span class="border border-black rounded-full text-sm inline self-start py-1 px-4" data-i18n={`${i18nKey}.metric`}>{metric}</span>
+        <h1 class="text-5xl md:text-7xl lg:text-8xl font-bold leading-[0.95] tracking-tight max-w-5xl" data-i18n={`${i18nKey}.title`}>{title}</h1>
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-8">
+          <p class="text-lg md:text-2xl max-w-2xl leading-snug" data-i18n={`${i18nKey}.description`}>{description}</p>
+          <div class="flex gap-2 flex-wrap md:justify-end md:max-w-xs">
+            {tags.map((tag, index) => (
+              <span class={`rounded-full px-4 py-1 text-xs whitespace-nowrap ${index % 2 === 0 ? 'border border-black' : 'bg-black text-white'}`}>{tag}</span>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <!-- ── Hero image ───────────────────────────────────── -->
+      {imgs && (
+        <div class="mt-12 relative bg-white aspect-[21/9] w-full overflow-hidden" role="img" aria-label={title}>
+          <img
+            src={`/projects/${project.slug}/hero.jpg`}
+            alt={title}
+            class="absolute inset-0 w-full h-full object-contain"
+            onerror="this.style.display='none'"
+          />
+          <div class="absolute inset-0 pointer-events-none" style="background: linear-gradient(to left, white 0%, transparent 18%), linear-gradient(to right, white 0%, transparent 18%), linear-gradient(to bottom, white 0%, transparent 18%), linear-gradient(to top, white 0%, transparent 18%);"></div>
+        </div>
+      )}
+
+      <div class="flex items-center gap-2 mt-6 text-xs uppercase tracking-widest text-gray-500">
+        <ArrowDown class="w-3 h-3" />
+        <span>Case study</span>
+      </div>
+
+      <!-- ── 01 Context ─────────────────────────────────── -->
+      <section class="chapter" aria-labelledby="cs-context">
+        <div class="chapter-head">
+          <span class={`chapter-num ${accent.text}`}>01</span>
+          <h2 id="cs-context" class="chapter-title" data-i18n="detail.situation">Context</h2>
+        </div>
+        <p class="chapter-body" data-i18n={`${i18nKey}.star.situation`}>{t(`${i18nKey}.star.situation`)}</p>
+      </section>
+
+      {imgs && (
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mt-12">
+          <figure class="flex flex-col gap-2">
+            <div
+              class="aspect-square relative overflow-hidden flex-1 bg-gray-100"
+              style={`background-image: url('${imgs.context[0].src}'); background-size: ${imgs.context[0].fit ?? 'cover'}; background-position: ${imgs.context[0].position?.replace('bg-', '') ?? 'center'}; background-repeat: no-repeat;`}
+            />
+            <figcaption class="flex flex-col gap-1"><div class="w-12 border-t-2 border-black"></div><span class="text-xs text-gray-500">{imgs.context[0].caption}</span></figcaption>
+          </figure>
+          <figure class="md:col-span-2 flex flex-col gap-2">
+            <div
+              class="flex-1 min-h-48 relative overflow-hidden"
+              style={`background-image: url('${imgs.context[1].src}'); background-size: cover; background-position: ${imgs.context[1].position?.replace('bg-', '') ?? 'center'};`}
+            />
+            <figcaption class="flex flex-col gap-1"><div class="w-12 border-t-2 border-black"></div><span class="text-xs text-gray-500">{imgs.context[1].caption}</span></figcaption>
+          </figure>
+        </div>
+      )}
+
+      <!-- ── 02 Challenge ──────────────────────────────────────── -->
+      <section class="chapter" aria-labelledby="cs-challenge">
+        <div class="chapter-head">
+          <span class={`chapter-num ${accent.text}`}>02</span>
+          <h2 id="cs-challenge" class="chapter-title" data-i18n="detail.task">Challenge</h2>
+        </div>
+        <p class="chapter-body" data-i18n={`${i18nKey}.star.task`}>{t(`${i18nKey}.star.task`)}</p>
+      </section>
+
+      <!-- ── 03 Approach ────────────────────────────────────── -->
+      <section class="chapter" aria-labelledby="cs-approach">
+        <div class="chapter-head">
+          <span class={`chapter-num ${accent.text}`}>03</span>
+          <h2 id="cs-approach" class="chapter-title" data-i18n="detail.action">Approach</h2>
+        </div>
+        <p class="chapter-body" data-i18n={`${i18nKey}.star.action`}>{t(`${i18nKey}.star.action`)}</p>
+      </section>
+
+      {imgs && (
+        <div class="grid grid-cols-2 gap-3 mt-12">
+          <figure class="flex flex-col gap-2">
+            <div
+              class="aspect-[4/3] relative overflow-hidden"
+              style={`background-image: url('${imgs.approach[0].src}'); background-size: cover; background-position: ${imgs.approach[0].position?.replace('bg-', '') ?? 'center'};`}
+            />
+            <figcaption class="flex flex-col gap-1"><div class="w-12 border-t-2 border-black"></div><span class="text-xs text-gray-500">{imgs.approach[0].caption}</span></figcaption>
+          </figure>
+          <figure class="flex flex-col gap-2">
+            <div
+              class="aspect-[4/3] relative overflow-hidden"
+              style={`background-image: url('${imgs.approach[1].src}'); background-size: cover; background-position: ${imgs.approach[1].position?.replace('bg-', '') ?? 'center'};`}
+            />
+            <figcaption class="flex flex-col gap-1"><div class="w-12 border-t-2 border-black"></div><span class="text-xs text-gray-500">{imgs.approach[1].caption}</span></figcaption>
+          </figure>
+          <figure class="col-span-2 flex flex-col gap-2">
+            <div
+              class="aspect-[21/9] relative overflow-hidden"
+              style={`background-image: url('${imgs.approach[2].src}'); background-size: cover; background-position: ${imgs.approach[2].position?.replace('bg-', '') ?? 'center'};`}
+            />
+            <figcaption class="flex flex-col gap-1"><div class="w-12 border-t-2 border-black"></div><span class="text-xs text-gray-500">{imgs.approach[2].caption}</span></figcaption>
+          </figure>
+        </div>
+      )}
+
+      <!-- ── 04 Impact ────────────────────────────────────── -->
+      <section class="chapter" aria-labelledby="cs-impact">
+        <div class="chapter-head">
+          <span class={`chapter-num ${accent.text}`}>04</span>
+          <h2 id="cs-impact" class="chapter-title" data-i18n="detail.result">Impact</h2>
+        </div>
+        <p class="chapter-body" data-i18n={`${i18nKey}.star.result`}>{t(`${i18nKey}.star.result`)}</p>
+      </section>
+
+      <div class={`${accent.main} mt-12 p-10 md:p-16 flex flex-col md:flex-row md:items-center gap-6 md:gap-16`}>
+        <span class="text-5xl md:text-8xl font-bold text-white leading-none" data-i18n={`${i18nKey}.metric`}>{metric}</span>
+        <span class="text-white/90 text-lg md:text-xl max-w-md" data-i18n={`${i18nKey}.description`}>{description}</span>
+      </div>
+
+      <!-- ── 05 Takeaway ────────────────────────────────── -->
+      <section class="chapter" aria-labelledby="cs-takeaway">
+        <div class="chapter-head">
+          <span class={`chapter-num ${accent.text}`}>05</span>
+          <h2 id="cs-takeaway" class="chapter-title" data-i18n="detail.reflection">Takeaway</h2>
+        </div>
+        <blockquote class={`border-l-4 pl-6 md:pl-10 mt-2 ${accent.text} border-current`}>
+          <p class="text-xl md:text-3xl font-bold leading-snug text-black" data-i18n={`${i18nKey}.star.reflection`}>{t(`${i18nKey}.star.reflection`)}</p>
+        </blockquote>
+      </section>
+
+      <!-- ── Footer CTA ───────────────────────────────────── -->
+      {url && (
+        <div class="mt-20 pt-10 border-t border-gray-200">
+          <a
+            href={url}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="rounded-lg py-3 px-4 bg-black text-white flex items-center gap-4 text-sm self-start w-fit"
+          >
+            <span data-i18n="detail.github">View on GitHub</span>
+            <ArrowUpRight class="w-4 h-4" />
+          </a>
+        </div>
+      )}
+
+      <!-- ── Project nav ── -->
+      <div class="flex justify-between items-center border-t border-b border-gray-200 py-8 mt-20 mb-4">
+        <a href={`/projects/${prevProject.slug}`} class="flex items-center gap-3 group">
+          <ArrowLeft class="w-4 h-4" />
+          <div class="flex flex-col">
+            <span class="text-xs uppercase tracking-widest text-gray-400">Previous</span>
+            <span class="text-sm font-bold group-hover:underline">{prevProject.title}</span>
+          </div>
+        </a>
+        <a href={`/projects/${nextProject.slug}`} class="flex items-center gap-3 text-right group">
+          <div class="flex flex-col">
+            <span class="text-xs uppercase tracking-widest text-gray-400">Next</span>
+            <span class="text-sm font-bold group-hover:underline">{nextProject.title}</span>
+          </div>
+          <ArrowRight class="w-4 h-4" />
+        </a>
+      </div>
+
+      <ContactSection />
+    </main>
+  </div>
+  <SiteFooter />
+</BaseLayout>
+
+<style>
+  .chapter {
+    margin-top: 6rem;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .chapter {
+      grid-template-columns: 1fr 2fr;
+      gap: 3rem;
+    }
+  }
+
+  .chapter-head {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .chapter-num {
+    font-size: 4rem;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  .chapter-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  .chapter-body {
+    font-size: 1.125rem;
+    line-height: 1.75;
+    max-width: 42rem;
+  }
+
+  @media (min-width: 768px) {
+    .chapter-body {
+      font-size: 1.25rem;
+    }
+  }
+
+  .placeholder-label {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: rgba(0, 0, 0, 0.35);
+    background: rgba(255, 255, 255, 0.6);
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+  }
+</style>

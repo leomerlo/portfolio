@@ -1,0 +1,12 @@
+---
+import ProjectBlock from './ProjectBlock.astro';
+import { projects } from '../data/projects';
+---
+
+<div class="project-list flex flex-col gap-4" aria-label="Selected projects" data-i18n-aria="carousel.label">
+  {projects.map((p) => (
+    <div id={`project-${p.slug}`} class="border-b border-gray-200 last:border-b-0">
+      <ProjectBlock {...p} />
+    </div>
+  ))}
+</div>

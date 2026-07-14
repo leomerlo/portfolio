@@ -1,0 +1,42 @@
+<button type="button" class="lang-toggle" aria-label="Cambiar a español">
+  <span class="lang-label lang-en">EN</span>
+  <span class="lang-sep" aria-hidden="true">/</span>
+  <span class="lang-label lang-es">ES</span>
+</button>
+
+<style>
+  .lang-toggle {
+    height: 38px;
+    padding: 0 0.75rem;
+    border-radius: 9999px;
+    border: 1px solid #0d0d1c;
+    background: #fff;
+    color: inherit;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    transition: transform 0.15s ease;
+  }
+
+  .lang-toggle:hover {
+    transform: scale(1.05);
+  }
+
+  .lang-label {
+    opacity: 0.4;
+    transition: opacity 0.15s ease;
+  }
+
+  .lang-label.lang-active {
+    opacity: 1;
+  }
+
+  .lang-sep {
+    opacity: 0.25;
+    font-size: 0.65rem;
+  }
+</style>
