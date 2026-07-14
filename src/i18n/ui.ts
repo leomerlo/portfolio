@@ -9,11 +9,12 @@ export const ui = {
     'site.tagline': 'I build frontend systems that teams actually use.',
 
     'nav.about': 'About',
-    'nav.work': 'Work',
+    'nav.work': 'Projects',
     'nav.contact': 'Contact',
 
     'about.heading': 'About',
-    'about.p1': "I'm a fullstack developer with a strong frontend focus — 10+ years building the kind of systems that hold up under real product pressure. My work lives at the intersection of engineering quality, design consistency, and team scale.",
+    'about.hook': "I'm a fullstack developer with a strong frontend focus — 15+ years building the kind of systems that hold up under real product pressure.",
+    'about.p1': "I'm a fullstack developer with a strong frontend focus — 15+ years building the kind of systems that hold up under real product pressure. My work lives at the intersection of engineering quality, design consistency, and team scale.",
     'about.p2': "I've built design systems from scratch that reached 80%+ adoption across distributed teams — not by mandate, but by making them genuinely better to use than the alternative. Token-first architecture, framework-agnostic components, and Storybook as the shared contract between design and engineering.",
     'about.p3': "I treat accessibility as architecture, not audit. When a11y constraints live in the system — semantic tokens, tested patterns, focus management done right — quality becomes the default and review cycles shrink. I've cut them by 30%.",
     'about.p4': "I've also led cross-functional Frontend Guilds: aligning 6 distributed teams on shared standards through RFCs and pair programming, without relying on org chart authority.",
@@ -59,6 +60,8 @@ export const ui = {
     'contact.intro': "If frontend architecture is a real constraint in what you're building — not an afterthought — I want to talk.",
     'contact.title': "Let's build something solid.",
     'contact.now': 'Contact Now',
+    'contact.copy': 'Copy email',
+    'contact.copied': 'Copied!',
 
     'nav.features': 'Features',
     'nav.reviews': 'Reviews',
@@ -72,7 +75,7 @@ export const ui = {
     'hero.care': 'Performance and access, built in — not bolted on',
     'hero.thinker': 'Systems thinker',
     'hero.thinker.detail': 'I think in systems, not screens. Architecture decisions today prevent fires next quarter.',
-    'hero.years.detail': '10+ years of shipping frontend that holds',
+    'hero.years.detail': '15+ years of shipping frontend that holds',
     'hero.learn-more': 'Learn More',
 
     'work.flavors.heading': 'NOW in MORE flavors',
@@ -143,11 +146,12 @@ export const ui = {
     'site.tagline': 'Construyo sistemas frontend que los equipos realmente usan.',
 
     'nav.about': 'Sobre mí',
-    'nav.work': 'Trabajo',
+    'nav.work': 'Proyectos',
     'nav.contact': 'Contacto',
 
     'about.heading': 'Sobre mí',
-    'about.p1': 'Soy desarrollador fullstack con fuerte foco en frontend — más de 10 años construyendo sistemas que aguantan la presión real de producto. Mi trabajo vive en la intersección entre calidad de ingeniería, consistencia de diseño y escala de equipo.',
+    'about.hook': 'Soy desarrollador fullstack con fuerte foco en frontend — 15+ años construyendo sistemas que aguantan la presión real de producto.',
+    'about.p1': 'Soy desarrollador fullstack con fuerte foco en frontend — más de 15 años construyendo sistemas que aguantan la presión real de producto. Mi trabajo vive en la intersección entre calidad de ingeniería, consistencia de diseño y escala de equipo.',
     'about.p2': 'Construí design systems desde cero que alcanzaron más del 80% de adopción en equipos distribuidos — no por mandato, sino haciéndolos genuinamente mejores que la alternativa. Arquitectura token-first, componentes agnósticos al framework, y Storybook como contrato compartido entre diseño e ingeniería.',
     'about.p3': 'Trato la accesibilidad como arquitectura, no como auditoría. Cuando las restricciones de a11y viven en el sistema — tokens semánticos, patrones testeados, manejo de foco bien hecho — la calidad se vuelve el default y los ciclos de revisión se reducen. Los reduje un 30%.',
     'about.p4': 'También lideré Frontend Guilds interfuncionales: alineando 6 equipos distribuidos en estándares comunes a través de RFCs y pair programming, sin depender de autoridad jerárquica.',
@@ -193,6 +197,8 @@ export const ui = {
     'contact.intro': 'Si la arquitectura frontend es una restricción real en lo que estás construyendo — no un afterthought — quiero hablar.',
     'contact.title': 'Construyamos algo sólido.',
     'contact.now': 'Contactame',
+    'contact.copy': 'Copiar email',
+    'contact.copied': '¡Copiado!',
 
     'nav.features': 'Secciones',
     'nav.reviews': 'Reseñas',
@@ -206,7 +212,7 @@ export const ui = {
     'hero.care': 'Performance y acceso, integrados — no pegados con cinta',
     'hero.thinker': 'Pensamiento sistémico',
     'hero.thinker.detail': 'Pienso en sistemas, no en pantallas. Las decisiones de arquitectura de hoy evitan los incendios del próximo trimestre.',
-    'hero.years.detail': '10+ años shipiando frontend que aguanta',
+    'hero.years.detail': '15+ años shipiando frontend que aguanta',
     'hero.learn-more': 'Ver más',
 
     'work.flavors.heading': 'AHORA con MÁS sabores',

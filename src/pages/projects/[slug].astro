@@ -1,5 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import ContactSection from '../../components/ContactSection.astro';
+import SiteFooter from '../../components/SiteFooter.astro';
 import { ArrowLeft, ArrowUpRight, ArrowDown } from 'lucide-astro';
 import { projects } from '../../data/projects';
 import { ui } from '../../i18n/ui';
@@ -148,8 +150,11 @@ const accent = accents[i18nKey] ?? accents.project1;
           </a>
         )}
       </div>
+
+      <ContactSection />
     </main>
   </div>
+  <SiteFooter />
 </BaseLayout>
 
 <style>

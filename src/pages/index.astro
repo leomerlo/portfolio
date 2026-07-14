@@ -2,6 +2,8 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import LangToggle from '../components/LangToggle.astro';
 import ProjectCarousel from '../components/ProjectCarousel.astro';
+import ContactSection from '../components/ContactSection.astro';
+import SiteFooter from '../components/SiteFooter.astro';
 import { Brain, Heart, Star, ArrowRight, ArrowUpRight, Menu, Puzzle, Rabbit, Sticker, X } from 'lucide-astro';
 
 const experience = [
@@ -67,8 +69,8 @@ const earlierExperience = [
     <header class="relative flex justify-between items-center py-6 border-b border-gray-200 text-sm" aria-label="Site header">
       <nav class="hidden md:flex gap-8">
         <a href="#about" data-i18n="nav.about">About</a>
-        <a href="#features" data-i18n="nav.features">Features</a>
-        <a href="#work" data-i18n="nav.reviews">Reviews</a>
+        <a href="#projects" data-i18n="nav.work">Projects</a>
+        <a href="#experience" data-i18n="work.experience.heading">Experience</a>
       </nav>
       <div class="absolute left-1/2 -translate-x-1/2 text-2xl pointer-events-none select-none">
         Leo Merlo
@@ -108,8 +110,8 @@ const earlierExperience = [
         <X class="w-6 h-6" />
       </button>
       <a href="#about" data-i18n="nav.about">About</a>
-      <a href="#features" data-i18n="nav.features">Features</a>
-      <a href="#work" data-i18n="nav.reviews">Reviews</a>
+      <a href="#projects" data-i18n="nav.work">Projects</a>
+      <a href="#experience" data-i18n="work.experience.heading">Experience</a>
       <hr class="border-gray-200" />
       <a href="https://linkedin.com/in/merloleandro" target="_blank" rel="noopener noreferrer" data-i18n="nav.linkedin">LinkedIn</a>
       <a href="https://github.com/leomerlo" target="_blank" rel="noopener noreferrer" data-i18n="nav.other-works">Other works</a>
@@ -141,7 +143,7 @@ const earlierExperience = [
                 <span class="text-sm block text-center" data-i18n="hero.thinker.detail">Passionate for the craft, always thinking on the next step</span>
               </div>
             </div>
-            <div class="max-w-xl margin-auto relative order-1 md:order-none">
+            <div class="max-w-xl margin-auto relative order-1 md:order-none min-h-[360px] md:min-h-[460px]">
               <div data-parallax="0.1" class="w-[200px] h-[320px] md:w-[260px] md:h-[420px] overflow-hidden bg-[url(/hero_yellow.png)] bg-cover bg-center absolute -right-2 md:-right-10 z-10 will-change-transform"></div>
               <div data-parallax="-0.08" class="w-[200px] h-[320px] md:w-[260px] md:h-[420px] overflow-hidden bg-[url(/hero_pink.png)] bg-cover bg-center relative z-20 top-10 will-change-transform"></div>
             </div>
@@ -158,6 +160,12 @@ const earlierExperience = [
           </div>
         </div>
       </section>
+
+      <div class="section flex flex-col items-center gap-6">
+        <div class="w-12 border-t border-black"></div>
+        <p class="text-2xl font-bold leading-snug text-center max-w-md" data-i18n="about.hook">I'm a fullstack developer with a strong frontend focus — 15+ years building the kind of systems that hold up under real product pressure.</p>
+        <div class="w-12 border-t border-black"></div>
+      </div>
 
       <!-- ── Work ── -->
       <section id="features" class="section" aria-labelledby="features-heading">
@@ -203,7 +211,7 @@ const earlierExperience = [
           <ProjectCarousel />
         </section>
 
-        <div class="flex flex-col gap-8">
+        <div id="experience" class="flex flex-col gap-8">
           <h3 class="border border-black rounded-full text-sm inline self-start py-1 px-4" data-i18n="work.experience.heading">Experience</h3>
           <ul class="flex flex-col" aria-label="Work experience">
             {experience.map((e) => (
@@ -232,76 +240,11 @@ const earlierExperience = [
       </section>
 
       <!-- ── Contact ── -->
-      <section id="contact" class="section" aria-labelledby="contact-heading">
-        <div class="grid grid-cols-1 md:grid-cols-2 items-center gap-12">
-          <div class="flex flex-col gap-8">
-            <h2 id="contact-heading" class="text-4xl md:text-5xl font-bold" data-i18n="contact.title">Let's keep in touch.</h2>
-            <div class="flex gap-8 items-center w-full md:w-2/3">
-              <img src="./contact-photo.png" class="w-20" />
-              <span class="text-sm" data-i18n="contact.intro">If you're building something where frontend architecture matters, I'd like to hear about it.</span>
-            </div>
-            <div class="flex justify-between items-center">
-              <button class="rounded-lg py-3 px-4 bg-black text-white flex items-center gap-4 text-sm">
-                <span data-i18n="contact.now">Contact Now</span>
-                <ArrowUpRight class="w-4 h-4" />
-              </button>
-            </div>
-          </div>
-          <nav aria-label="Contact links">
-            <ul class="contact-links" role="list">
-              {[
-                { href: 'mailto:merloleandro@gmail.com',        label: 'merloleandro@gmail.com',      external: false },
-                { href: 'https://linkedin.com/in/merloleandro', label: 'linkedin.com/in/merloleandro', external: true  },
-                { href: 'https://github.com/leomerlo',          label: 'github.com/leomerlo',          external: true  },
-              ].map(({ href, label, external }) => (
-                <li>
-                  <a
-                    href={href}
-                    class="contact-link"
-                    {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-                  >
-                    <span class="contact-arrow" aria-hidden="true">→</span>
-                    <span>{label}</span>
-                    {external && (
-                      <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="contact-ext-icon" aria-label="opens in new tab" role="img">
-                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
-                        <polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
-                      </svg>
-                    )}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </nav>
-        </div>
-      </section>
+      <ContactSection />
 
     </main>
   </div>
-  <footer class="bg-brand-navy text-white pt-8 pb-12 px-4">
-    <div class="max-w-screen-xl mx-auto">
-      <div class="grid grid-cols-1 gap-8 md:grid-cols-2">
-        <div>
-          <h1 class="text-4xl">Leo Merlo</h1>
-          <span class="text-xs" data-i18n="footer.tagline">Fullstack developer with a focus on experience and accessibility.</span>
-        </div>
-        <div class="grid grid-cols-2 gap-4 md:grid-cols-4">
-          <div>
-            <span>Shop</span>
-          </div>
-          <div>
-            <span>Shop</span>
-          </div>
-          <div>
-            <span>Shop</span>
-          </div>
-          <div>
-            <span>Shop</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </footer>
+  <SiteFooter />
 </BaseLayout>
 
 <script>
