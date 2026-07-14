@@ -179,7 +179,7 @@ const earlierExperience = [
                 <span class="text-md" data-i18n="work.flavors.frontend.kicker">Frontend experience</span>
                 <span class="text-xl font-bold whitespace-pre-line" data-i18n="work.flavors.frontend.title">Design systems & frontend architecture</span>
               </div>
-              <a href="#projects" data-carousel-slide="0" class="border-black flex items-center uppercase text-sm font-bold tracking-wider"><span data-i18n="work.my-work">My Work</span> <ArrowRight class="w-2 h-2" /></a>
+              <a href="#project-vision-design-system" class="border-black flex items-center uppercase text-sm font-bold tracking-wider"><span data-i18n="work.my-work">My Work</span> <ArrowRight class="w-2 h-2" /></a>
             </div>
           </div>
           <div class="bg-brand-pink text-white relative flex items-center p-4 min-h-40">
@@ -187,7 +187,7 @@ const earlierExperience = [
               <div class="flex flex-col gap-1 md:h-40">
                 <span class="text-xl font-bold whitespace-pre-line" data-i18n="work.flavors.a11y.title">Accessibility & Performance</span>
               </div>
-              <a href="#projects" data-carousel-slide="0" class="border-black flex items-center uppercase text-sm font-bold tracking-wider"><span data-i18n="work.my-work">My Work</span> <ArrowRight class="w-2 h-2" /></a>
+              <a href="#project-vision-design-system" class="border-black flex items-center uppercase text-sm font-bold tracking-wider"><span data-i18n="work.my-work">My Work</span> <ArrowRight class="w-2 h-2" /></a>
             </div>
             <img id="badge-performance" src="/badge_performance.png" alt="" aria-hidden="true" class="absolute h-[68%] w-auto object-contain" style="right: -20px; bottom: -20px;" />
           </div>
@@ -198,16 +198,13 @@ const earlierExperience = [
                 <span class="text-md" data-i18n="work.flavors.backend.kicker">Extended flavor</span>
                 <span class="text-xl font-bold" data-i18n="work.flavors.backend.title">Node, SQL & APIs</span>
               </div>
-              <a href="#projects" data-carousel-slide="1" class="border-black flex items-center justify-end uppercase text-sm font-bold tracking-wider"><span data-i18n="work.my-work">My Work</span> <ArrowRight class="w-2 h-2" /></a>
+              <a href="#project-turnisports" class="border-black flex items-center justify-end uppercase text-sm font-bold tracking-wider"><span data-i18n="work.my-work">My Work</span> <ArrowRight class="w-2 h-2" /></a>
             </div>
           </div>
         </div>
 
         <section id="projects" class="section flex flex-col gap-4" aria-labelledby="projects-heading">
-          <div class="flex items-center justify-between">
-            <h2 id="projects-heading" class="border border-black rounded-full text-sm inline py-1 px-4" data-i18n="work.projects.pill">Projects</h2>
-            <div id="carousel-controls-slot" class="flex items-center gap-4"></div>
-          </div>
+          <h2 id="projects-heading" class="border border-black rounded-full text-sm inline self-start py-1 px-4" data-i18n="work.projects.pill">Projects</h2>
           <ProjectCarousel />
         </section>
 
@@ -334,19 +331,6 @@ const earlierExperience = [
 
     update();
   }
-  // ── Flavor → Carousel links ──────────────────────────────
-  document.querySelectorAll<HTMLAnchorElement>('[data-carousel-slide]').forEach((link) => {
-    link.addEventListener('click', (e) => {
-      const targetSlide = parseInt(link.dataset.carouselSlide ?? '0', 10);
-      const carousel = document.querySelector('.project-carousel');
-      if (!carousel) return;
-      const slides = [...carousel.querySelectorAll<HTMLElement>('.carousel-slide')];
-      const activeIndex = slides.findIndex((s) => s.classList.contains('is-active'));
-      if (activeIndex === targetSlide) return;
-      // Dispatch a synthetic click on the correct dot/nav isn't available — drive goTo via custom event
-      carousel.dispatchEvent(new CustomEvent('goto', { detail: { index: targetSlide } }));
-    });
-  });
 </script>
 
 <style>

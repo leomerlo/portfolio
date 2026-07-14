@@ -1,8 +1,5 @@
 ---
-import Vision from './projects/Vision.astro'
-import Turni from './projects/Turni.astro'
-import KimberlyClark from './projects/KimberlyClark.astro'
-import SurveyBuilder from './projects/SurveyBuilder.astro'
+import { ArrowUpRight } from 'lucide-astro';
 
 interface Props {
   i18nKey: string;
@@ -16,23 +13,23 @@ interface Props {
   url?: string;
 }
 
-const { i18nKey } = Astro.props;
+const { i18nKey, slug, title, description, tags } = Astro.props;
+const detailUrl = `/projects/${slug}`;
 ---
 
-<div>
-  {i18nKey === 'project1' && (
-    <Vision {...Astro.props} />
-  )}
-
-  {i18nKey === 'project2' && (
-    <Turni {...Astro.props} />
-  )}
-
-  {i18nKey === 'project3' && (
-    <KimberlyClark {...Astro.props} />
-  )}
-
-  {i18nKey === 'project4' && (
-    <SurveyBuilder {...Astro.props} />
-  )}
+<div class="flex flex-col md:flex-row md:items-start justify-between gap-6 py-6">
+  <div class="flex flex-col gap-3 max-w-xl">
+    <h3 class="text-3xl md:text-4xl">
+      <a href={detailUrl} class="hover:underline" data-i18n={`${i18nKey}.title`}>{title}</a>
+    </h3>
+    <p class="text-sm text-gray-500" data-i18n={`${i18nKey}.description`}>{description}</p>
+    <a href={detailUrl} class="border-b border-black uppercase text-xs self-start flex items-center gap-1 mt-2">
+      <span data-i18n="project.view-more">View More</span> <ArrowUpRight class="w-2 h-2" />
+    </a>
+  </div>
+  <div class="flex gap-2 flex-wrap md:justify-end md:max-w-xs">
+    {tags.map((tag, index) => (
+      <span class={`rounded-full px-4 py-1 text-xs whitespace-nowrap ${index % 2 === 0 ? 'border border-black' : 'bg-black text-white'}`}>{tag}</span>
+    ))}
+  </div>
 </div>
