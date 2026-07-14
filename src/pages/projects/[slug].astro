@@ -30,6 +30,39 @@ const accents: Record<string, { main: string; soft: string; alt: string; text: s
   project3: { main: 'bg-brand-pink', soft: 'bg-brand-pink/10', alt: 'bg-brand-lavender', text: 'text-brand-pink' },
 };
 const accent = accents[i18nKey] ?? accents.project1;
+
+type ProjectImage = { src: string; caption: string; position?: string; fit?: string };
+type ProjectImageSet = {
+  context: [ProjectImage, ProjectImage];
+  approach: [ProjectImage, ProjectImage, ProjectImage];
+};
+
+const projectImages: Record<string, ProjectImageSet> = {
+  'vision-design-system': {
+    context: [
+      { src: '/projects/vision-design-system/before-state.png', caption: 'Legacy Perceptyx dashboard — the analytics surface before Vision.', position: 'bg-left-top' },
+      { src: '/projects/vision-design-system/context.png', caption: 'Favorability Report — primary analytics view used across all product teams.', position: 'bg-left-top' },
+    ],
+    approach: [
+      { src: '/projects/vision-design-system/process.png', caption: 'Design token system — color scale documentation for the Vision palette.', position: 'bg-left-top' },
+      { src: '/projects/vision-design-system/detail.png', caption: 'Brand components in Storybook — the shared contract between design and engineering.', position: 'bg-left-top' },
+      { src: '/projects/vision-design-system/outcome.png', caption: 'New Perceptyx platform — post Vision Design System adoption across product teams.', position: 'bg-top' },
+    ],
+  },
+  'turnisports': {
+    context: [
+      { src: '/projects/turnisports/context.jpg', caption: 'Coach profile & class packs — the first screen every coach configures on signup.', position: 'bg-center', fit: 'contain' },
+      { src: '/projects/turnisports/context2.jpg', caption: 'Class schedule — calendar and list views built for coaches managing multiple groups.', position: 'bg-center' },
+    ],
+    approach: [
+      { src: '/projects/turnisports/process.jpg', caption: 'Turni Kit visual system — gradient overlays and brand language documented for consistency.', position: 'bg-center' },
+      { src: '/projects/turnisports/detail.jpg', caption: 'Mascotas & Ilustraciones — 3D characters representing each sport, built as reusable assets.', position: 'bg-center' },
+      { src: '/projects/turnisports/outcome.jpg', caption: 'Turni Kit 1.0 — color palette, typography, components, and illustration system shipped as a living doc.', position: 'bg-center' },
+    ],
+  },
+};
+
+const imgs = projectImages[project.slug];
 ---
 
 <BaseLayout title={`${title} — Leo Merlo`} description={description}>
@@ -61,11 +94,17 @@ const accent = accents[i18nKey] ?? accents.project1;
       </section>
 
       <!-- ── Hero image ───────────────────────────────────── -->
-      <div class={`mt-12 relative ${accent.main} aspect-[21/9] w-full overflow-hidden`} role="img" aria-label={title}>
-        <span class="placeholder-label">Hero image</span>
-        <div class={`absolute -right-16 -bottom-16 w-64 h-64 rounded-full ${accent.alt}`}></div>
-        <div class="absolute left-8 bottom-8 w-16 h-16 rounded-full bg-white/30"></div>
-      </div>
+      {imgs && (
+        <div class="mt-12 relative bg-white aspect-[21/9] w-full overflow-hidden" role="img" aria-label={title}>
+          <img
+            src={`/projects/${project.slug}/hero.jpg`}
+            alt={title}
+            class="absolute inset-0 w-full h-full object-contain"
+            onerror="this.style.display='none'"
+          />
+          <div class="absolute inset-0 pointer-events-none" style="background: linear-gradient(to left, white 0%, transparent 18%), linear-gradient(to right, white 0%, transparent 18%), linear-gradient(to bottom, white 0%, transparent 18%), linear-gradient(to top, white 0%, transparent 18%);"></div>
+        </div>
+      )}
 
       <div class="flex items-center gap-2 mt-6 text-xs uppercase tracking-widest text-gray-500">
         <ArrowDown class="w-3 h-3" />
@@ -81,10 +120,24 @@ const accent = accents[i18nKey] ?? accents.project1;
         <p class="chapter-body" data-i18n={`${i18nKey}.star.situation`}>{t(`${i18nKey}.star.situation`)}</p>
       </section>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mt-12">
-        <div class={`${accent.soft} aspect-square relative`}><span class="placeholder-label">Context</span></div>
-        <div class={`${accent.main} md:col-span-2 relative`}><span class="placeholder-label">Before state</span></div>
-      </div>
+      {imgs && (
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mt-12">
+          <figure class="flex flex-col gap-2">
+            <div
+              class="aspect-square relative overflow-hidden flex-1 bg-gray-100"
+              style={`background-image: url('${imgs.context[0].src}'); background-size: ${imgs.context[0].fit ?? 'cover'}; background-position: ${imgs.context[0].position?.replace('bg-', '') ?? 'center'}; background-repeat: no-repeat;`}
+            />
+            <figcaption class="flex flex-col gap-1"><div class="w-12 border-t-2 border-black"></div><span class="text-xs text-gray-500">{imgs.context[0].caption}</span></figcaption>
+          </figure>
+          <figure class="md:col-span-2 flex flex-col gap-2">
+            <div
+              class="flex-1 min-h-48 relative overflow-hidden"
+              style={`background-image: url('${imgs.context[1].src}'); background-size: cover; background-position: ${imgs.context[1].position?.replace('bg-', '') ?? 'center'};`}
+            />
+            <figcaption class="flex flex-col gap-1"><div class="w-12 border-t-2 border-black"></div><span class="text-xs text-gray-500">{imgs.context[1].caption}</span></figcaption>
+          </figure>
+        </div>
+      )}
 
       <!-- ── 02 Challenge ──────────────────────────────────────── -->
       <section class="chapter" aria-labelledby="cs-challenge">
@@ -104,14 +157,31 @@ const accent = accents[i18nKey] ?? accents.project1;
         <p class="chapter-body" data-i18n={`${i18nKey}.star.action`}>{t(`${i18nKey}.star.action`)}</p>
       </section>
 
-      <div class="grid grid-cols-2 gap-3 mt-12">
-        <div class={`${accent.alt} aspect-[4/3] relative`}><span class="placeholder-label">Process</span></div>
-        <div class="bg-brand-lavender aspect-[4/3] relative"><span class="placeholder-label">Detail</span></div>
-        <div class={`${accent.main} col-span-2 aspect-[21/9] relative`}>
-          <span class="placeholder-label">Full-width outcome</span>
-          <div class="absolute right-8 top-8 w-12 h-12 rounded-full bg-white/30"></div>
+      {imgs && (
+        <div class="grid grid-cols-2 gap-3 mt-12">
+          <figure class="flex flex-col gap-2">
+            <div
+              class="aspect-[4/3] relative overflow-hidden"
+              style={`background-image: url('${imgs.approach[0].src}'); background-size: cover; background-position: ${imgs.approach[0].position?.replace('bg-', '') ?? 'center'};`}
+            />
+            <figcaption class="flex flex-col gap-1"><div class="w-12 border-t-2 border-black"></div><span class="text-xs text-gray-500">{imgs.approach[0].caption}</span></figcaption>
+          </figure>
+          <figure class="flex flex-col gap-2">
+            <div
+              class="aspect-[4/3] relative overflow-hidden"
+              style={`background-image: url('${imgs.approach[1].src}'); background-size: cover; background-position: ${imgs.approach[1].position?.replace('bg-', '') ?? 'center'};`}
+            />
+            <figcaption class="flex flex-col gap-1"><div class="w-12 border-t-2 border-black"></div><span class="text-xs text-gray-500">{imgs.approach[1].caption}</span></figcaption>
+          </figure>
+          <figure class="col-span-2 flex flex-col gap-2">
+            <div
+              class="aspect-[21/9] relative overflow-hidden"
+              style={`background-image: url('${imgs.approach[2].src}'); background-size: cover; background-position: ${imgs.approach[2].position?.replace('bg-', '') ?? 'center'};`}
+            />
+            <figcaption class="flex flex-col gap-1"><div class="w-12 border-t-2 border-black"></div><span class="text-xs text-gray-500">{imgs.approach[2].caption}</span></figcaption>
+          </figure>
         </div>
-      </div>
+      )}
 
       <!-- ── 04 Impact ────────────────────────────────────── -->
       <section class="chapter" aria-labelledby="cs-impact">
