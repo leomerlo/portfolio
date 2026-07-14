@@ -17,7 +17,7 @@ const detailUrl = `/projects/${slug}`;
 ---
 
 <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-0 py-6">
-  <div class="flex flex-col justify-between gap-6 md:gap-0">
+  <div class="project-text flex flex-col justify-between gap-6 md:gap-0">
     <div class="flex flex-col gap-2">
       <h3 class="text-3xl md:text-4xl"><a href={detailUrl} class="hover:underline" data-i18n={`${i18nKey}.title`}>{title}</a></h3>
       <p class="text-sm my-6" data-i18n={`${i18nKey}.description`}>{description}</p>

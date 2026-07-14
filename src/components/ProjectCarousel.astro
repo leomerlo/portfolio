@@ -12,10 +12,10 @@ import { projects } from '../data/projects';
   data-i18n-aria="carousel.label"
 >
   <div class="carousel-viewport">
-    <div class="carousel-track flex items-start transition-transform duration-500 ease-out motion-reduce:transition-none" aria-live="off">
+    <div class="carousel-track" aria-live="off">
       {projects.map((p, i) => (
         <div
-          class:list={['carousel-slide w-full shrink-0 overflow-hidden', { 'is-active': i === 0 }]}
+          class:list={['carousel-slide', { 'is-active': i === 0 }]}
           role="group"
           aria-roledescription="slide"
           aria-label={`${i + 1} / ${projects.length}`}
@@ -28,7 +28,7 @@ import { projects } from '../data/projects';
     </div>
   </div>
 
-  <div class="flex items-center justify-between mt-2">
+  <div class="carousel-controls flex items-center justify-between mt-2">
     <div class="flex gap-2">
       {projects.map((p, i) => (
         <button
@@ -72,46 +72,39 @@ import { projects } from '../data/projects';
     cursor: grabbing;
   }
 
-  .carousel-viewport.is-dragging .carousel-track {
-    transition: none;
-  }
-
   .project-carousel.is-dragging,
   .project-carousel.is-dragging * {
     user-select: none;
   }
 
   .carousel-track {
+    position: relative;
     touch-action: pan-y;
+    width: 100%;
   }
 
-  @media (max-width: 767px) {
-    .carousel-viewport {
-      transition: height 300ms ease;
-    }
+  .carousel-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    opacity: 0;
+    pointer-events: none;
   }
 
-  @media (prefers-reduced-motion: no-preference) {
-    .carousel-slide.is-active .color-block {
-      animation: carousel-block-in 0.5s ease-out backwards;
-    }
-  }
-
-  @keyframes carousel-block-in {
-    from {
-      opacity: 0;
-      transform: translateY(8px) scale(0.98);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0) scale(1);
-    }
+  .carousel-slide.is-active {
+    opacity: 1;
+    pointer-events: auto;
   }
 </style>
 
 <script>
   const AUTOPLAY_MS = 6000;
   const MOBILE_QUERY = '(max-width: 767px)';
+  const OUT_MS = 300;
+  const IN_MS = 450;
+  const STAGGER_MS = 80;
+
   const carousel = document.querySelector<HTMLElement>('.project-carousel');
 
   if (carousel) {
@@ -121,81 +114,154 @@ import { projects } from '../data/projects';
     const dots = [...carousel.querySelectorAll<HTMLElement>('.carousel-dot')];
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    // Stagger the color-block entrance within each slide
-    slides.forEach((slide) => {
-      slide.querySelectorAll<HTMLElement>('.color-block').forEach((block, i) => {
-        block.style.animationDelay = `${i * 90}ms`;
-      });
-    });
-
     let index = 0;
     let timer: ReturnType<typeof setInterval> | null = null;
-    let slideWidth = viewport.clientWidth;
-    let dragOffset = 0;
+    let transitioning = false;
     let dragging = false;
     let dragStartX = 0;
+    let dragOffset = 0;
     let dragMoved = false;
 
     function syncHeight() {
+      const h = slides[index].offsetHeight;
+      track.style.height = `${h}px`;
       if (window.matchMedia(MOBILE_QUERY).matches) {
-        viewport.style.height = `${slides[index].offsetHeight}px`;
+        viewport.style.height = `${h}px`;
       } else {
         viewport.style.height = '';
       }
     }
 
-    function applyTransform() {
-      track.style.transform = `translateX(${-(index * slideWidth) + dragOffset}px)`;
+    function clearAnimations(slide: HTMLElement) {
+      const textEl = slide.querySelector<HTMLElement>('.project-text');
+      const blocks = [...slide.querySelectorAll<HTMLElement>('.color-block')];
+      [textEl, ...blocks].filter(Boolean).forEach((el) => {
+        el!.getAnimations().forEach((a) => a.cancel());
+        (el as HTMLElement).style.opacity = '';
+        (el as HTMLElement).style.transform = '';
+      });
     }
 
-    function goTo(next: number) {
-      index = (next + slides.length) % slides.length;
-      dragOffset = 0;
-      applyTransform();
-      slides.forEach((slide, i) => {
-        const active = i === index;
-        slide.classList.toggle('is-active', active);
-        slide.setAttribute('aria-hidden', String(!active));
-        slide.toggleAttribute('inert', !active);
+    function animateOut(slide: HTMLElement, dir: 'next' | 'prev') {
+      const textEl = slide.querySelector<HTMLElement>('.project-text');
+      const blocks = [...slide.querySelectorAll<HTMLElement>('.color-block')];
+      const xOut = dir === 'next' ? '-60px' : '60px';
+
+      if (textEl) {
+        textEl.animate(
+          [{ opacity: 1 }, { opacity: 0 }],
+          { duration: OUT_MS, easing: 'ease', fill: 'forwards' }
+        );
+      }
+
+      blocks.forEach((block) => {
+        block.animate(
+          [
+            { opacity: 1, transform: 'translateX(0)' },
+            { opacity: 0, transform: `translateX(${xOut})` },
+          ],
+          { duration: OUT_MS, easing: 'ease', fill: 'forwards' }
+        );
       });
+    }
+
+    function animateIn(slide: HTMLElement, dir: 'next' | 'prev') {
+      const textEl = slide.querySelector<HTMLElement>('.project-text');
+      const blocks = [...slide.querySelectorAll<HTMLElement>('.color-block')];
+      const xIn = dir === 'next' ? '60px' : '-60px';
+
+      if (textEl) {
+        textEl.animate(
+          [{ opacity: 0 }, { opacity: 1 }],
+          { duration: IN_MS, easing: 'ease', fill: 'backwards' }
+        );
+      }
+
+      blocks.forEach((block, i) => {
+        block.animate(
+          [
+            { opacity: 0, transform: `translateX(${xIn})` },
+            { opacity: 1, transform: 'translateX(0)' },
+          ],
+          { duration: IN_MS, delay: i * STAGGER_MS, easing: 'ease', fill: 'backwards' }
+        );
+      });
+    }
+
+    function goTo(next: number, dir: 'next' | 'prev' = 'next') {
+      if (transitioning || next === index) return;
+      transitioning = true;
+
+      const prevIndex = index;
+      index = (next + slides.length) % slides.length;
+
+      const prevSlide = slides[prevIndex];
+      const nextSlide = slides[index];
+
+      // Update dots immediately
       dots.forEach((dot, i) => {
         dot.classList.toggle('bg-black', i === index);
         dot.setAttribute('aria-current', String(i === index));
       });
-      syncHeight();
+
+      if (reduceMotion) {
+        prevSlide.classList.remove('is-active');
+        prevSlide.setAttribute('aria-hidden', 'true');
+        prevSlide.setAttribute('inert', '');
+        nextSlide.classList.add('is-active');
+        nextSlide.setAttribute('aria-hidden', 'false');
+        nextSlide.removeAttribute('inert');
+        transitioning = false;
+        syncHeight();
+        return;
+      }
+
+      // Phase 1: animate out
+      clearAnimations(prevSlide);
+      animateOut(prevSlide, dir);
+
+      // Phase 2: switch + animate in
+      setTimeout(() => {
+        prevSlide.classList.remove('is-active');
+        prevSlide.setAttribute('aria-hidden', 'true');
+        prevSlide.setAttribute('inert', '');
+
+        nextSlide.classList.add('is-active');
+        nextSlide.setAttribute('aria-hidden', 'false');
+        nextSlide.removeAttribute('inert');
+
+        syncHeight();
+        clearAnimations(nextSlide);
+        animateIn(nextSlide, dir);
+
+        setTimeout(() => {
+          transitioning = false;
+        }, IN_MS + (nextSlide.querySelectorAll('.color-block').length - 1) * STAGGER_MS + 50);
+      }, OUT_MS);
     }
 
     function stop() {
-      if (timer) {
-        clearInterval(timer);
-        timer = null;
-      }
+      if (timer) { clearInterval(timer); timer = null; }
       track.setAttribute('aria-live', 'polite');
     }
 
     function start() {
       if (reduceMotion || timer) return;
       track.setAttribute('aria-live', 'off');
-      timer = setInterval(() => goTo(index + 1), AUTOPLAY_MS);
+      timer = setInterval(() => goTo(index + 1, 'next'), AUTOPLAY_MS);
     }
 
-    function restart() {
-      stop();
-      start();
-    }
+    function restart() { stop(); start(); }
 
     carousel.querySelector('.carousel-prev')?.addEventListener('click', () => {
-      goTo(index - 1);
-      restart();
+      goTo(index - 1, 'prev'); restart();
     });
     carousel.querySelector('.carousel-next')?.addEventListener('click', () => {
-      goTo(index + 1);
-      restart();
+      goTo(index + 1, 'next'); restart();
     });
     dots.forEach((dot, i) =>
       dot.addEventListener('click', () => {
-        goTo(i);
-        restart();
+        goTo(i, i > index ? 'next' : 'prev'); restart();
       })
     );
 
@@ -206,7 +272,7 @@ import { projects } from '../data/projects';
       if (!carousel.contains(e.relatedTarget as Node)) start();
     });
 
-    // ── Drag to scroll (mouse + touch + pen via Pointer Events) ──
+    // ── Drag ──
     viewport.addEventListener('pointerdown', (e) => {
       dragging = true;
       dragMoved = false;
@@ -222,7 +288,7 @@ import { projects } from '../data/projects';
       if (!dragging) return;
       dragOffset = e.clientX - dragStartX;
       if (Math.abs(dragOffset) > 4) dragMoved = true;
-      applyTransform();
+      slides[index].style.transform = `translateX(${dragOffset}px)`;
     });
 
     function endDrag(e: PointerEvent) {
@@ -230,43 +296,35 @@ import { projects } from '../data/projects';
       dragging = false;
       carousel.classList.remove('is-dragging');
       viewport.classList.remove('is-dragging');
-      try {
-        viewport.releasePointerCapture(e.pointerId);
-      } catch {}
+      try { viewport.releasePointerCapture(e.pointerId); } catch {}
 
-      const threshold = Math.min(80, slideWidth * 0.15);
-      if (dragOffset <= -threshold) {
-        goTo(index + 1);
-      } else if (dragOffset >= threshold) {
-        goTo(index - 1);
-      } else {
-        dragOffset = 0;
-        applyTransform();
-      }
+      slides[index].style.transform = '';
+      const threshold = Math.min(80, viewport.clientWidth * 0.15);
+      if (dragOffset <= -threshold) { goTo(index + 1, 'next'); }
+      else if (dragOffset >= threshold) { goTo(index - 1, 'prev'); }
+      dragOffset = 0;
       restart();
     }
 
     viewport.addEventListener('pointerup', endDrag);
     viewport.addEventListener('pointercancel', endDrag);
 
-    // Prevent a dragged link/button from firing its click on release
     carousel.addEventListener('click', (e) => {
-      if (dragMoved) {
-        e.preventDefault();
-        e.stopPropagation();
-        dragMoved = false;
-      }
+      if (dragMoved) { e.preventDefault(); e.stopPropagation(); dragMoved = false; }
     }, { capture: true });
 
-    // ── Keep width/height in sync with layout changes ──
-    const resizeObserver = new ResizeObserver(() => {
-      slideWidth = viewport.clientWidth;
-      applyTransform();
-      syncHeight();
-    });
+    const resizeObserver = new ResizeObserver(() => syncHeight());
     resizeObserver.observe(viewport);
 
-    goTo(0);
+    // Portal controls to the section header slot if available
+    const slot = document.getElementById('carousel-controls-slot');
+    const controls = carousel.querySelector<HTMLElement>('.carousel-controls');
+    if (slot && controls) {
+      controls.classList.remove('mt-2');
+      slot.appendChild(controls);
+    }
+
+    syncHeight();
     start();
   }
 </script>

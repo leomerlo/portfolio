@@ -195,8 +195,11 @@ const earlierExperience = [
           </div>
         </div>
 
-        <section id="projects" class="section flex flex-col gap-6" aria-labelledby="projects-heading">
-          <h2 id="projects-heading" class="border border-black rounded-full text-sm inline self-start py-1 px-4" data-i18n="work.projects.pill">Projects</h2>
+        <section id="projects" class="section flex flex-col gap-4" aria-labelledby="projects-heading">
+          <div class="flex items-center justify-between">
+            <h2 id="projects-heading" class="border border-black rounded-full text-sm inline py-1 px-4" data-i18n="work.projects.pill">Projects</h2>
+            <div id="carousel-controls-slot" class="flex items-center gap-4"></div>
+          </div>
           <ProjectCarousel />
         </section>
 
