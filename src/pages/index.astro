@@ -11,14 +11,14 @@ const experience = [
     i18nKey: 'experience1',
     company: 'Perceptyx',
     role: 'Sr. Frontend Developer',
-    period: '2017 — 2025',
+    period: 'Sep 2016 — Jan 2026',
     summary: 'Led the Design System to 80%+ adoption across product teams, drove WCAG accessibility initiatives that cut review cycles by 30%, and founded the cross-team Frontend Guild.',
   },
   {
     i18nKey: 'experience2',
     company: 'Accenture',
     role: 'Sr. Frontend Developer',
-    period: '2014 — 2017',
+    period: 'Sep 2014 — Sep 2016',
     summary: 'Built client-facing interfaces for Kimberly-Clark and Dyson on SharePoint, end-to-end from wireframes to production, in cross-functional US/Argentina teams.',
   },
 ];
@@ -28,35 +28,35 @@ const earlierExperience = [
     i18nKey: 'experience3',
     company: 'CrossMedia',
     role: 'Frontend Developer',
-    period: '2014',
+    period: 'Jul 2013 — Sep 2014',
     summary: 'Responsive HTML builds for Virgin Mobile, Bimbo, and Banamex.',
   },
   {
     i18nKey: 'experience4',
     company: 'Estudio Himalaya',
     role: 'Freelance Frontend Developer',
-    period: 'Freelance',
+    period: 'May 2012 — Sep 2014',
     summary: 'Independent frontend and WordPress projects.',
   },
   {
     i18nKey: 'experience5',
     company: 'Paginar.net',
     role: 'Frontend Developer',
-    period: '2010 — 2013',
+    period: 'Sep 2010 — Jul 2013',
     summary: 'Drupal, Joomla, and WordPress sites for ICBC, SC Johnson, and Banghó.',
   },
   {
     i18nKey: 'experience6',
     company: 'Insilence',
-    role: 'PHP Developer',
-    period: '2009 — 2010',
+    role: 'Backend Developer',
+    period: 'Jan 2009 — Aug 2010',
     summary: 'Web security tooling and pentesting utilities.',
   },
   {
     i18nKey: 'experience7',
     company: 'Baires Group',
     role: 'Web Designer',
-    period: '2008 — 2009',
+    period: 'Oct 2007 — Jan 2009',
     summary: 'Loyalty-program sites and newsletter/Flash design.',
   },
 ];
@@ -213,9 +213,11 @@ const earlierExperience = [
           <ul class="flex flex-col" aria-label="Work experience">
             {experience.map((e) => (
               <li class="grid grid-cols-1 md:grid-cols-[8rem_1fr] gap-1 md:gap-6 py-6 border-b border-gray-200 w-full">
-                <div class="text-sm text-gray-500 md:pt-1">{e.period}</div>
+                <div class="text-sm text-gray-500 md:pt-1 flex flex-col">
+                  {e.period.split(' — ').map((part) => <span>{part}</span>)}
+                </div>
                 <div class="flex flex-col gap-2 w-full">
-                  <p class="text-xl font-bold">
+                  <p class="text-base font-bold">
                     {e.role} <span class="font-normal text-gray-500">· {e.company}</span>
                   </p>
                   <p class="text-sm max-w-2xl" data-i18n={`${e.i18nKey}.summary`}>{e.summary}</p>
@@ -223,13 +225,16 @@ const earlierExperience = [
               </li>
             ))}
             {earlierExperience.map((e) => (
-              <li class="grid grid-cols-1 md:grid-cols-[8rem_1fr] gap-1 md:gap-6 py-4 md:py-3 border-b border-gray-200 text-sm items-baseline w-full">
-                <div class="text-gray-500">{e.period}</div>
-                <p>
-                  <span class="font-bold">{e.role}</span> <span class="text-gray-500">· {e.company}</span>
-                  {' — '}
-                  <span data-i18n={`${e.i18nKey}.summary`}>{e.summary}</span>
-                </p>
+              <li class="grid grid-cols-1 md:grid-cols-[8rem_1fr] gap-1 md:gap-6 py-4 md:py-3 border-b border-gray-200 text-sm w-full">
+                <div class="text-gray-500 flex flex-col">
+                  {e.period.split(' — ').map((part) => <span>{part}</span>)}
+                </div>
+                <div class="flex flex-col gap-2 w-full">
+                  <p class="text-base font-bold">
+                    {e.role} <span class="font-normal text-gray-500">· {e.company}</span>
+                  </p>
+                  <p class="text-sm max-w-2xl" data-i18n={`${e.i18nKey}.summary`}>{e.summary}</p>
+                </div>
               </li>
             ))}
           </ul>
