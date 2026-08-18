@@ -28,13 +28,14 @@ const accents: Record<string, { main: string; soft: string; alt: string; text: s
   project1: { main: 'bg-brand-purple', soft: 'bg-brand-purple/10', alt: 'bg-brand-yellow', text: 'text-brand-purple' },
   project2: { main: 'bg-brand-yellow', soft: 'bg-brand-yellow/10', alt: 'bg-brand-purple', text: 'text-brand-purple' },
   project3: { main: 'bg-brand-pink', soft: 'bg-brand-pink/10', alt: 'bg-brand-lavender', text: 'text-brand-pink' },
+  project4: { main: 'bg-brand-purple', soft: 'bg-brand-lavender/10', alt: 'bg-brand-yellow', text: 'text-brand-purple' },
 };
 const accent = accents[i18nKey] ?? accents.project1;
 
 type ProjectImage = { src: string; caption: string; position?: string; fit?: string };
 type ProjectImageSet = {
   context: [ProjectImage, ProjectImage];
-  approach: [ProjectImage, ProjectImage, ProjectImage];
+  approach: ProjectImage[];
 };
 
 const projectImages: Record<string, ProjectImageSet> = {
@@ -59,6 +60,13 @@ const projectImages: Record<string, ProjectImageSet> = {
       { src: '/projects/turnisports/detail.jpg', caption: 'Mascotas & Ilustraciones — 3D characters representing each sport, built as reusable assets.', position: 'bg-center' },
       { src: '/projects/turnisports/outcome.jpg', caption: 'Turni Kit 1.0 — color palette, typography, components, and illustration system shipped as a living doc.', position: 'bg-center' },
     ],
+  },
+  'condor': {
+    context: [
+      { src: '/projects/condor/context.jpg', caption: 'The conversation itself: an agent sets recurring reminders and asks Cóndor to recap every open follow-up for a contact — all in plain language.', position: 'bg-top', fit: 'contain' },
+      { src: '/projects/condor/context2.jpg', caption: 'The main dashboard — agents can review contacts, follow-up status, and reply history without leaving the web view.', position: 'bg-top', fit: 'contain' },
+    ],
+    approach: [],
   },
 };
 
@@ -124,15 +132,15 @@ const imgs = projectImages[project.slug];
         <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mt-12">
           <figure class="flex flex-col gap-2">
             <div
-              class="aspect-square relative overflow-hidden flex-1 bg-gray-100"
+              class="relative overflow-hidden flex-1 bg-gray-100"
               style={`background-image: url('${imgs.context[0].src}'); background-size: ${imgs.context[0].fit ?? 'cover'}; background-position: ${imgs.context[0].position?.replace('bg-', '') ?? 'center'}; background-repeat: no-repeat;`}
             />
             <figcaption class="flex flex-col gap-1"><div class="w-12 border-t-2 border-black"></div><span class="text-xs text-gray-500">{imgs.context[0].caption}</span></figcaption>
           </figure>
           <figure class="md:col-span-2 flex flex-col gap-2">
             <div
-              class="flex-1 min-h-48 relative overflow-hidden"
-              style={`background-image: url('${imgs.context[1].src}'); background-size: cover; background-position: ${imgs.context[1].position?.replace('bg-', '') ?? 'center'};`}
+              class="aspect-[21/9] relative overflow-hidden bg-gray-100"
+              style={`background-image: url('${imgs.context[1].src}'); background-size: ${imgs.context[1].fit ?? 'cover'}; background-position: ${imgs.context[1].position?.replace('bg-', '') ?? 'center'}; background-repeat: no-repeat;`}
             />
             <figcaption class="flex flex-col gap-1"><div class="w-12 border-t-2 border-black"></div><span class="text-xs text-gray-500">{imgs.context[1].caption}</span></figcaption>
           </figure>
@@ -157,29 +165,127 @@ const imgs = projectImages[project.slug];
         <p class="chapter-body" data-i18n={`${i18nKey}.star.action`}>{t(`${i18nKey}.star.action`)}</p>
       </section>
 
-      {imgs && (
+      {imgs && imgs.approach.length > 0 && (
         <div class="grid grid-cols-2 gap-3 mt-12">
-          <figure class="flex flex-col gap-2">
-            <div
-              class="aspect-[4/3] relative overflow-hidden"
-              style={`background-image: url('${imgs.approach[0].src}'); background-size: cover; background-position: ${imgs.approach[0].position?.replace('bg-', '') ?? 'center'};`}
-            />
-            <figcaption class="flex flex-col gap-1"><div class="w-12 border-t-2 border-black"></div><span class="text-xs text-gray-500">{imgs.approach[0].caption}</span></figcaption>
-          </figure>
-          <figure class="flex flex-col gap-2">
-            <div
-              class="aspect-[4/3] relative overflow-hidden"
-              style={`background-image: url('${imgs.approach[1].src}'); background-size: cover; background-position: ${imgs.approach[1].position?.replace('bg-', '') ?? 'center'};`}
-            />
-            <figcaption class="flex flex-col gap-1"><div class="w-12 border-t-2 border-black"></div><span class="text-xs text-gray-500">{imgs.approach[1].caption}</span></figcaption>
-          </figure>
-          <figure class="col-span-2 flex flex-col gap-2">
-            <div
-              class="aspect-[21/9] relative overflow-hidden"
-              style={`background-image: url('${imgs.approach[2].src}'); background-size: cover; background-position: ${imgs.approach[2].position?.replace('bg-', '') ?? 'center'};`}
-            />
-            <figcaption class="flex flex-col gap-1"><div class="w-12 border-t-2 border-black"></div><span class="text-xs text-gray-500">{imgs.approach[2].caption}</span></figcaption>
-          </figure>
+          {imgs.approach[0] && (
+            <figure class="flex flex-col gap-2">
+              <div
+                class="aspect-[4/3] relative overflow-hidden bg-gray-100"
+                style={`background-image: url('${imgs.approach[0].src}'); background-size: ${imgs.approach[0].fit ?? 'cover'}; background-position: ${imgs.approach[0].position?.replace('bg-', '') ?? 'center'}; background-repeat: no-repeat;`}
+              />
+              <figcaption class="flex flex-col gap-1"><div class="w-12 border-t-2 border-black"></div><span class="text-xs text-gray-500">{imgs.approach[0].caption}</span></figcaption>
+            </figure>
+          )}
+          {imgs.approach[1] && (
+            <figure class="flex flex-col gap-2">
+              <div
+                class="aspect-[4/3] relative overflow-hidden bg-gray-100"
+                style={`background-image: url('${imgs.approach[1].src}'); background-size: ${imgs.approach[1].fit ?? 'cover'}; background-position: ${imgs.approach[1].position?.replace('bg-', '') ?? 'center'}; background-repeat: no-repeat;`}
+              />
+              <figcaption class="flex flex-col gap-1"><div class="w-12 border-t-2 border-black"></div><span class="text-xs text-gray-500">{imgs.approach[1].caption}</span></figcaption>
+            </figure>
+          )}
+          {imgs.approach[2] && (
+            <figure class="col-span-2 flex flex-col gap-2">
+              <div
+                class="aspect-[21/9] relative overflow-hidden bg-gray-100"
+                style={`background-image: url('${imgs.approach[2].src}'); background-size: ${imgs.approach[2].fit ?? 'cover'}; background-position: ${imgs.approach[2].position?.replace('bg-', '') ?? 'center'}; background-repeat: no-repeat;`}
+              />
+              <figcaption class="flex flex-col gap-1"><div class="w-12 border-t-2 border-black"></div><span class="text-xs text-gray-500">{imgs.approach[2].caption}</span></figcaption>
+            </figure>
+          )}
+        </div>
+      )}
+
+      {project.slug === 'condor' && (
+        <div class="mt-12 rounded-2xl border border-gray-200 p-6 md:p-10">
+          <div class="flex flex-col md:flex-row md:items-baseline md:justify-between gap-3 mb-10">
+            <div>
+              <span class="text-xs font-bold uppercase tracking-widest text-brand-purple" data-i18n="project4.flow.eyebrow">{t('project4.flow.eyebrow')}</span>
+              <h3 class="text-xl md:text-2xl font-bold mt-1 max-w-xl" data-i18n="project4.flow.title">{t('project4.flow.title')}</h3>
+            </div>
+            <p class="text-sm text-gray-500 md:max-w-xs md:text-right" data-i18n="project4.flow.subtitle">{t('project4.flow.subtitle')}</p>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+            <div class="flex flex-col gap-3">
+              <div class="flex items-center gap-2">
+                <span class="text-2xl font-extrabold text-brand-purple">01</span>
+                <span class="text-xs font-bold uppercase tracking-wide" data-i18n="project4.flow.s1.label">{t('project4.flow.s1.label')}</span>
+              </div>
+              <div class="flex flex-col gap-3 flex-1">
+                <div class="rounded-xl border p-4" style="background:#E4F8EC;border-color:#BEEBD1;">
+                  <span class="inline-block text-[10px] font-bold uppercase tracking-wide px-2 py-0.5 rounded-full bg-[#22C35E] text-[#06210F] mb-1.5">WhatsApp</span>
+                  <p class="text-xs text-gray-700 leading-relaxed" data-i18n="project4.flow.s1.c1">{t('project4.flow.s1.c1')}</p>
+                </div>
+                <div class="rounded-xl border border-gray-200 p-4">
+                  <p class="text-sm font-bold mb-1" data-i18n="project4.flow.s1.c2title">{t('project4.flow.s1.c2title')}</p>
+                  <p class="text-xs text-gray-500 leading-relaxed" data-i18n="project4.flow.s1.c2">{t('project4.flow.s1.c2')}</p>
+                </div>
+                <div class="rounded-xl border border-gray-200 p-4">
+                  <p class="text-sm font-bold mb-1" data-i18n="project4.flow.s1.c3title">{t('project4.flow.s1.c3title')}</p>
+                  <p class="text-xs text-gray-500 leading-relaxed" data-i18n="project4.flow.s1.c3">{t('project4.flow.s1.c3')}</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex flex-col gap-3">
+              <div class="flex items-center gap-2">
+                <span class="text-2xl font-extrabold text-brand-purple">02</span>
+                <span class="text-xs font-bold uppercase tracking-wide" data-i18n="project4.flow.s2.label">{t('project4.flow.s2.label')}</span>
+              </div>
+              <div class="flex flex-col gap-3 flex-1">
+                <div class="rounded-xl border p-4 flex-1" style="background:#EDE9FF;border-color:#D6CFFF;">
+                  <p class="text-sm font-bold mb-1" data-i18n="project4.flow.s2.c1title">{t('project4.flow.s2.c1title')}</p>
+                  <p class="text-xs text-gray-600 leading-relaxed" data-i18n="project4.flow.s2.c1">{t('project4.flow.s2.c1')}</p>
+                </div>
+                <div class="rounded-xl border p-4 flex-1" style="background:#EDE9FF;border-color:#D6CFFF;">
+                  <p class="text-sm font-bold mb-1" data-i18n="project4.flow.s2.c2title">{t('project4.flow.s2.c2title')}</p>
+                  <p class="text-xs text-gray-600 leading-relaxed" data-i18n="project4.flow.s2.c2">{t('project4.flow.s2.c2')}</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex flex-col gap-3">
+              <div class="flex items-center gap-2">
+                <span class="text-2xl font-extrabold text-brand-purple">03</span>
+                <span class="text-xs font-bold uppercase tracking-wide" data-i18n="project4.flow.s3.label">{t('project4.flow.s3.label')}</span>
+              </div>
+              <div class="flex flex-col gap-3 flex-1">
+                <div class="rounded-xl border border-gray-200 p-4">
+                  <p class="text-sm font-bold mb-1" data-i18n="project4.flow.s3.c1title">{t('project4.flow.s3.c1title')}</p>
+                  <p class="text-xs text-gray-500 leading-relaxed" data-i18n="project4.flow.s3.c1">{t('project4.flow.s3.c1')}</p>
+                </div>
+                <div class="rounded-xl border p-4" style="background:#E4F8EC;border-color:#BEEBD1;">
+                  <span class="inline-block text-[10px] font-bold uppercase tracking-wide px-2 py-0.5 rounded-full bg-[#22C35E] text-[#06210F] mb-1.5">WhatsApp</span>
+                  <p class="text-xs text-gray-700 leading-relaxed mb-1.5" data-i18n="project4.flow.s3.c2">{t('project4.flow.s3.c2')}</p>
+                  <p class="text-[11px] text-gray-500" data-i18n="project4.flow.s3.c2note">{t('project4.flow.s3.c2note')}</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex flex-col gap-3">
+              <div class="flex items-center gap-2">
+                <span class="text-2xl font-extrabold text-brand-purple">04</span>
+                <span class="text-xs font-bold uppercase tracking-wide" data-i18n="project4.flow.s4.label">{t('project4.flow.s4.label')}</span>
+              </div>
+              <div class="flex flex-col gap-3 flex-1">
+                <div class="rounded-xl border border-gray-200 p-4">
+                  <p class="text-sm font-bold mb-1" data-i18n="project4.flow.s4.c1title">{t('project4.flow.s4.c1title')}</p>
+                  <p class="text-xs text-gray-500 leading-relaxed" data-i18n="project4.flow.s4.c1">{t('project4.flow.s4.c1')}</p>
+                </div>
+                <div class="rounded-xl border border-gray-200 p-4">
+                  <p class="text-sm font-bold mb-1" data-i18n="project4.flow.s4.c2title">{t('project4.flow.s4.c2title')}</p>
+                  <p class="text-xs text-gray-500 leading-relaxed" data-i18n="project4.flow.s4.c2">{t('project4.flow.s4.c2')}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-2 text-xs text-gray-500 mt-8 pt-6 border-t border-gray-200">
+            <span class="font-bold text-black" data-i18n="project4.flow.footer.lead">{t('project4.flow.footer.lead')}</span>
+            <span data-i18n="project4.flow.footer.rest">{t('project4.flow.footer.rest')}</span>
+          </div>
         </div>
       )}
 
