@@ -12,6 +12,16 @@ export interface Project {
 
 export const projects: Project[] = [
   {
+    i18nKey: 'project4',
+    slug: 'condor',
+    title: 'Cóndor — Proactive WhatsApp CRM for Real Estate',
+    description: 'Conversational CRM for real estate agents: contacts, follow-up rules, and proactive alerts, managed entirely through WhatsApp.',
+    metric: 'Too early to tell',
+    summary: 'Real estate agents were tracking clients across WhatsApp threads and spreadsheets, missing the follow-ups that actually close deals. Cóndor turns that into a conversational system: agents manage contacts and reminders by just texting, while the system proactively nudges them when it\'s time to reach out.',
+    details: 'Before writing code, I ran a research phase interviewing brokers, agents, and office staff to map real workflows and pain points — captured as a living domain glossary rather than assumptions. The product is a monorepo: an Express + Twilio webhook bot that parses natural-language WhatsApp messages through ChatGPT, a scheduler that triggers proactive "Avisos" (follow-up nudges), and a React PWA dashboard for agents to review contacts and rules.',
+    tags: ['Node.js', 'Express', 'Twilio', 'ChatGPT', 'React'],
+  },
+  {
     i18nKey: 'project1',
     slug: 'vision-design-system',
     title: 'Vision Design System',
@@ -41,15 +51,5 @@ export const projects: Project[] = [
     summary: 'Embedded within an Accenture team delivering frontend solutions for Kimberly-Clark\'s internal tools and consumer-facing platforms. The challenge was navigating enterprise constraints — legacy integrations, multi-team coordination, strict delivery timelines — while keeping the frontend quality high.',
     details: 'Led component standardization efforts across the engagement, established coding guidelines adopted by the broader team, and worked closely with UX and backend engineers to ship features that held up at scale. The experience sharpened my ability to operate in large, distributed delivery contexts.',
     tags: ['React', 'TypeScript', 'Enterprise', 'Accenture', 'Component Architecture'],
-  },
-  {
-    i18nKey: 'project4',
-    slug: 'condor',
-    title: 'Cóndor — Proactive WhatsApp CRM for Real Estate',
-    description: 'Conversational CRM for real estate agents: contacts, follow-up rules, and proactive alerts, managed entirely through WhatsApp.',
-    metric: 'Too early to tell',
-    summary: 'Real estate agents were tracking clients across WhatsApp threads and spreadsheets, missing the follow-ups that actually close deals. Cóndor turns that into a conversational system: agents manage contacts and reminders by just texting, while the system proactively nudges them when it\'s time to reach out.',
-    details: 'Before writing code, I ran a research phase interviewing brokers, agents, and office staff to map real workflows and pain points — captured as a living domain glossary rather than assumptions. The product is a monorepo: an Express + Twilio webhook bot that parses natural-language WhatsApp messages through ChatGPT, a scheduler that triggers proactive "Avisos" (follow-up nudges), and a React PWA dashboard for agents to review contacts and rules.',
-    tags: ['Node.js', 'Express', 'Twilio', 'ChatGPT', 'React'],
   },
 ];
